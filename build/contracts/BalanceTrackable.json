@@ -1,0 +1,2138 @@
+{
+  "contractName": "BalanceTrackable",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "balanceTracker",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "balanceTrackerFrozen",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldBalanceTracker",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newBalanceTracker",
+          "type": "address"
+        }
+      ],
+      "name": "SetBalanceTrackerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "FreezeBalanceTrackerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newBalanceTracker",
+          "type": "address"
+        }
+      ],
+      "name": "setBalanceTracker",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "freezeBalanceTracker",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {BalanceTracker} from \"./BalanceTracker.sol\";\n\n/**\n * @title BalanceTrackable\n * @notice An ownable that has a balance tracker property\n */\ncontract BalanceTrackable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    BalanceTracker public balanceTracker;\n    bool public balanceTrackerFrozen;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetBalanceTrackerEvent(BalanceTracker oldBalanceTracker, BalanceTracker newBalanceTracker);\n    event FreezeBalanceTrackerEvent();\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the balance tracker contract\n    /// @param newBalanceTracker The (address of) BalanceTracker contract instance\n    function setBalanceTracker(BalanceTracker newBalanceTracker)\n    public\n    onlyDeployer\n    notNullAddress(newBalanceTracker)\n    notSameAddresses(newBalanceTracker, balanceTracker)\n    {\n        // Require that this contract has not been frozen\n        require(!balanceTrackerFrozen);\n\n        // Update fields\n        BalanceTracker oldBalanceTracker = balanceTracker;\n        balanceTracker = newBalanceTracker;\n\n        // Emit event\n        emit SetBalanceTrackerEvent(oldBalanceTracker, newBalanceTracker);\n    }\n\n    /// @notice Freeze the balance tracker from further updates\n    /// @dev This operation can not be undone\n    function freezeBalanceTracker()\n    public\n    onlyDeployer\n    {\n        balanceTrackerFrozen = true;\n\n        // Emit event\n        emit FreezeBalanceTrackerEvent();\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier balanceTrackerInitialized() {\n        require(balanceTracker != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/BalanceTrackable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/BalanceTrackable.sol",
+    "exportedSymbols": {
+      "BalanceTrackable": [
+        813
+      ]
+    },
+    "id": 814,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 736,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:3"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 738,
+        "nodeType": "ImportDirective",
+        "scope": 814,
+        "sourceUnit": 25427,
+        "src": "148:38:3",
+        "symbolAliases": [
+          {
+            "foreign": 737,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/BalanceTracker.sol",
+        "file": "./BalanceTracker.sol",
+        "id": 740,
+        "nodeType": "ImportDirective",
+        "scope": 814,
+        "sourceUnit": 1740,
+        "src": "187:52:3",
+        "symbolAliases": [
+          {
+            "foreign": 739,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 741,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "363:7:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 742,
+            "nodeType": "InheritanceSpecifier",
+            "src": "363:7:3"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title BalanceTrackable\n@notice An ownable that has a balance tracker property",
+        "fullyImplemented": false,
+        "id": 813,
+        "linearizedBaseContracts": [
+          813,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "BalanceTrackable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 744,
+            "name": "balanceTracker",
+            "nodeType": "VariableDeclaration",
+            "scope": 813,
+            "src": "522:36:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+              "typeString": "contract BalanceTracker"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 743,
+              "name": "BalanceTracker",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1739,
+              "src": "522:14:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                "typeString": "contract BalanceTracker"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 746,
+            "name": "balanceTrackerFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 813,
+            "src": "564:32:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 745,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "564:4:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 752,
+            "name": "SetBalanceTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 751,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 748,
+                  "indexed": false,
+                  "name": "oldBalanceTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 752,
+                  "src": "774:32:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                    "typeString": "contract BalanceTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 747,
+                    "name": "BalanceTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1739,
+                    "src": "774:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 750,
+                  "indexed": false,
+                  "name": "newBalanceTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 752,
+                  "src": "808:32:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                    "typeString": "contract BalanceTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 749,
+                    "name": "BalanceTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1739,
+                    "src": "808:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "773:68:3"
+            },
+            "src": "745:97:3"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 754,
+            "name": "FreezeBalanceTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 753,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "878:2:3"
+            },
+            "src": "847:34:3"
+          },
+          {
+            "body": {
+              "id": 786,
+              "nodeType": "Block",
+              "src": "1351:332:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 770,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1427:21:3",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 769,
+                          "name": "balanceTrackerFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 746,
+                          "src": "1428:20:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 768,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1419:7:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 771,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1419:30:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 772,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1419:30:3"
+                },
+                {
+                  "assignments": [
+                    774
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 774,
+                      "name": "oldBalanceTracker",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 787,
+                      "src": "1485:32:3",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                        "typeString": "contract BalanceTracker"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 773,
+                        "name": "BalanceTracker",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 1739,
+                        "src": "1485:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 776,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 775,
+                    "name": "balanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 744,
+                    "src": "1520:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1485:49:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 779,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 777,
+                      "name": "balanceTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 744,
+                      "src": "1544:14:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                        "typeString": "contract BalanceTracker"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 778,
+                      "name": "newBalanceTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 756,
+                      "src": "1561:17:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                        "typeString": "contract BalanceTracker"
+                      }
+                    },
+                    "src": "1544:34:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "id": 780,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1544:34:3"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 782,
+                        "name": "oldBalanceTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 774,
+                        "src": "1639:17:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 783,
+                        "name": "newBalanceTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 756,
+                        "src": "1658:17:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      ],
+                      "id": 781,
+                      "name": "SetBalanceTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 752,
+                      "src": "1616:22:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_BalanceTracker_$1739_$_t_contract$_BalanceTracker_$1739_$returns$__$",
+                        "typeString": "function (contract BalanceTracker,contract BalanceTracker)"
+                      }
+                    },
+                    "id": 784,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1616:60:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 785,
+                  "nodeType": "EmitStatement",
+                  "src": "1611:65:3"
+                }
+              ]
+            },
+            "documentation": "@notice Set the balance tracker contract\n @param newBalanceTracker The (address of) BalanceTracker contract instance",
+            "id": 787,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 759,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 758,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1240:12:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1240:12:3"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 761,
+                    "name": "newBalanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 756,
+                    "src": "1272:17:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  }
+                ],
+                "id": 762,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 760,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1257:14:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1257:33:3"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 764,
+                    "name": "newBalanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 756,
+                    "src": "1312:17:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 765,
+                    "name": "balanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 744,
+                    "src": "1331:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  }
+                ],
+                "id": 766,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 763,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1295:16:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1295:51:3"
+              }
+            ],
+            "name": "setBalanceTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 757,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 756,
+                  "name": "newBalanceTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 787,
+                  "src": "1191:32:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                    "typeString": "contract BalanceTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 755,
+                    "name": "BalanceTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1739,
+                    "src": "1191:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1190:34:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 767,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1351:0:3"
+            },
+            "scope": 813,
+            "src": "1164:519:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 799,
+              "nodeType": "Block",
+              "src": "1863:109:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 794,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 792,
+                      "name": "balanceTrackerFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 746,
+                      "src": "1873:20:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 793,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1896:4:3",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1873:27:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 795,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1873:27:3"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 796,
+                      "name": "FreezeBalanceTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 754,
+                      "src": "1938:25:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 797,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1938:27:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 798,
+                  "nodeType": "EmitStatement",
+                  "src": "1933:32:3"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the balance tracker from further updates\n @dev This operation can not be undone",
+            "id": 800,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 790,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 789,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1846:12:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1846:12:3"
+              }
+            ],
+            "name": "freezeBalanceTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 788,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1828:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 791,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1863:0:3"
+            },
+            "scope": 813,
+            "src": "1799:173:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 811,
+              "nodeType": "Block",
+              "src": "2160:65:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 807,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 803,
+                          "name": "balanceTracker",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 744,
+                          "src": "2178:14:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                            "typeString": "contract BalanceTracker"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 805,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2204:1:3",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 804,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2196:7:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 806,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2196:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2178:28:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 802,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2170:7:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 808,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2170:37:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 809,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2170:37:3"
+                },
+                {
+                  "id": 810,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2217:1:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 812,
+            "name": "balanceTrackerInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 801,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2157:2:3"
+            },
+            "src": "2123:102:3",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 814,
+        "src": "334:1893:3"
+      }
+    ],
+    "src": "122:2106:3"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/BalanceTrackable.sol",
+    "exportedSymbols": {
+      "BalanceTrackable": [
+        813
+      ]
+    },
+    "id": 814,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 736,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:3"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 738,
+        "nodeType": "ImportDirective",
+        "scope": 814,
+        "sourceUnit": 25427,
+        "src": "148:38:3",
+        "symbolAliases": [
+          {
+            "foreign": 737,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/BalanceTracker.sol",
+        "file": "./BalanceTracker.sol",
+        "id": 740,
+        "nodeType": "ImportDirective",
+        "scope": 814,
+        "sourceUnit": 1740,
+        "src": "187:52:3",
+        "symbolAliases": [
+          {
+            "foreign": 739,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 741,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "363:7:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 742,
+            "nodeType": "InheritanceSpecifier",
+            "src": "363:7:3"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title BalanceTrackable\n@notice An ownable that has a balance tracker property",
+        "fullyImplemented": false,
+        "id": 813,
+        "linearizedBaseContracts": [
+          813,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "BalanceTrackable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 744,
+            "name": "balanceTracker",
+            "nodeType": "VariableDeclaration",
+            "scope": 813,
+            "src": "522:36:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+              "typeString": "contract BalanceTracker"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 743,
+              "name": "BalanceTracker",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1739,
+              "src": "522:14:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                "typeString": "contract BalanceTracker"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 746,
+            "name": "balanceTrackerFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 813,
+            "src": "564:32:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 745,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "564:4:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 752,
+            "name": "SetBalanceTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 751,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 748,
+                  "indexed": false,
+                  "name": "oldBalanceTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 752,
+                  "src": "774:32:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                    "typeString": "contract BalanceTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 747,
+                    "name": "BalanceTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1739,
+                    "src": "774:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 750,
+                  "indexed": false,
+                  "name": "newBalanceTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 752,
+                  "src": "808:32:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                    "typeString": "contract BalanceTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 749,
+                    "name": "BalanceTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1739,
+                    "src": "808:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "773:68:3"
+            },
+            "src": "745:97:3"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 754,
+            "name": "FreezeBalanceTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 753,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "878:2:3"
+            },
+            "src": "847:34:3"
+          },
+          {
+            "body": {
+              "id": 786,
+              "nodeType": "Block",
+              "src": "1351:332:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 770,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1427:21:3",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 769,
+                          "name": "balanceTrackerFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 746,
+                          "src": "1428:20:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 768,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1419:7:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 771,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1419:30:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 772,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1419:30:3"
+                },
+                {
+                  "assignments": [
+                    774
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 774,
+                      "name": "oldBalanceTracker",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 787,
+                      "src": "1485:32:3",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                        "typeString": "contract BalanceTracker"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 773,
+                        "name": "BalanceTracker",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 1739,
+                        "src": "1485:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 776,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 775,
+                    "name": "balanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 744,
+                    "src": "1520:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1485:49:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 779,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 777,
+                      "name": "balanceTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 744,
+                      "src": "1544:14:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                        "typeString": "contract BalanceTracker"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 778,
+                      "name": "newBalanceTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 756,
+                      "src": "1561:17:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                        "typeString": "contract BalanceTracker"
+                      }
+                    },
+                    "src": "1544:34:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "id": 780,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1544:34:3"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 782,
+                        "name": "oldBalanceTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 774,
+                        "src": "1639:17:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 783,
+                        "name": "newBalanceTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 756,
+                        "src": "1658:17:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                          "typeString": "contract BalanceTracker"
+                        }
+                      ],
+                      "id": 781,
+                      "name": "SetBalanceTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 752,
+                      "src": "1616:22:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_BalanceTracker_$1739_$_t_contract$_BalanceTracker_$1739_$returns$__$",
+                        "typeString": "function (contract BalanceTracker,contract BalanceTracker)"
+                      }
+                    },
+                    "id": 784,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1616:60:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 785,
+                  "nodeType": "EmitStatement",
+                  "src": "1611:65:3"
+                }
+              ]
+            },
+            "documentation": "@notice Set the balance tracker contract\n @param newBalanceTracker The (address of) BalanceTracker contract instance",
+            "id": 787,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 759,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 758,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1240:12:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1240:12:3"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 761,
+                    "name": "newBalanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 756,
+                    "src": "1272:17:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  }
+                ],
+                "id": 762,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 760,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1257:14:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1257:33:3"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 764,
+                    "name": "newBalanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 756,
+                    "src": "1312:17:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 765,
+                    "name": "balanceTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 744,
+                    "src": "1331:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  }
+                ],
+                "id": 766,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 763,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1295:16:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1295:51:3"
+              }
+            ],
+            "name": "setBalanceTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 757,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 756,
+                  "name": "newBalanceTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 787,
+                  "src": "1191:32:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                    "typeString": "contract BalanceTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 755,
+                    "name": "BalanceTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1739,
+                    "src": "1191:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                      "typeString": "contract BalanceTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1190:34:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 767,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1351:0:3"
+            },
+            "scope": 813,
+            "src": "1164:519:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 799,
+              "nodeType": "Block",
+              "src": "1863:109:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 794,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 792,
+                      "name": "balanceTrackerFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 746,
+                      "src": "1873:20:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 793,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1896:4:3",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1873:27:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 795,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1873:27:3"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 796,
+                      "name": "FreezeBalanceTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 754,
+                      "src": "1938:25:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 797,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1938:27:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 798,
+                  "nodeType": "EmitStatement",
+                  "src": "1933:32:3"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the balance tracker from further updates\n @dev This operation can not be undone",
+            "id": 800,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 790,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 789,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1846:12:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1846:12:3"
+              }
+            ],
+            "name": "freezeBalanceTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 788,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1828:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 791,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1863:0:3"
+            },
+            "scope": 813,
+            "src": "1799:173:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 811,
+              "nodeType": "Block",
+              "src": "2160:65:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 807,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 803,
+                          "name": "balanceTracker",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 744,
+                          "src": "2178:14:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_BalanceTracker_$1739",
+                            "typeString": "contract BalanceTracker"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 805,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2204:1:3",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 804,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2196:7:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 806,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2196:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2178:28:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 802,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2170:7:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 808,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2170:37:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 809,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2170:37:3"
+                },
+                {
+                  "id": 810,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2217:1:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 812,
+            "name": "balanceTrackerInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 801,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2157:2:3"
+            },
+            "src": "2123:102:3",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 814,
+        "src": "334:1893:3"
+      }
+    ],
+    "src": "122:2106:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:36.855Z"
+}

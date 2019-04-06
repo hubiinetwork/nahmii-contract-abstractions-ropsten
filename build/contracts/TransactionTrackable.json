@@ -1,0 +1,2138 @@
+{
+  "contractName": "TransactionTrackable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "transactionTrackerFrozen",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "transactionTracker",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldTransactionTracker",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newTransactionTracker",
+          "type": "address"
+        }
+      ],
+      "name": "SetTransactionTrackerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "FreezeTransactionTrackerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newTransactionTracker",
+          "type": "address"
+        }
+      ],
+      "name": "setTransactionTracker",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "freezeTransactionTracker",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {TransactionTracker} from \"./TransactionTracker.sol\";\n\n/**\n * @title TransactionTrackable\n * @notice An ownable that has a transaction tracker property\n */\ncontract TransactionTrackable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    TransactionTracker public transactionTracker;\n    bool public transactionTrackerFrozen;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetTransactionTrackerEvent(TransactionTracker oldTransactionTracker, TransactionTracker newTransactionTracker);\n    event FreezeTransactionTrackerEvent();\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the transaction tracker contract\n    /// @param newTransactionTracker The (address of) TransactionTracker contract instance\n    function setTransactionTracker(TransactionTracker newTransactionTracker)\n    public\n    onlyDeployer\n    notNullAddress(newTransactionTracker)\n    notSameAddresses(newTransactionTracker, transactionTracker)\n    {\n        // Require that this contract has not been frozen\n        require(!transactionTrackerFrozen);\n\n        // Update fields\n        TransactionTracker oldTransactionTracker = transactionTracker;\n        transactionTracker = newTransactionTracker;\n\n        // Emit event\n        emit SetTransactionTrackerEvent(oldTransactionTracker, newTransactionTracker);\n    }\n\n    /// @notice Freeze the transaction tracker from further updates\n    /// @dev This operation can not be undone\n    function freezeTransactionTracker()\n    public\n    onlyDeployer\n    {\n        transactionTrackerFrozen = true;\n\n        // Emit event\n        emit FreezeTransactionTrackerEvent();\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier transactionTrackerInitialized() {\n        require(transactionTracker != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/TransactionTrackable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransactionTrackable.sol",
+    "exportedSymbols": {
+      "TransactionTrackable": [
+        34643
+      ]
+    },
+    "id": 34644,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34566,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:85"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 34568,
+        "nodeType": "ImportDirective",
+        "scope": 34644,
+        "sourceUnit": 25427,
+        "src": "148:38:85",
+        "symbolAliases": [
+          {
+            "foreign": 34567,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransactionTracker.sol",
+        "file": "./TransactionTracker.sol",
+        "id": 34570,
+        "nodeType": "ImportDirective",
+        "scope": 34644,
+        "sourceUnit": 35173,
+        "src": "187:60:85",
+        "symbolAliases": [
+          {
+            "foreign": 34569,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 34571,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "383:7:85",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 34572,
+            "nodeType": "InheritanceSpecifier",
+            "src": "383:7:85"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title TransactionTrackable\n@notice An ownable that has a transaction tracker property",
+        "fullyImplemented": false,
+        "id": 34643,
+        "linearizedBaseContracts": [
+          34643,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "TransactionTrackable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 34574,
+            "name": "transactionTracker",
+            "nodeType": "VariableDeclaration",
+            "scope": 34643,
+            "src": "542:44:85",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+              "typeString": "contract TransactionTracker"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 34573,
+              "name": "TransactionTracker",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 35172,
+              "src": "542:18:85",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                "typeString": "contract TransactionTracker"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 34576,
+            "name": "transactionTrackerFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 34643,
+            "src": "592:36:85",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 34575,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "592:4:85",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 34582,
+            "name": "SetTransactionTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 34581,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34578,
+                  "indexed": false,
+                  "name": "oldTransactionTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34582,
+                  "src": "810:40:85",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                    "typeString": "contract TransactionTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34577,
+                    "name": "TransactionTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 35172,
+                    "src": "810:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 34580,
+                  "indexed": false,
+                  "name": "newTransactionTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34582,
+                  "src": "852:40:85",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                    "typeString": "contract TransactionTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34579,
+                    "name": "TransactionTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 35172,
+                    "src": "852:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "809:84:85"
+            },
+            "src": "777:117:85"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 34584,
+            "name": "FreezeTransactionTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 34583,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "934:2:85"
+            },
+            "src": "899:38:85"
+          },
+          {
+            "body": {
+              "id": 34616,
+              "nodeType": "Block",
+              "src": "1443:368:85",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 34600,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1519:25:85",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 34599,
+                          "name": "transactionTrackerFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 34576,
+                          "src": "1520:24:85",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 34598,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1511:7:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 34601,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1511:34:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34602,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1511:34:85"
+                },
+                {
+                  "assignments": [
+                    34604
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 34604,
+                      "name": "oldTransactionTracker",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 34617,
+                      "src": "1581:40:85",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                        "typeString": "contract TransactionTracker"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 34603,
+                        "name": "TransactionTracker",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 35172,
+                        "src": "1581:18:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 34606,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 34605,
+                    "name": "transactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34574,
+                    "src": "1624:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1581:61:85"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 34609,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 34607,
+                      "name": "transactionTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34574,
+                      "src": "1652:18:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                        "typeString": "contract TransactionTracker"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 34608,
+                      "name": "newTransactionTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34586,
+                      "src": "1673:21:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                        "typeString": "contract TransactionTracker"
+                      }
+                    },
+                    "src": "1652:42:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "id": 34610,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1652:42:85"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 34612,
+                        "name": "oldTransactionTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34604,
+                        "src": "1759:21:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 34613,
+                        "name": "newTransactionTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34586,
+                        "src": "1782:21:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      ],
+                      "id": 34611,
+                      "name": "SetTransactionTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34582,
+                      "src": "1732:26:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TransactionTracker_$35172_$_t_contract$_TransactionTracker_$35172_$returns$__$",
+                        "typeString": "function (contract TransactionTracker,contract TransactionTracker)"
+                      }
+                    },
+                    "id": 34614,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1732:72:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34615,
+                  "nodeType": "EmitStatement",
+                  "src": "1727:77:85"
+                }
+              ]
+            },
+            "documentation": "@notice Set the transaction tracker contract\n @param newTransactionTracker The (address of) TransactionTracker contract instance",
+            "id": 34617,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 34589,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34588,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1320:12:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1320:12:85"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 34591,
+                    "name": "newTransactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34586,
+                    "src": "1352:21:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  }
+                ],
+                "id": 34592,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34590,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1337:14:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1337:37:85"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 34594,
+                    "name": "newTransactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34586,
+                    "src": "1396:21:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 34595,
+                    "name": "transactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34574,
+                    "src": "1419:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  }
+                ],
+                "id": 34596,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34593,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1379:16:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1379:59:85"
+              }
+            ],
+            "name": "setTransactionTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34587,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34586,
+                  "name": "newTransactionTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34617,
+                  "src": "1263:40:85",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                    "typeString": "contract TransactionTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34585,
+                    "name": "TransactionTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 35172,
+                    "src": "1263:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1262:42:85"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34597,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1443:0:85"
+            },
+            "scope": 34643,
+            "src": "1232:579:85",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34629,
+              "nodeType": "Block",
+              "src": "1999:117:85",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 34624,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 34622,
+                      "name": "transactionTrackerFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34576,
+                      "src": "2009:24:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 34623,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "2036:4:85",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "2009:31:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 34625,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2009:31:85"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 34626,
+                      "name": "FreezeTransactionTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34584,
+                      "src": "2078:29:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 34627,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2078:31:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34628,
+                  "nodeType": "EmitStatement",
+                  "src": "2073:36:85"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the transaction tracker from further updates\n @dev This operation can not be undone",
+            "id": 34630,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 34620,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34619,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1982:12:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1982:12:85"
+              }
+            ],
+            "name": "freezeTransactionTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34618,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1964:2:85"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34621,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1999:0:85"
+            },
+            "scope": 34643,
+            "src": "1931:185:85",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34641,
+              "nodeType": "Block",
+              "src": "2308:69:85",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 34637,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 34633,
+                          "name": "transactionTracker",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 34574,
+                          "src": "2326:18:85",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                            "typeString": "contract TransactionTracker"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 34635,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2356:1:85",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 34634,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2348:7:85",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 34636,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2348:10:85",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2326:32:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 34632,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2318:7:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 34638,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2318:41:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34639,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2318:41:85"
+                },
+                {
+                  "id": 34640,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2369:1:85"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 34642,
+            "name": "transactionTrackerInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 34631,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2305:2:85"
+            },
+            "src": "2267:110:85",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 34644,
+        "src": "350:2029:85"
+      }
+    ],
+    "src": "122:2258:85"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransactionTrackable.sol",
+    "exportedSymbols": {
+      "TransactionTrackable": [
+        34643
+      ]
+    },
+    "id": 34644,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34566,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:85"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 34568,
+        "nodeType": "ImportDirective",
+        "scope": 34644,
+        "sourceUnit": 25427,
+        "src": "148:38:85",
+        "symbolAliases": [
+          {
+            "foreign": 34567,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransactionTracker.sol",
+        "file": "./TransactionTracker.sol",
+        "id": 34570,
+        "nodeType": "ImportDirective",
+        "scope": 34644,
+        "sourceUnit": 35173,
+        "src": "187:60:85",
+        "symbolAliases": [
+          {
+            "foreign": 34569,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 34571,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "383:7:85",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 34572,
+            "nodeType": "InheritanceSpecifier",
+            "src": "383:7:85"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title TransactionTrackable\n@notice An ownable that has a transaction tracker property",
+        "fullyImplemented": false,
+        "id": 34643,
+        "linearizedBaseContracts": [
+          34643,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "TransactionTrackable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 34574,
+            "name": "transactionTracker",
+            "nodeType": "VariableDeclaration",
+            "scope": 34643,
+            "src": "542:44:85",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+              "typeString": "contract TransactionTracker"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 34573,
+              "name": "TransactionTracker",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 35172,
+              "src": "542:18:85",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                "typeString": "contract TransactionTracker"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 34576,
+            "name": "transactionTrackerFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 34643,
+            "src": "592:36:85",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 34575,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "592:4:85",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 34582,
+            "name": "SetTransactionTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 34581,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34578,
+                  "indexed": false,
+                  "name": "oldTransactionTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34582,
+                  "src": "810:40:85",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                    "typeString": "contract TransactionTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34577,
+                    "name": "TransactionTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 35172,
+                    "src": "810:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 34580,
+                  "indexed": false,
+                  "name": "newTransactionTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34582,
+                  "src": "852:40:85",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                    "typeString": "contract TransactionTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34579,
+                    "name": "TransactionTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 35172,
+                    "src": "852:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "809:84:85"
+            },
+            "src": "777:117:85"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 34584,
+            "name": "FreezeTransactionTrackerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 34583,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "934:2:85"
+            },
+            "src": "899:38:85"
+          },
+          {
+            "body": {
+              "id": 34616,
+              "nodeType": "Block",
+              "src": "1443:368:85",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 34600,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1519:25:85",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 34599,
+                          "name": "transactionTrackerFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 34576,
+                          "src": "1520:24:85",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 34598,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1511:7:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 34601,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1511:34:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34602,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1511:34:85"
+                },
+                {
+                  "assignments": [
+                    34604
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 34604,
+                      "name": "oldTransactionTracker",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 34617,
+                      "src": "1581:40:85",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                        "typeString": "contract TransactionTracker"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 34603,
+                        "name": "TransactionTracker",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 35172,
+                        "src": "1581:18:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 34606,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 34605,
+                    "name": "transactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34574,
+                    "src": "1624:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1581:61:85"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 34609,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 34607,
+                      "name": "transactionTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34574,
+                      "src": "1652:18:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                        "typeString": "contract TransactionTracker"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 34608,
+                      "name": "newTransactionTracker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34586,
+                      "src": "1673:21:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                        "typeString": "contract TransactionTracker"
+                      }
+                    },
+                    "src": "1652:42:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "id": 34610,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1652:42:85"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 34612,
+                        "name": "oldTransactionTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34604,
+                        "src": "1759:21:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 34613,
+                        "name": "newTransactionTracker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 34586,
+                        "src": "1782:21:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                          "typeString": "contract TransactionTracker"
+                        }
+                      ],
+                      "id": 34611,
+                      "name": "SetTransactionTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34582,
+                      "src": "1732:26:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TransactionTracker_$35172_$_t_contract$_TransactionTracker_$35172_$returns$__$",
+                        "typeString": "function (contract TransactionTracker,contract TransactionTracker)"
+                      }
+                    },
+                    "id": 34614,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1732:72:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34615,
+                  "nodeType": "EmitStatement",
+                  "src": "1727:77:85"
+                }
+              ]
+            },
+            "documentation": "@notice Set the transaction tracker contract\n @param newTransactionTracker The (address of) TransactionTracker contract instance",
+            "id": 34617,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 34589,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34588,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1320:12:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1320:12:85"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 34591,
+                    "name": "newTransactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34586,
+                    "src": "1352:21:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  }
+                ],
+                "id": 34592,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34590,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1337:14:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1337:37:85"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 34594,
+                    "name": "newTransactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34586,
+                    "src": "1396:21:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 34595,
+                    "name": "transactionTracker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 34574,
+                    "src": "1419:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  }
+                ],
+                "id": 34596,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34593,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1379:16:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1379:59:85"
+              }
+            ],
+            "name": "setTransactionTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34587,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34586,
+                  "name": "newTransactionTracker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34617,
+                  "src": "1263:40:85",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                    "typeString": "contract TransactionTracker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 34585,
+                    "name": "TransactionTracker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 35172,
+                    "src": "1263:18:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                      "typeString": "contract TransactionTracker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1262:42:85"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34597,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1443:0:85"
+            },
+            "scope": 34643,
+            "src": "1232:579:85",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34629,
+              "nodeType": "Block",
+              "src": "1999:117:85",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 34624,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 34622,
+                      "name": "transactionTrackerFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34576,
+                      "src": "2009:24:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 34623,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "2036:4:85",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "2009:31:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 34625,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2009:31:85"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 34626,
+                      "name": "FreezeTransactionTrackerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 34584,
+                      "src": "2078:29:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 34627,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2078:31:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34628,
+                  "nodeType": "EmitStatement",
+                  "src": "2073:36:85"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the transaction tracker from further updates\n @dev This operation can not be undone",
+            "id": 34630,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 34620,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 34619,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1982:12:85",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1982:12:85"
+              }
+            ],
+            "name": "freezeTransactionTracker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34618,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1964:2:85"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34621,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1999:0:85"
+            },
+            "scope": 34643,
+            "src": "1931:185:85",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34641,
+              "nodeType": "Block",
+              "src": "2308:69:85",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 34637,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 34633,
+                          "name": "transactionTracker",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 34574,
+                          "src": "2326:18:85",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_TransactionTracker_$35172",
+                            "typeString": "contract TransactionTracker"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 34635,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2356:1:85",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 34634,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2348:7:85",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 34636,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2348:10:85",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2326:32:85",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 34632,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2318:7:85",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 34638,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2318:41:85",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 34639,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2318:41:85"
+                },
+                {
+                  "id": 34640,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2369:1:85"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 34642,
+            "name": "transactionTrackerInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 34631,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2305:2:85"
+            },
+            "src": "2267:110:85",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 34644,
+        "src": "350:2029:85"
+      }
+    ],
+    "src": "122:2258:85"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:37.062Z"
+}

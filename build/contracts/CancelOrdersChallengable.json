@@ -1,0 +1,1601 @@
+{
+  "contractName": "CancelOrdersChallengable",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "cancelOrdersChallenge",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldCancelOrdersChallenge",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newCancelOrdersChallenge",
+          "type": "address"
+        }
+      ],
+      "name": "SetCancelOrdersChallengeEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newCancelOrdersChallenge",
+          "type": "address"
+        }
+      ],
+      "name": "setCancelOrdersChallenge",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {CancelOrdersChallenge} from \"./CancelOrdersChallenge.sol\";\n\n/**\n * @title CancelOrdersChallengable\n * @notice An ownable that has a cancel orders challenge property\n */\ncontract CancelOrdersChallengable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    CancelOrdersChallenge public cancelOrdersChallenge;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetCancelOrdersChallengeEvent(CancelOrdersChallenge oldCancelOrdersChallenge,\n        CancelOrdersChallenge newCancelOrdersChallenge);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the cancel orders challenge contract\n    /// @param newCancelOrdersChallenge The (address of) CancelOrdersChallenge contract instance\n    function setCancelOrdersChallenge(CancelOrdersChallenge newCancelOrdersChallenge)\n    public\n    onlyDeployer\n    notNullAddress(newCancelOrdersChallenge)\n    notSameAddresses(newCancelOrdersChallenge, cancelOrdersChallenge)\n    {\n        // Set new cancel orders challenge\n        CancelOrdersChallenge oldCancelOrdersChallenge = cancelOrdersChallenge;\n        cancelOrdersChallenge = newCancelOrdersChallenge;\n\n        // Emit event\n        emit SetCancelOrdersChallengeEvent(oldCancelOrdersChallenge, newCancelOrdersChallenge);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier cancelOrdersChallengeInitialized() {\n        require(cancelOrdersChallenge != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/CancelOrdersChallengable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CancelOrdersChallengable.sol",
+    "exportedSymbols": {
+      "CancelOrdersChallengable": [
+        3456
+      ]
+    },
+    "id": 3457,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3401,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:13"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 3403,
+        "nodeType": "ImportDirective",
+        "scope": 3457,
+        "sourceUnit": 25427,
+        "src": "148:38:13",
+        "symbolAliases": [
+          {
+            "foreign": 3402,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CancelOrdersChallenge.sol",
+        "file": "./CancelOrdersChallenge.sol",
+        "id": 3405,
+        "nodeType": "ImportDirective",
+        "scope": 3457,
+        "sourceUnit": 3959,
+        "src": "187:66:13",
+        "symbolAliases": [
+          {
+            "foreign": 3404,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3406,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "401:7:13",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 3407,
+            "nodeType": "InheritanceSpecifier",
+            "src": "401:7:13"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title CancelOrdersChallengable\n@notice An ownable that has a cancel orders challenge property",
+        "fullyImplemented": false,
+        "id": 3456,
+        "linearizedBaseContracts": [
+          3456,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "CancelOrdersChallengable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 3409,
+            "name": "cancelOrdersChallenge",
+            "nodeType": "VariableDeclaration",
+            "scope": 3456,
+            "src": "560:50:13",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+              "typeString": "contract CancelOrdersChallenge"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 3408,
+              "name": "CancelOrdersChallenge",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3958,
+              "src": "560:21:13",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                "typeString": "contract CancelOrdersChallenge"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 3415,
+            "name": "SetCancelOrdersChallengeEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3414,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3411,
+                  "indexed": false,
+                  "name": "oldCancelOrdersChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3415,
+                  "src": "795:46:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                    "typeString": "contract CancelOrdersChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 3410,
+                    "name": "CancelOrdersChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 3958,
+                    "src": "795:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3413,
+                  "indexed": false,
+                  "name": "newCancelOrdersChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3415,
+                  "src": "851:46:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                    "typeString": "contract CancelOrdersChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 3412,
+                    "name": "CancelOrdersChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 3958,
+                    "src": "851:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "794:104:13"
+            },
+            "src": "759:140:13"
+          },
+          {
+            "body": {
+              "id": 3442,
+              "nodeType": "Block",
+              "src": "1433:307:13",
+              "statements": [
+                {
+                  "assignments": [
+                    3430
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 3430,
+                      "name": "oldCancelOrdersChallenge",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 3443,
+                      "src": "1486:46:13",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                        "typeString": "contract CancelOrdersChallenge"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 3429,
+                        "name": "CancelOrdersChallenge",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 3958,
+                        "src": "1486:21:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 3432,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 3431,
+                    "name": "cancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3409,
+                    "src": "1535:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1486:70:13"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 3435,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 3433,
+                      "name": "cancelOrdersChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3409,
+                      "src": "1566:21:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                        "typeString": "contract CancelOrdersChallenge"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 3434,
+                      "name": "newCancelOrdersChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3417,
+                      "src": "1590:24:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                        "typeString": "contract CancelOrdersChallenge"
+                      }
+                    },
+                    "src": "1566:48:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "id": 3436,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1566:48:13"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 3438,
+                        "name": "oldCancelOrdersChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3430,
+                        "src": "1682:24:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 3439,
+                        "name": "newCancelOrdersChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3417,
+                        "src": "1708:24:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      ],
+                      "id": 3437,
+                      "name": "SetCancelOrdersChallengeEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3415,
+                      "src": "1652:29:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_CancelOrdersChallenge_$3958_$_t_contract$_CancelOrdersChallenge_$3958_$returns$__$",
+                        "typeString": "function (contract CancelOrdersChallenge,contract CancelOrdersChallenge)"
+                      }
+                    },
+                    "id": 3440,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1652:81:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3441,
+                  "nodeType": "EmitStatement",
+                  "src": "1647:86:13"
+                }
+              ]
+            },
+            "documentation": "@notice Set the cancel orders challenge contract\n @param newCancelOrdersChallenge The (address of) CancelOrdersChallenge contract instance",
+            "id": 3443,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 3420,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3419,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1301:12:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1301:12:13"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 3422,
+                    "name": "newCancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3417,
+                    "src": "1333:24:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  }
+                ],
+                "id": 3423,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3421,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1318:14:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1318:40:13"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 3425,
+                    "name": "newCancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3417,
+                    "src": "1380:24:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 3426,
+                    "name": "cancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3409,
+                    "src": "1406:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  }
+                ],
+                "id": 3427,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3424,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1363:16:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1363:65:13"
+              }
+            ],
+            "name": "setCancelOrdersChallenge",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3418,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3417,
+                  "name": "newCancelOrdersChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3443,
+                  "src": "1238:46:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                    "typeString": "contract CancelOrdersChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 3416,
+                    "name": "CancelOrdersChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 3958,
+                    "src": "1238:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1237:48:13"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3428,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1433:0:13"
+            },
+            "scope": 3456,
+            "src": "1204:536:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3454,
+              "nodeType": "Block",
+              "src": "1935:72:13",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 3450,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 3446,
+                          "name": "cancelOrdersChallenge",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3409,
+                          "src": "1953:21:13",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                            "typeString": "contract CancelOrdersChallenge"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 3448,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1986:1:13",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 3447,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1978:7:13",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 3449,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1978:10:13",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1953:35:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 3445,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1945:7:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 3451,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1945:44:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3452,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1945:44:13"
+                },
+                {
+                  "id": 3453,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1999:1:13"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3455,
+            "name": "cancelOrdersChallengeInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 3444,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1932:2:13"
+            },
+            "src": "1891:116:13",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3457,
+        "src": "364:1645:13"
+      }
+    ],
+    "src": "122:1888:13"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CancelOrdersChallengable.sol",
+    "exportedSymbols": {
+      "CancelOrdersChallengable": [
+        3456
+      ]
+    },
+    "id": 3457,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3401,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:13"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 3403,
+        "nodeType": "ImportDirective",
+        "scope": 3457,
+        "sourceUnit": 25427,
+        "src": "148:38:13",
+        "symbolAliases": [
+          {
+            "foreign": 3402,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CancelOrdersChallenge.sol",
+        "file": "./CancelOrdersChallenge.sol",
+        "id": 3405,
+        "nodeType": "ImportDirective",
+        "scope": 3457,
+        "sourceUnit": 3959,
+        "src": "187:66:13",
+        "symbolAliases": [
+          {
+            "foreign": 3404,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3406,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "401:7:13",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 3407,
+            "nodeType": "InheritanceSpecifier",
+            "src": "401:7:13"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title CancelOrdersChallengable\n@notice An ownable that has a cancel orders challenge property",
+        "fullyImplemented": false,
+        "id": 3456,
+        "linearizedBaseContracts": [
+          3456,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "CancelOrdersChallengable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 3409,
+            "name": "cancelOrdersChallenge",
+            "nodeType": "VariableDeclaration",
+            "scope": 3456,
+            "src": "560:50:13",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+              "typeString": "contract CancelOrdersChallenge"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 3408,
+              "name": "CancelOrdersChallenge",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3958,
+              "src": "560:21:13",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                "typeString": "contract CancelOrdersChallenge"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 3415,
+            "name": "SetCancelOrdersChallengeEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3414,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3411,
+                  "indexed": false,
+                  "name": "oldCancelOrdersChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3415,
+                  "src": "795:46:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                    "typeString": "contract CancelOrdersChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 3410,
+                    "name": "CancelOrdersChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 3958,
+                    "src": "795:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3413,
+                  "indexed": false,
+                  "name": "newCancelOrdersChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3415,
+                  "src": "851:46:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                    "typeString": "contract CancelOrdersChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 3412,
+                    "name": "CancelOrdersChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 3958,
+                    "src": "851:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "794:104:13"
+            },
+            "src": "759:140:13"
+          },
+          {
+            "body": {
+              "id": 3442,
+              "nodeType": "Block",
+              "src": "1433:307:13",
+              "statements": [
+                {
+                  "assignments": [
+                    3430
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 3430,
+                      "name": "oldCancelOrdersChallenge",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 3443,
+                      "src": "1486:46:13",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                        "typeString": "contract CancelOrdersChallenge"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 3429,
+                        "name": "CancelOrdersChallenge",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 3958,
+                        "src": "1486:21:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 3432,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 3431,
+                    "name": "cancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3409,
+                    "src": "1535:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1486:70:13"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 3435,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 3433,
+                      "name": "cancelOrdersChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3409,
+                      "src": "1566:21:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                        "typeString": "contract CancelOrdersChallenge"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 3434,
+                      "name": "newCancelOrdersChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3417,
+                      "src": "1590:24:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                        "typeString": "contract CancelOrdersChallenge"
+                      }
+                    },
+                    "src": "1566:48:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "id": 3436,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1566:48:13"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 3438,
+                        "name": "oldCancelOrdersChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3430,
+                        "src": "1682:24:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 3439,
+                        "name": "newCancelOrdersChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3417,
+                        "src": "1708:24:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                          "typeString": "contract CancelOrdersChallenge"
+                        }
+                      ],
+                      "id": 3437,
+                      "name": "SetCancelOrdersChallengeEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3415,
+                      "src": "1652:29:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_CancelOrdersChallenge_$3958_$_t_contract$_CancelOrdersChallenge_$3958_$returns$__$",
+                        "typeString": "function (contract CancelOrdersChallenge,contract CancelOrdersChallenge)"
+                      }
+                    },
+                    "id": 3440,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1652:81:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3441,
+                  "nodeType": "EmitStatement",
+                  "src": "1647:86:13"
+                }
+              ]
+            },
+            "documentation": "@notice Set the cancel orders challenge contract\n @param newCancelOrdersChallenge The (address of) CancelOrdersChallenge contract instance",
+            "id": 3443,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 3420,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3419,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1301:12:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1301:12:13"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 3422,
+                    "name": "newCancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3417,
+                    "src": "1333:24:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  }
+                ],
+                "id": 3423,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3421,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1318:14:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1318:40:13"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 3425,
+                    "name": "newCancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3417,
+                    "src": "1380:24:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 3426,
+                    "name": "cancelOrdersChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 3409,
+                    "src": "1406:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  }
+                ],
+                "id": 3427,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3424,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1363:16:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1363:65:13"
+              }
+            ],
+            "name": "setCancelOrdersChallenge",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3418,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3417,
+                  "name": "newCancelOrdersChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3443,
+                  "src": "1238:46:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                    "typeString": "contract CancelOrdersChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 3416,
+                    "name": "CancelOrdersChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 3958,
+                    "src": "1238:21:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                      "typeString": "contract CancelOrdersChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1237:48:13"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3428,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1433:0:13"
+            },
+            "scope": 3456,
+            "src": "1204:536:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3454,
+              "nodeType": "Block",
+              "src": "1935:72:13",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 3450,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 3446,
+                          "name": "cancelOrdersChallenge",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3409,
+                          "src": "1953:21:13",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_CancelOrdersChallenge_$3958",
+                            "typeString": "contract CancelOrdersChallenge"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 3448,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1986:1:13",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 3447,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1978:7:13",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 3449,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1978:10:13",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1953:35:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 3445,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1945:7:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 3451,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1945:44:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3452,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1945:44:13"
+                },
+                {
+                  "id": 3453,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1999:1:13"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3455,
+            "name": "cancelOrdersChallengeInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 3444,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1932:2:13"
+            },
+            "src": "1891:116:13",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 3457,
+        "src": "364:1645:13"
+      }
+    ],
+    "src": "122:1888:13"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:36.867Z"
+}

@@ -1,0 +1,1601 @@
+{
+  "contractName": "TradeHashable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "tradeHasher",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldTradeHasher",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newTradeHasher",
+          "type": "address"
+        }
+      ],
+      "name": "SetTradeHasherEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newTradeHasher",
+          "type": "address"
+        }
+      ],
+      "name": "setTradeHasher",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {TradeHasher} from \"./TradeHasher.sol\";\n\n/**\n * @title TradeHashable\n * @notice An ownable that has a trade hasher property\n */\ncontract TradeHashable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    TradeHasher public tradeHasher;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetTradeHasherEvent(TradeHasher oldTradeHasher, TradeHasher newTradeHasher);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the trade hasher contract\n    /// @param newTradeHasher The (address of) TradeHasher contract instance\n    function setTradeHasher(TradeHasher newTradeHasher)\n    public\n    onlyDeployer\n    notNullAddress(newTradeHasher)\n    notSameAddresses(newTradeHasher, tradeHasher)\n    {\n        // Set new trade hasher\n        TradeHasher oldTradeHasher = tradeHasher;\n        tradeHasher = newTradeHasher;\n\n        // Emit event\n        emit SetTradeHasherEvent(oldTradeHasher, newTradeHasher);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier tradeHasherInitialized() {\n        require(tradeHasher != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeHashable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeHashable.sol",
+    "exportedSymbols": {
+      "TradeHashable": [
+        33947
+      ]
+    },
+    "id": 33948,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 33892,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:82"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 33894,
+        "nodeType": "ImportDirective",
+        "scope": 33948,
+        "sourceUnit": 25427,
+        "src": "148:38:82",
+        "symbolAliases": [
+          {
+            "foreign": 33893,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeHasher.sol",
+        "file": "./TradeHasher.sol",
+        "id": 33896,
+        "nodeType": "ImportDirective",
+        "scope": 33948,
+        "sourceUnit": 34463,
+        "src": "187:46:82",
+        "symbolAliases": [
+          {
+            "foreign": 33895,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 33897,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "348:7:82",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 33898,
+            "nodeType": "InheritanceSpecifier",
+            "src": "348:7:82"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title TradeHashable\n@notice An ownable that has a trade hasher property",
+        "fullyImplemented": false,
+        "id": 33947,
+        "linearizedBaseContracts": [
+          33947,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "TradeHashable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 33900,
+            "name": "tradeHasher",
+            "nodeType": "VariableDeclaration",
+            "scope": 33947,
+            "src": "507:30:82",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_TradeHasher_$34462",
+              "typeString": "contract TradeHasher"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 33899,
+              "name": "TradeHasher",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 34462,
+              "src": "507:11:82",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                "typeString": "contract TradeHasher"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 33906,
+            "name": "SetTradeHasherEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 33905,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 33902,
+                  "indexed": false,
+                  "name": "oldTradeHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 33906,
+                  "src": "712:26:82",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                    "typeString": "contract TradeHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 33901,
+                    "name": "TradeHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34462,
+                    "src": "712:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 33904,
+                  "indexed": false,
+                  "name": "newTradeHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 33906,
+                  "src": "740:26:82",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                    "typeString": "contract TradeHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 33903,
+                    "name": "TradeHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34462,
+                    "src": "740:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "711:56:82"
+            },
+            "src": "686:82:82"
+          },
+          {
+            "body": {
+              "id": 33933,
+              "nodeType": "Block",
+              "src": "1211:216:82",
+              "statements": [
+                {
+                  "assignments": [
+                    33921
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 33921,
+                      "name": "oldTradeHasher",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 33934,
+                      "src": "1253:26:82",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                        "typeString": "contract TradeHasher"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 33920,
+                        "name": "TradeHasher",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 34462,
+                        "src": "1253:11:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 33923,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 33922,
+                    "name": "tradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33900,
+                    "src": "1282:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1253:40:82"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 33926,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 33924,
+                      "name": "tradeHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 33900,
+                      "src": "1303:11:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                        "typeString": "contract TradeHasher"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 33925,
+                      "name": "newTradeHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 33908,
+                      "src": "1317:14:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                        "typeString": "contract TradeHasher"
+                      }
+                    },
+                    "src": "1303:28:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "id": 33927,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1303:28:82"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 33929,
+                        "name": "oldTradeHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 33921,
+                        "src": "1389:14:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 33930,
+                        "name": "newTradeHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 33908,
+                        "src": "1405:14:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      ],
+                      "id": 33928,
+                      "name": "SetTradeHasherEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 33906,
+                      "src": "1369:19:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TradeHasher_$34462_$_t_contract$_TradeHasher_$34462_$returns$__$",
+                        "typeString": "function (contract TradeHasher,contract TradeHasher)"
+                      }
+                    },
+                    "id": 33931,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1369:51:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 33932,
+                  "nodeType": "EmitStatement",
+                  "src": "1364:56:82"
+                }
+              ]
+            },
+            "documentation": "@notice Set the trade hasher contract\n @param newTradeHasher The (address of) TradeHasher contract instance",
+            "id": 33934,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 33911,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 33910,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1109:12:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1109:12:82"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 33913,
+                    "name": "newTradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33908,
+                    "src": "1141:14:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  }
+                ],
+                "id": 33914,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 33912,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1126:14:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1126:30:82"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 33916,
+                    "name": "newTradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33908,
+                    "src": "1178:14:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 33917,
+                    "name": "tradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33900,
+                    "src": "1194:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  }
+                ],
+                "id": 33918,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 33915,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1161:16:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1161:45:82"
+              }
+            ],
+            "name": "setTradeHasher",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 33909,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 33908,
+                  "name": "newTradeHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 33934,
+                  "src": "1066:26:82",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                    "typeString": "contract TradeHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 33907,
+                    "name": "TradeHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34462,
+                    "src": "1066:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1065:28:82"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 33919,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1211:0:82"
+            },
+            "scope": 33947,
+            "src": "1042:385:82",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 33945,
+              "nodeType": "Block",
+              "src": "1612:62:82",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 33941,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 33937,
+                          "name": "tradeHasher",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 33900,
+                          "src": "1630:11:82",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                            "typeString": "contract TradeHasher"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 33939,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1653:1:82",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 33938,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1645:7:82",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 33940,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1645:10:82",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1630:25:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 33936,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1622:7:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 33942,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1622:34:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 33943,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1622:34:82"
+                },
+                {
+                  "id": 33944,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1666:1:82"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 33946,
+            "name": "tradeHasherInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 33935,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1609:2:82"
+            },
+            "src": "1578:96:82",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 33948,
+        "src": "322:1354:82"
+      }
+    ],
+    "src": "122:1555:82"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeHashable.sol",
+    "exportedSymbols": {
+      "TradeHashable": [
+        33947
+      ]
+    },
+    "id": 33948,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 33892,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:82"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 33894,
+        "nodeType": "ImportDirective",
+        "scope": 33948,
+        "sourceUnit": 25427,
+        "src": "148:38:82",
+        "symbolAliases": [
+          {
+            "foreign": 33893,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeHasher.sol",
+        "file": "./TradeHasher.sol",
+        "id": 33896,
+        "nodeType": "ImportDirective",
+        "scope": 33948,
+        "sourceUnit": 34463,
+        "src": "187:46:82",
+        "symbolAliases": [
+          {
+            "foreign": 33895,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 33897,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "348:7:82",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 33898,
+            "nodeType": "InheritanceSpecifier",
+            "src": "348:7:82"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title TradeHashable\n@notice An ownable that has a trade hasher property",
+        "fullyImplemented": false,
+        "id": 33947,
+        "linearizedBaseContracts": [
+          33947,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "TradeHashable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 33900,
+            "name": "tradeHasher",
+            "nodeType": "VariableDeclaration",
+            "scope": 33947,
+            "src": "507:30:82",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_TradeHasher_$34462",
+              "typeString": "contract TradeHasher"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 33899,
+              "name": "TradeHasher",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 34462,
+              "src": "507:11:82",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                "typeString": "contract TradeHasher"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 33906,
+            "name": "SetTradeHasherEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 33905,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 33902,
+                  "indexed": false,
+                  "name": "oldTradeHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 33906,
+                  "src": "712:26:82",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                    "typeString": "contract TradeHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 33901,
+                    "name": "TradeHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34462,
+                    "src": "712:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 33904,
+                  "indexed": false,
+                  "name": "newTradeHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 33906,
+                  "src": "740:26:82",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                    "typeString": "contract TradeHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 33903,
+                    "name": "TradeHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34462,
+                    "src": "740:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "711:56:82"
+            },
+            "src": "686:82:82"
+          },
+          {
+            "body": {
+              "id": 33933,
+              "nodeType": "Block",
+              "src": "1211:216:82",
+              "statements": [
+                {
+                  "assignments": [
+                    33921
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 33921,
+                      "name": "oldTradeHasher",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 33934,
+                      "src": "1253:26:82",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                        "typeString": "contract TradeHasher"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 33920,
+                        "name": "TradeHasher",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 34462,
+                        "src": "1253:11:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 33923,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 33922,
+                    "name": "tradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33900,
+                    "src": "1282:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1253:40:82"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 33926,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 33924,
+                      "name": "tradeHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 33900,
+                      "src": "1303:11:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                        "typeString": "contract TradeHasher"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 33925,
+                      "name": "newTradeHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 33908,
+                      "src": "1317:14:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                        "typeString": "contract TradeHasher"
+                      }
+                    },
+                    "src": "1303:28:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "id": 33927,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1303:28:82"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 33929,
+                        "name": "oldTradeHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 33921,
+                        "src": "1389:14:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 33930,
+                        "name": "newTradeHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 33908,
+                        "src": "1405:14:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                          "typeString": "contract TradeHasher"
+                        }
+                      ],
+                      "id": 33928,
+                      "name": "SetTradeHasherEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 33906,
+                      "src": "1369:19:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TradeHasher_$34462_$_t_contract$_TradeHasher_$34462_$returns$__$",
+                        "typeString": "function (contract TradeHasher,contract TradeHasher)"
+                      }
+                    },
+                    "id": 33931,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1369:51:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 33932,
+                  "nodeType": "EmitStatement",
+                  "src": "1364:56:82"
+                }
+              ]
+            },
+            "documentation": "@notice Set the trade hasher contract\n @param newTradeHasher The (address of) TradeHasher contract instance",
+            "id": 33934,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 33911,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 33910,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1109:12:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1109:12:82"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 33913,
+                    "name": "newTradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33908,
+                    "src": "1141:14:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  }
+                ],
+                "id": 33914,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 33912,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1126:14:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1126:30:82"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 33916,
+                    "name": "newTradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33908,
+                    "src": "1178:14:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 33917,
+                    "name": "tradeHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 33900,
+                    "src": "1194:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  }
+                ],
+                "id": 33918,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 33915,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1161:16:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1161:45:82"
+              }
+            ],
+            "name": "setTradeHasher",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 33909,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 33908,
+                  "name": "newTradeHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 33934,
+                  "src": "1066:26:82",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                    "typeString": "contract TradeHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 33907,
+                    "name": "TradeHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34462,
+                    "src": "1066:11:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                      "typeString": "contract TradeHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1065:28:82"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 33919,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1211:0:82"
+            },
+            "scope": 33947,
+            "src": "1042:385:82",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 33945,
+              "nodeType": "Block",
+              "src": "1612:62:82",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 33941,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 33937,
+                          "name": "tradeHasher",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 33900,
+                          "src": "1630:11:82",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_TradeHasher_$34462",
+                            "typeString": "contract TradeHasher"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 33939,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1653:1:82",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 33938,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1645:7:82",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 33940,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1645:10:82",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1630:25:82",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 33936,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1622:7:82",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 33942,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1622:34:82",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 33943,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1622:34:82"
+                },
+                {
+                  "id": 33944,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1666:1:82"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 33946,
+            "name": "tradeHasherInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 33935,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1609:2:82"
+            },
+            "src": "1578:96:82",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 33948,
+        "src": "322:1354:82"
+      }
+    ],
+    "src": "122:1555:82"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:37.059Z"
+}

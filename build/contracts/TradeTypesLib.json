@@ -1,0 +1,2497 @@
+{
+  "contractName": "TradeTypesLib",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "TRADE_KIND",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "ORDER_KIND",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x610143610030600b82828239805160001a6073146000811461002057610022565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600436106100495763ffffffff60e060020a60003504166332575cb6811461004e578063af75a2f7146100cb575b600080fd5b6100566100d3565b6040805160208082528351818301528351919283929083019185019080838360005b83811015610090578181015183820152602001610078565b50505050905090810190601f1680156100bd5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6100566100f5565b604080518082019091526005815260d860020a64747261646502602082015290565b604080518082019091526005815260d960020a6437b93232b9026020820152905600a165627a7a7230582005ad2a7a69872b19ad16bf543f1b2faa409ddb60135d405a10d17285566f33220029",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600436106100495763ffffffff60e060020a60003504166332575cb6811461004e578063af75a2f7146100cb575b600080fd5b6100566100d3565b6040805160208082528351818301528351919283929083019185019080838360005b83811015610090578181015183820152602001610078565b50505050905090810190601f1680156100bd5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6100566100f5565b604080518082019091526005815260d860020a64747261646502602082015290565b604080518082019091526005815260d960020a6437b93232b9026020820152905600a165627a7a7230582005ad2a7a69872b19ad16bf543f1b2faa409ddb60135d405a10d17285566f33220029",
+  "sourceMap": "342:2267:84:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "342:2267:84:-;;;;;;;;;;;;-1:-1:-1;;;342:2267:84;;;;;;;;;;;;;;;;;;2405:98;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:100:-1;33:3;30:1;27:10;8:100;;;90:11;;;84:18;71:11;;;64:39;52:2;45:10;8:100;;;12:14;2405:98:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2509;;;;2405;2482:14;;;;;;;;;;;;-1:-1:-1;;;;;2482:14:84;;;;2405:98;:::o;2509:::-;2586:14;;;;;;;;;;;;-1:-1:-1;;;;;2586:14:84;;;;2509:98;:::o",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\nimport {NahmiiTypesLib} from \"./NahmiiTypesLib.sol\";\n\n/**\n * @title     TradeTypesLib\n * @dev       Data types centered around trade\n */\nlibrary TradeTypesLib {\n    //\n    // Enums\n    // -----------------------------------------------------------------------------------------------------------------\n    enum CurrencyRole {Intended, Conjugate}\n    enum LiquidityRole {Maker, Taker}\n    enum Intention {Buy, Sell}\n    enum TradePartyRole {Buyer, Seller}\n\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    struct OrderPlacement {\n        Intention intention;\n\n        int256 amount;\n        NahmiiTypesLib.IntendedConjugateCurrency currencies;\n        int256 rate;\n\n        NahmiiTypesLib.CurrentPreviousInt256 residuals;\n    }\n\n    struct Order {\n        uint256 nonce;\n        address wallet;\n\n        OrderPlacement placement;\n\n        NahmiiTypesLib.WalletOperatorSeal seals;\n        uint256 blockNumber;\n        uint256 operatorId;\n    }\n\n    struct TradeOrder {\n        int256 amount;\n        NahmiiTypesLib.WalletOperatorHashes hashes;\n        NahmiiTypesLib.CurrentPreviousInt256 residuals;\n    }\n\n    struct TradeParty {\n        uint256 nonce;\n        address wallet;\n\n        uint256 rollingVolume;\n\n        LiquidityRole liquidityRole;\n\n        TradeOrder order;\n\n        NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256 balances;\n\n        NahmiiTypesLib.SingleFigureTotalOriginFigures fees;\n    }\n\n    struct Trade {\n        uint256 nonce;\n\n        int256 amount;\n        NahmiiTypesLib.IntendedConjugateCurrency currencies;\n        int256 rate;\n\n        TradeParty buyer;\n        TradeParty seller;\n\n        // Positive intended transfer is always in direction from seller to buyer\n        // Positive conjugate transfer is always in direction from buyer to seller\n        NahmiiTypesLib.IntendedConjugateSingleTotalInt256 transfers;\n\n        NahmiiTypesLib.Seal seal;\n        uint256 blockNumber;\n        uint256 operatorId;\n    }\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    function TRADE_KIND()\n    public\n    pure\n    returns (string)\n    {\n        return \"trade\";\n    }\n\n    function ORDER_KIND()\n    public\n    pure\n    returns (string)\n    {\n        return \"order\";\n    }\n}",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeTypesLib.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeTypesLib.sol",
+    "exportedSymbols": {
+      "TradeTypesLib": [
+        34564
+      ]
+    },
+    "id": 34565,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34464,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:84"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
+        "file": "./MonetaryTypesLib.sol",
+        "id": 34466,
+        "nodeType": "ImportDirective",
+        "scope": 34565,
+        "sourceUnit": 19413,
+        "src": "148:56:84",
+        "symbolAliases": [
+          {
+            "foreign": 34465,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
+        "file": "./NahmiiTypesLib.sol",
+        "id": 34468,
+        "nodeType": "ImportDirective",
+        "scope": 34565,
+        "sourceUnit": 19539,
+        "src": "205:52:84",
+        "symbolAliases": [
+          {
+            "foreign": 34467,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": "@title     TradeTypesLib\n@dev       Data types centered around trade",
+        "fullyImplemented": true,
+        "id": 34564,
+        "linearizedBaseContracts": [
+          34564
+        ],
+        "name": "TradeTypesLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "TradeTypesLib.CurrencyRole",
+            "id": 34471,
+            "members": [
+              {
+                "id": 34469,
+                "name": "Intended",
+                "nodeType": "EnumValue",
+                "src": "530:8:84"
+              },
+              {
+                "id": 34470,
+                "name": "Conjugate",
+                "nodeType": "EnumValue",
+                "src": "540:9:84"
+              }
+            ],
+            "name": "CurrencyRole",
+            "nodeType": "EnumDefinition",
+            "src": "511:39:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.LiquidityRole",
+            "id": 34474,
+            "members": [
+              {
+                "id": 34472,
+                "name": "Maker",
+                "nodeType": "EnumValue",
+                "src": "575:5:84"
+              },
+              {
+                "id": 34473,
+                "name": "Taker",
+                "nodeType": "EnumValue",
+                "src": "582:5:84"
+              }
+            ],
+            "name": "LiquidityRole",
+            "nodeType": "EnumDefinition",
+            "src": "555:33:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.Intention",
+            "id": 34477,
+            "members": [
+              {
+                "id": 34475,
+                "name": "Buy",
+                "nodeType": "EnumValue",
+                "src": "609:3:84"
+              },
+              {
+                "id": 34476,
+                "name": "Sell",
+                "nodeType": "EnumValue",
+                "src": "614:4:84"
+              }
+            ],
+            "name": "Intention",
+            "nodeType": "EnumDefinition",
+            "src": "593:26:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.TradePartyRole",
+            "id": 34480,
+            "members": [
+              {
+                "id": 34478,
+                "name": "Buyer",
+                "nodeType": "EnumValue",
+                "src": "645:5:84"
+              },
+              {
+                "id": 34479,
+                "name": "Seller",
+                "nodeType": "EnumValue",
+                "src": "652:6:84"
+              }
+            ],
+            "name": "TradePartyRole",
+            "nodeType": "EnumDefinition",
+            "src": "624:35:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.OrderPlacement",
+            "id": 34491,
+            "members": [
+              {
+                "constant": false,
+                "id": 34482,
+                "name": "intention",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "843:19:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Intention_$34477",
+                  "typeString": "enum TradeTypesLib.Intention"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34481,
+                  "name": "Intention",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34477,
+                  "src": "843:9:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Intention_$34477",
+                    "typeString": "enum TradeTypesLib.Intention"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34484,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "873:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34483,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "873:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34486,
+                "name": "currencies",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "896:51:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34485,
+                  "name": "NahmiiTypesLib.IntendedConjugateCurrency",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19485,
+                  "src": "896:40:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34488,
+                "name": "rate",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "957:11:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34487,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "957:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34490,
+                "name": "residuals",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "979:46:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34489,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "979:36:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "OrderPlacement",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "811:221:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.Order",
+            "id": 34504,
+            "members": [
+              {
+                "constant": false,
+                "id": 34493,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1061:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34492,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1061:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34495,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1084:14:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 34494,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1084:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34497,
+                "name": "placement",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1109:24:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_OrderPlacement_$34491_storage_ptr",
+                  "typeString": "struct TradeTypesLib.OrderPlacement"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34496,
+                  "name": "OrderPlacement",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34491,
+                  "src": "1109:14:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_OrderPlacement_$34491_storage_ptr",
+                    "typeString": "struct TradeTypesLib.OrderPlacement"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34499,
+                "name": "seals",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1144:39:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34498,
+                  "name": "NahmiiTypesLib.WalletOperatorSeal",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19537,
+                  "src": "1144:33:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34501,
+                "name": "blockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1193:19:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34500,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1193:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34503,
+                "name": "operatorId",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1222:18:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34502,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1222:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Order",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1038:209:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.TradeOrder",
+            "id": 34511,
+            "members": [
+              {
+                "constant": false,
+                "id": 34506,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 34511,
+                "src": "1281:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34505,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1281:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34508,
+                "name": "hashes",
+                "nodeType": "VariableDeclaration",
+                "scope": 34511,
+                "src": "1304:42:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_WalletOperatorHashes_$19520_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.WalletOperatorHashes"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34507,
+                  "name": "NahmiiTypesLib.WalletOperatorHashes",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19520,
+                  "src": "1304:35:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_WalletOperatorHashes_$19520_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.WalletOperatorHashes"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34510,
+                "name": "residuals",
+                "nodeType": "VariableDeclaration",
+                "scope": 34511,
+                "src": "1356:46:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34509,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "1356:36:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "TradeOrder",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1253:156:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.TradeParty",
+            "id": 34526,
+            "members": [
+              {
+                "constant": false,
+                "id": 34513,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1443:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34512,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1443:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34515,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1466:14:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 34514,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1466:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34517,
+                "name": "rollingVolume",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1491:21:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34516,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1491:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34519,
+                "name": "liquidityRole",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1523:27:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_LiquidityRole_$34474",
+                  "typeString": "enum TradeTypesLib.LiquidityRole"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34518,
+                  "name": "LiquidityRole",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34474,
+                  "src": "1523:13:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_LiquidityRole_$34474",
+                    "typeString": "enum TradeTypesLib.LiquidityRole"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34521,
+                "name": "order",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1561:16:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TradeOrder_$34511_storage_ptr",
+                  "typeString": "struct TradeTypesLib.TradeOrder"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34520,
+                  "name": "TradeOrder",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34511,
+                  "src": "1561:10:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TradeOrder_$34511_storage_ptr",
+                    "typeString": "struct TradeTypesLib.TradeOrder"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34523,
+                "name": "balances",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1588:62:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateCurrentPreviousInt256_$19510_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34522,
+                  "name": "NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19510,
+                  "src": "1588:53:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateCurrentPreviousInt256_$19510_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34525,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1661:50:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34524,
+                  "name": "NahmiiTypesLib.SingleFigureTotalOriginFigures",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19491,
+                  "src": "1661:45:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "TradeParty",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1415:303:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.Trade",
+            "id": 34547,
+            "members": [
+              {
+                "constant": false,
+                "id": 34528,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1747:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34527,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1747:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34530,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1771:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34529,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1771:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34532,
+                "name": "currencies",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1794:51:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34531,
+                  "name": "NahmiiTypesLib.IntendedConjugateCurrency",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19485,
+                  "src": "1794:40:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34534,
+                "name": "rate",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1855:11:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34533,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1855:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34536,
+                "name": "buyer",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1877:16:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                  "typeString": "struct TradeTypesLib.TradeParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34535,
+                  "name": "TradeParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34526,
+                  "src": "1877:10:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                    "typeString": "struct TradeTypesLib.TradeParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34538,
+                "name": "seller",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1903:17:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                  "typeString": "struct TradeTypesLib.TradeParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34537,
+                  "name": "TradeParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34526,
+                  "src": "1903:10:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                    "typeString": "struct TradeTypesLib.TradeParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34540,
+                "name": "transfers",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2096:59:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateSingleTotalInt256_$19515_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateSingleTotalInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34539,
+                  "name": "NahmiiTypesLib.IntendedConjugateSingleTotalInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19515,
+                  "src": "2096:49:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateSingleTotalInt256_$19515_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateSingleTotalInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34542,
+                "name": "seal",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2166:24:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.Seal"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34541,
+                  "name": "NahmiiTypesLib.Seal",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19532,
+                  "src": "2166:19:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.Seal"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34544,
+                "name": "blockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2200:19:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34543,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2200:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34546,
+                "name": "operatorId",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2229:18:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34545,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2229:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Trade",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1724:530:84",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34554,
+              "nodeType": "Block",
+              "src": "2472:31:84",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "7472616465",
+                    "id": 34552,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2489:7:84",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_f0ab6bbf074217bd209077ef38d1fe65034d0327dbceeb5dc94a0d7050798c99",
+                      "typeString": "literal_string \"trade\""
+                    },
+                    "value": "trade"
+                  },
+                  "functionReturnParameters": 34551,
+                  "id": 34553,
+                  "nodeType": "Return",
+                  "src": "2482:14:84"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 34555,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "TRADE_KIND",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34548,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2424:2:84"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34551,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34550,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34555,
+                  "src": "2460:6:84",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 34549,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2460:6:84",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2459:8:84"
+            },
+            "scope": 34564,
+            "src": "2405:98:84",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34562,
+              "nodeType": "Block",
+              "src": "2576:31:84",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "6f72646572",
+                    "id": 34560,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2593:7:84",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_21c0107378acb490e7190da71596effe409c128f08adcc5467b293f1f3a66431",
+                      "typeString": "literal_string \"order\""
+                    },
+                    "value": "order"
+                  },
+                  "functionReturnParameters": 34559,
+                  "id": 34561,
+                  "nodeType": "Return",
+                  "src": "2586:14:84"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 34563,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "ORDER_KIND",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34556,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2528:2:84"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34559,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34558,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34563,
+                  "src": "2564:6:84",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 34557,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2564:6:84",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2563:8:84"
+            },
+            "scope": 34564,
+            "src": "2509:98:84",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 34565,
+        "src": "342:2267:84"
+      }
+    ],
+    "src": "122:2487:84"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeTypesLib.sol",
+    "exportedSymbols": {
+      "TradeTypesLib": [
+        34564
+      ]
+    },
+    "id": 34565,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 34464,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:84"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
+        "file": "./MonetaryTypesLib.sol",
+        "id": 34466,
+        "nodeType": "ImportDirective",
+        "scope": 34565,
+        "sourceUnit": 19413,
+        "src": "148:56:84",
+        "symbolAliases": [
+          {
+            "foreign": 34465,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
+        "file": "./NahmiiTypesLib.sol",
+        "id": 34468,
+        "nodeType": "ImportDirective",
+        "scope": 34565,
+        "sourceUnit": 19539,
+        "src": "205:52:84",
+        "symbolAliases": [
+          {
+            "foreign": 34467,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": "@title     TradeTypesLib\n@dev       Data types centered around trade",
+        "fullyImplemented": true,
+        "id": 34564,
+        "linearizedBaseContracts": [
+          34564
+        ],
+        "name": "TradeTypesLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "TradeTypesLib.CurrencyRole",
+            "id": 34471,
+            "members": [
+              {
+                "id": 34469,
+                "name": "Intended",
+                "nodeType": "EnumValue",
+                "src": "530:8:84"
+              },
+              {
+                "id": 34470,
+                "name": "Conjugate",
+                "nodeType": "EnumValue",
+                "src": "540:9:84"
+              }
+            ],
+            "name": "CurrencyRole",
+            "nodeType": "EnumDefinition",
+            "src": "511:39:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.LiquidityRole",
+            "id": 34474,
+            "members": [
+              {
+                "id": 34472,
+                "name": "Maker",
+                "nodeType": "EnumValue",
+                "src": "575:5:84"
+              },
+              {
+                "id": 34473,
+                "name": "Taker",
+                "nodeType": "EnumValue",
+                "src": "582:5:84"
+              }
+            ],
+            "name": "LiquidityRole",
+            "nodeType": "EnumDefinition",
+            "src": "555:33:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.Intention",
+            "id": 34477,
+            "members": [
+              {
+                "id": 34475,
+                "name": "Buy",
+                "nodeType": "EnumValue",
+                "src": "609:3:84"
+              },
+              {
+                "id": 34476,
+                "name": "Sell",
+                "nodeType": "EnumValue",
+                "src": "614:4:84"
+              }
+            ],
+            "name": "Intention",
+            "nodeType": "EnumDefinition",
+            "src": "593:26:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.TradePartyRole",
+            "id": 34480,
+            "members": [
+              {
+                "id": 34478,
+                "name": "Buyer",
+                "nodeType": "EnumValue",
+                "src": "645:5:84"
+              },
+              {
+                "id": 34479,
+                "name": "Seller",
+                "nodeType": "EnumValue",
+                "src": "652:6:84"
+              }
+            ],
+            "name": "TradePartyRole",
+            "nodeType": "EnumDefinition",
+            "src": "624:35:84"
+          },
+          {
+            "canonicalName": "TradeTypesLib.OrderPlacement",
+            "id": 34491,
+            "members": [
+              {
+                "constant": false,
+                "id": 34482,
+                "name": "intention",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "843:19:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Intention_$34477",
+                  "typeString": "enum TradeTypesLib.Intention"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34481,
+                  "name": "Intention",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34477,
+                  "src": "843:9:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Intention_$34477",
+                    "typeString": "enum TradeTypesLib.Intention"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34484,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "873:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34483,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "873:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34486,
+                "name": "currencies",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "896:51:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34485,
+                  "name": "NahmiiTypesLib.IntendedConjugateCurrency",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19485,
+                  "src": "896:40:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34488,
+                "name": "rate",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "957:11:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34487,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "957:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34490,
+                "name": "residuals",
+                "nodeType": "VariableDeclaration",
+                "scope": 34491,
+                "src": "979:46:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34489,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "979:36:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "OrderPlacement",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "811:221:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.Order",
+            "id": 34504,
+            "members": [
+              {
+                "constant": false,
+                "id": 34493,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1061:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34492,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1061:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34495,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1084:14:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 34494,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1084:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34497,
+                "name": "placement",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1109:24:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_OrderPlacement_$34491_storage_ptr",
+                  "typeString": "struct TradeTypesLib.OrderPlacement"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34496,
+                  "name": "OrderPlacement",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34491,
+                  "src": "1109:14:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_OrderPlacement_$34491_storage_ptr",
+                    "typeString": "struct TradeTypesLib.OrderPlacement"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34499,
+                "name": "seals",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1144:39:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34498,
+                  "name": "NahmiiTypesLib.WalletOperatorSeal",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19537,
+                  "src": "1144:33:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34501,
+                "name": "blockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1193:19:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34500,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1193:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34503,
+                "name": "operatorId",
+                "nodeType": "VariableDeclaration",
+                "scope": 34504,
+                "src": "1222:18:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34502,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1222:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Order",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1038:209:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.TradeOrder",
+            "id": 34511,
+            "members": [
+              {
+                "constant": false,
+                "id": 34506,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 34511,
+                "src": "1281:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34505,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1281:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34508,
+                "name": "hashes",
+                "nodeType": "VariableDeclaration",
+                "scope": 34511,
+                "src": "1304:42:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_WalletOperatorHashes_$19520_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.WalletOperatorHashes"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34507,
+                  "name": "NahmiiTypesLib.WalletOperatorHashes",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19520,
+                  "src": "1304:35:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_WalletOperatorHashes_$19520_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.WalletOperatorHashes"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34510,
+                "name": "residuals",
+                "nodeType": "VariableDeclaration",
+                "scope": 34511,
+                "src": "1356:46:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34509,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "1356:36:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "TradeOrder",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1253:156:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.TradeParty",
+            "id": 34526,
+            "members": [
+              {
+                "constant": false,
+                "id": 34513,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1443:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34512,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1443:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34515,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1466:14:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 34514,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1466:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34517,
+                "name": "rollingVolume",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1491:21:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34516,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1491:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34519,
+                "name": "liquidityRole",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1523:27:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_LiquidityRole_$34474",
+                  "typeString": "enum TradeTypesLib.LiquidityRole"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34518,
+                  "name": "LiquidityRole",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34474,
+                  "src": "1523:13:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_LiquidityRole_$34474",
+                    "typeString": "enum TradeTypesLib.LiquidityRole"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34521,
+                "name": "order",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1561:16:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TradeOrder_$34511_storage_ptr",
+                  "typeString": "struct TradeTypesLib.TradeOrder"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34520,
+                  "name": "TradeOrder",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34511,
+                  "src": "1561:10:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TradeOrder_$34511_storage_ptr",
+                    "typeString": "struct TradeTypesLib.TradeOrder"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34523,
+                "name": "balances",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1588:62:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateCurrentPreviousInt256_$19510_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34522,
+                  "name": "NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19510,
+                  "src": "1588:53:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateCurrentPreviousInt256_$19510_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34525,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 34526,
+                "src": "1661:50:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34524,
+                  "name": "NahmiiTypesLib.SingleFigureTotalOriginFigures",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19491,
+                  "src": "1661:45:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "TradeParty",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1415:303:84",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "TradeTypesLib.Trade",
+            "id": 34547,
+            "members": [
+              {
+                "constant": false,
+                "id": 34528,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1747:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34527,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1747:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34530,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1771:13:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34529,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1771:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34532,
+                "name": "currencies",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1794:51:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34531,
+                  "name": "NahmiiTypesLib.IntendedConjugateCurrency",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19485,
+                  "src": "1794:40:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateCurrency_$19485_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateCurrency"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34534,
+                "name": "rate",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1855:11:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 34533,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1855:6:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34536,
+                "name": "buyer",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1877:16:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                  "typeString": "struct TradeTypesLib.TradeParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34535,
+                  "name": "TradeParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34526,
+                  "src": "1877:10:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                    "typeString": "struct TradeTypesLib.TradeParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34538,
+                "name": "seller",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "1903:17:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                  "typeString": "struct TradeTypesLib.TradeParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34537,
+                  "name": "TradeParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 34526,
+                  "src": "1903:10:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TradeParty_$34526_storage_ptr",
+                    "typeString": "struct TradeTypesLib.TradeParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34540,
+                "name": "transfers",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2096:59:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_IntendedConjugateSingleTotalInt256_$19515_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.IntendedConjugateSingleTotalInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34539,
+                  "name": "NahmiiTypesLib.IntendedConjugateSingleTotalInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19515,
+                  "src": "2096:49:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IntendedConjugateSingleTotalInt256_$19515_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.IntendedConjugateSingleTotalInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34542,
+                "name": "seal",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2166:24:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.Seal"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 34541,
+                  "name": "NahmiiTypesLib.Seal",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19532,
+                  "src": "2166:19:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.Seal"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34544,
+                "name": "blockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2200:19:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34543,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2200:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34546,
+                "name": "operatorId",
+                "nodeType": "VariableDeclaration",
+                "scope": 34547,
+                "src": "2229:18:84",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 34545,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2229:7:84",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Trade",
+            "nodeType": "StructDefinition",
+            "scope": 34564,
+            "src": "1724:530:84",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34554,
+              "nodeType": "Block",
+              "src": "2472:31:84",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "7472616465",
+                    "id": 34552,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2489:7:84",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_f0ab6bbf074217bd209077ef38d1fe65034d0327dbceeb5dc94a0d7050798c99",
+                      "typeString": "literal_string \"trade\""
+                    },
+                    "value": "trade"
+                  },
+                  "functionReturnParameters": 34551,
+                  "id": 34553,
+                  "nodeType": "Return",
+                  "src": "2482:14:84"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 34555,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "TRADE_KIND",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34548,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2424:2:84"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34551,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34550,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34555,
+                  "src": "2460:6:84",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 34549,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2460:6:84",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2459:8:84"
+            },
+            "scope": 34564,
+            "src": "2405:98:84",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 34562,
+              "nodeType": "Block",
+              "src": "2576:31:84",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "6f72646572",
+                    "id": 34560,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2593:7:84",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_21c0107378acb490e7190da71596effe409c128f08adcc5467b293f1f3a66431",
+                      "typeString": "literal_string \"order\""
+                    },
+                    "value": "order"
+                  },
+                  "functionReturnParameters": 34559,
+                  "id": 34561,
+                  "nodeType": "Return",
+                  "src": "2586:14:84"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 34563,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "ORDER_KIND",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 34556,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2528:2:84"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 34559,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 34558,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 34563,
+                  "src": "2564:6:84",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 34557,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2564:6:84",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2563:8:84"
+            },
+            "scope": 34564,
+            "src": "2509:98:84",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 34565,
+        "src": "342:2267:84"
+      }
+    ],
+    "src": "122:2487:84"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0xa256f482d4eaa2705b29a03893e577a64af9a0fb",
+      "transactionHash": "0x8070e2301c3998e41f24fc44f5f2d5bab54877b154f6417beb738d965461dc0f"
+    }
+  },
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T08:24:32.419Z"
+}

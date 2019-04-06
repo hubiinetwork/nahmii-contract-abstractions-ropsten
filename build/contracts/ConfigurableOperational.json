@@ -1,0 +1,625 @@
+{
+  "contractName": "ConfigurableOperational",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newConfiguration",
+          "type": "address"
+        }
+      ],
+      "name": "setConfiguration",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "configuration",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldConfiguration",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newConfiguration",
+          "type": "address"
+        }
+      ],
+      "name": "SetConfigurationEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Configurable} from \"./Configurable.sol\";\n\n/**\n * @title ConfigurableOperational\n * @notice A configurable with modifiers for operational mode state validation\n */\ncontract ConfigurableOperational is Configurable {\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier onlyOperationalModeNormal() {\n        require(configuration.isOperationalModeNormal());\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/ConfigurableOperational.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ConfigurableOperational.sol",
+    "exportedSymbols": {
+      "ConfigurableOperational": [
+        5805
+      ]
+    },
+    "id": 5806,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5790,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:20"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configurable.sol",
+        "file": "./Configurable.sol",
+        "id": 5792,
+        "nodeType": "ImportDirective",
+        "scope": 5806,
+        "sourceUnit": 5789,
+        "src": "148:48:20",
+        "symbolAliases": [
+          {
+            "foreign": 5791,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5793,
+              "name": "Configurable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5788,
+              "src": "355:12:20",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Configurable_$5788",
+                "typeString": "contract Configurable"
+              }
+            },
+            "id": 5794,
+            "nodeType": "InheritanceSpecifier",
+            "src": "355:12:20"
+          }
+        ],
+        "contractDependencies": [
+          5788,
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title ConfigurableOperational\n@notice A configurable with modifiers for operational mode state validation",
+        "fullyImplemented": false,
+        "id": 5805,
+        "linearizedBaseContracts": [
+          5805,
+          5788,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "ConfigurableOperational",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 5803,
+              "nodeType": "Block",
+              "src": "556:76:20",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [],
+                        "expression": {
+                          "argumentTypes": [],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 5797,
+                            "name": "configuration",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 5741,
+                            "src": "574:13:20",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_Configuration_$7172",
+                              "typeString": "contract Configuration"
+                            }
+                          },
+                          "id": 5798,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isOperationalModeNormal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 6113,
+                          "src": "574:37:20",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$__$returns$_t_bool_$",
+                            "typeString": "function () view external returns (bool)"
+                          }
+                        },
+                        "id": 5799,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "574:39:20",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5796,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "566:7:20",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5800,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "566:48:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5801,
+                  "nodeType": "ExpressionStatement",
+                  "src": "566:48:20"
+                },
+                {
+                  "id": 5802,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "624:1:20"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5804,
+            "name": "onlyOperationalModeNormal",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5795,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "553:2:20"
+            },
+            "src": "519:113:20",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5806,
+        "src": "319:315:20"
+      }
+    ],
+    "src": "122:513:20"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ConfigurableOperational.sol",
+    "exportedSymbols": {
+      "ConfigurableOperational": [
+        5805
+      ]
+    },
+    "id": 5806,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5790,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:20"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configurable.sol",
+        "file": "./Configurable.sol",
+        "id": 5792,
+        "nodeType": "ImportDirective",
+        "scope": 5806,
+        "sourceUnit": 5789,
+        "src": "148:48:20",
+        "symbolAliases": [
+          {
+            "foreign": 5791,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5793,
+              "name": "Configurable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5788,
+              "src": "355:12:20",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Configurable_$5788",
+                "typeString": "contract Configurable"
+              }
+            },
+            "id": 5794,
+            "nodeType": "InheritanceSpecifier",
+            "src": "355:12:20"
+          }
+        ],
+        "contractDependencies": [
+          5788,
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title ConfigurableOperational\n@notice A configurable with modifiers for operational mode state validation",
+        "fullyImplemented": false,
+        "id": 5805,
+        "linearizedBaseContracts": [
+          5805,
+          5788,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "ConfigurableOperational",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 5803,
+              "nodeType": "Block",
+              "src": "556:76:20",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [],
+                        "expression": {
+                          "argumentTypes": [],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 5797,
+                            "name": "configuration",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 5741,
+                            "src": "574:13:20",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_Configuration_$7172",
+                              "typeString": "contract Configuration"
+                            }
+                          },
+                          "id": 5798,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isOperationalModeNormal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 6113,
+                          "src": "574:37:20",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$__$returns$_t_bool_$",
+                            "typeString": "function () view external returns (bool)"
+                          }
+                        },
+                        "id": 5799,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "574:39:20",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5796,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "566:7:20",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5800,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "566:48:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5801,
+                  "nodeType": "ExpressionStatement",
+                  "src": "566:48:20"
+                },
+                {
+                  "id": 5802,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "624:1:20"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5804,
+            "name": "onlyOperationalModeNormal",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5795,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "553:2:20"
+            },
+            "src": "519:113:20",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5806,
+        "src": "319:315:20"
+      }
+    ],
+    "src": "122:513:20"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:36.879Z"
+}

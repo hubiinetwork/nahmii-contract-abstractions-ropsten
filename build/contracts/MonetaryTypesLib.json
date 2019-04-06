@@ -1,24 +1,24 @@
 {
   "contractName": "MonetaryTypesLib",
   "abi": [],
-  "bytecode": "0x605a602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a265627a7a72305820cdef796ca9415ec4321e63c63e8f6bb5cb52ef4df8a0ad29bd4cffe944d387be6c6578706572696d656e74616cf50037",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a265627a7a72305820cdef796ca9415ec4321e63c63e8f6bb5cb52ef4df8a0ad29bd4cffe944d387be6c6578706572696d656e74616cf50037",
-  "sourceMap": "255:319:47:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
-  "deployedSourceMap": "255:319:47:-;;;;;;;;",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\npragma experimental ABIEncoderV2;\n\n/**\n * @title     MonetaryTypesLib\n * @dev       Monetary data types\n */\nlibrary MonetaryTypesLib {\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    struct Currency {\n        address ct;\n        uint256 id;\n    }\n\n    struct Figure {\n        int256 amount;\n        Currency currency;\n    }\n}",
+  "bytecode": "0x605a602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a265627a7a72305820c1dcd296c60e1d8971eb0fff30f5666c735e23f13d81b44e6379cde1290368356c6578706572696d656e74616cf50037",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a265627a7a72305820c1dcd296c60e1d8971eb0fff30f5666c735e23f13d81b44e6379cde1290368356c6578706572696d656e74616cf50037",
+  "sourceMap": "255:398:52:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "255:398:52:-;;;;;;;;",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\npragma experimental ABIEncoderV2;\n\n/**\n * @title     MonetaryTypesLib\n * @dev       Monetary data types\n */\nlibrary MonetaryTypesLib {\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    struct Currency {\n        address ct;\n        uint256 id;\n    }\n\n    struct Figure {\n        int256 amount;\n        Currency currency;\n    }\n\n    struct NoncedAmount {\n        uint256 nonce;\n        int256 amount;\n    }\n}",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
     "exportedSymbols": {
       "MonetaryTypesLib": [
-        17139
+        19412
       ]
     },
-    "id": 17140,
+    "id": 19413,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 17127,
+        "id": 19395,
         "literals": [
           "solidity",
           "^",
@@ -26,16 +26,16 @@
           ".25"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:47"
+        "src": "122:24:52"
       },
       {
-        "id": 17128,
+        "id": 19396,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:47"
+        "src": "147:33:52"
       },
       {
         "baseContracts": [],
@@ -43,24 +43,24 @@
         "contractKind": "library",
         "documentation": "@title     MonetaryTypesLib\n@dev       Monetary data types",
         "fullyImplemented": true,
-        "id": 17139,
+        "id": 19412,
         "linearizedBaseContracts": [
-          17139
+          19412
         ],
         "name": "MonetaryTypesLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "MonetaryTypesLib.Currency",
-            "id": 17133,
+            "id": 19401,
             "members": [
               {
                 "constant": false,
-                "id": 17130,
+                "id": 19398,
                 "name": "ct",
                 "nodeType": "VariableDeclaration",
-                "scope": 17133,
-                "src": "458:10:47",
+                "scope": 19401,
+                "src": "458:10:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -68,10 +68,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 17129,
+                  "id": 19397,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "458:7:47",
+                  "src": "458:7:52",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -82,11 +82,11 @@
               },
               {
                 "constant": false,
-                "id": 17132,
+                "id": 19400,
                 "name": "id",
                 "nodeType": "VariableDeclaration",
-                "scope": 17133,
-                "src": "478:10:47",
+                "scope": 19401,
+                "src": "478:10:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -94,10 +94,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 17131,
+                  "id": 19399,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "478:7:47",
+                  "src": "478:7:52",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -109,21 +109,21 @@
             ],
             "name": "Currency",
             "nodeType": "StructDefinition",
-            "scope": 17139,
-            "src": "432:63:47",
+            "scope": 19412,
+            "src": "432:63:52",
             "visibility": "public"
           },
           {
             "canonicalName": "MonetaryTypesLib.Figure",
-            "id": 17138,
+            "id": 19406,
             "members": [
               {
                 "constant": false,
-                "id": 17135,
+                "id": 19403,
                 "name": "amount",
                 "nodeType": "VariableDeclaration",
-                "scope": 17138,
-                "src": "525:13:47",
+                "scope": 19406,
+                "src": "525:13:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -131,10 +131,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 17134,
+                  "id": 19402,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "525:6:47",
+                  "src": "525:6:52",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -145,26 +145,26 @@
               },
               {
                 "constant": false,
-                "id": 17137,
+                "id": 19405,
                 "name": "currency",
                 "nodeType": "VariableDeclaration",
-                "scope": 17138,
-                "src": "548:17:47",
+                "scope": 19406,
+                "src": "548:17:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$17133_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 17136,
+                  "id": 19404,
                   "name": "Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 17133,
-                  "src": "548:8:47",
+                  "referencedDeclaration": 19401,
+                  "src": "548:8:52",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$17133_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -174,29 +174,92 @@
             ],
             "name": "Figure",
             "nodeType": "StructDefinition",
-            "scope": 17139,
-            "src": "501:71:47",
+            "scope": 19412,
+            "src": "501:71:52",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "MonetaryTypesLib.NoncedAmount",
+            "id": 19411,
+            "members": [
+              {
+                "constant": false,
+                "id": 19408,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 19411,
+                "src": "608:13:52",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19407,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "608:7:52",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19410,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 19411,
+                "src": "631:13:52",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 19409,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "631:6:52",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "NoncedAmount",
+            "nodeType": "StructDefinition",
+            "scope": 19412,
+            "src": "578:73:52",
             "visibility": "public"
           }
         ],
-        "scope": 17140,
-        "src": "255:319:47"
+        "scope": 19413,
+        "src": "255:398:52"
       }
     ],
-    "src": "122:452:47"
+    "src": "122:531:52"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
     "exportedSymbols": {
       "MonetaryTypesLib": [
-        17139
+        19412
       ]
     },
-    "id": 17140,
+    "id": 19413,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 17127,
+        "id": 19395,
         "literals": [
           "solidity",
           "^",
@@ -204,16 +267,16 @@
           ".25"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:47"
+        "src": "122:24:52"
       },
       {
-        "id": 17128,
+        "id": 19396,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:47"
+        "src": "147:33:52"
       },
       {
         "baseContracts": [],
@@ -221,24 +284,24 @@
         "contractKind": "library",
         "documentation": "@title     MonetaryTypesLib\n@dev       Monetary data types",
         "fullyImplemented": true,
-        "id": 17139,
+        "id": 19412,
         "linearizedBaseContracts": [
-          17139
+          19412
         ],
         "name": "MonetaryTypesLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "MonetaryTypesLib.Currency",
-            "id": 17133,
+            "id": 19401,
             "members": [
               {
                 "constant": false,
-                "id": 17130,
+                "id": 19398,
                 "name": "ct",
                 "nodeType": "VariableDeclaration",
-                "scope": 17133,
-                "src": "458:10:47",
+                "scope": 19401,
+                "src": "458:10:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -246,10 +309,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 17129,
+                  "id": 19397,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "458:7:47",
+                  "src": "458:7:52",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -260,11 +323,11 @@
               },
               {
                 "constant": false,
-                "id": 17132,
+                "id": 19400,
                 "name": "id",
                 "nodeType": "VariableDeclaration",
-                "scope": 17133,
-                "src": "478:10:47",
+                "scope": 19401,
+                "src": "478:10:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -272,10 +335,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 17131,
+                  "id": 19399,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "478:7:47",
+                  "src": "478:7:52",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -287,21 +350,21 @@
             ],
             "name": "Currency",
             "nodeType": "StructDefinition",
-            "scope": 17139,
-            "src": "432:63:47",
+            "scope": 19412,
+            "src": "432:63:52",
             "visibility": "public"
           },
           {
             "canonicalName": "MonetaryTypesLib.Figure",
-            "id": 17138,
+            "id": 19406,
             "members": [
               {
                 "constant": false,
-                "id": 17135,
+                "id": 19403,
                 "name": "amount",
                 "nodeType": "VariableDeclaration",
-                "scope": 17138,
-                "src": "525:13:47",
+                "scope": 19406,
+                "src": "525:13:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -309,10 +372,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 17134,
+                  "id": 19402,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "525:6:47",
+                  "src": "525:6:52",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -323,26 +386,26 @@
               },
               {
                 "constant": false,
-                "id": 17137,
+                "id": 19405,
                 "name": "currency",
                 "nodeType": "VariableDeclaration",
-                "scope": 17138,
-                "src": "548:17:47",
+                "scope": 19406,
+                "src": "548:17:52",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$17133_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 17136,
+                  "id": 19404,
                   "name": "Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 17133,
-                  "src": "548:8:47",
+                  "referencedDeclaration": 19401,
+                  "src": "548:8:52",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$17133_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -352,16 +415,79 @@
             ],
             "name": "Figure",
             "nodeType": "StructDefinition",
-            "scope": 17139,
-            "src": "501:71:47",
+            "scope": 19412,
+            "src": "501:71:52",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "MonetaryTypesLib.NoncedAmount",
+            "id": 19411,
+            "members": [
+              {
+                "constant": false,
+                "id": 19408,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 19411,
+                "src": "608:13:52",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 19407,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "608:7:52",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 19410,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 19411,
+                "src": "631:13:52",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 19409,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "631:6:52",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "NoncedAmount",
+            "nodeType": "StructDefinition",
+            "scope": 19412,
+            "src": "578:73:52",
             "visibility": "public"
           }
         ],
-        "scope": 17140,
-        "src": "255:319:47"
+        "scope": 19413,
+        "src": "255:398:52"
       }
     ],
-    "src": "122:452:47"
+    "src": "122:531:52"
   },
   "compiler": {
     "name": "solc",
@@ -371,10 +497,10 @@
     "3": {
       "events": {},
       "links": {},
-      "address": "0xb9f0fa5b966601e77eb567f878787325e4d6f17b",
-      "transactionHash": "0x4acf7684171118afda29add1f8f3d89be21c7de1c0913697a4e788b4189039aa"
+      "address": "0xda56f724b314a7a1d2e9addcb294a3ab63d65203",
+      "transactionHash": "0x1079a5919682d9fadcda3d02c10afb740b793c72e549a7d151ed87ffdc491205"
     }
   },
-  "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-31T11:28:29.717Z"
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T08:24:32.073Z"
 }

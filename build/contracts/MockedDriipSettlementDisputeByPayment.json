@@ -1,0 +1,987 @@
+{
+  "contractName": "MockedDriipSettlementDisputeByPayment",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "_challengeByPaymentCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "_reset",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "name": "amount",
+              "type": "int256"
+            },
+            {
+              "components": [
+                {
+                  "name": "ct",
+                  "type": "address"
+                },
+                {
+                  "name": "id",
+                  "type": "uint256"
+                }
+              ],
+              "name": "currency",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "nonce",
+                  "type": "uint256"
+                },
+                {
+                  "name": "wallet",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "name": "current",
+                      "type": "int256"
+                    },
+                    {
+                      "name": "previous",
+                      "type": "int256"
+                    }
+                  ],
+                  "name": "balances",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "name": "amount",
+                          "type": "int256"
+                        },
+                        {
+                          "components": [
+                            {
+                              "name": "ct",
+                              "type": "address"
+                            },
+                            {
+                              "name": "id",
+                              "type": "uint256"
+                            }
+                          ],
+                          "name": "currency",
+                          "type": "tuple"
+                        }
+                      ],
+                      "name": "single",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "name": "originId",
+                          "type": "uint256"
+                        },
+                        {
+                          "components": [
+                            {
+                              "name": "amount",
+                              "type": "int256"
+                            },
+                            {
+                              "components": [
+                                {
+                                  "name": "ct",
+                                  "type": "address"
+                                },
+                                {
+                                  "name": "id",
+                                  "type": "uint256"
+                                }
+                              ],
+                              "name": "currency",
+                              "type": "tuple"
+                            }
+                          ],
+                          "name": "figure",
+                          "type": "tuple"
+                        }
+                      ],
+                      "name": "total",
+                      "type": "tuple[]"
+                    }
+                  ],
+                  "name": "fees",
+                  "type": "tuple"
+                }
+              ],
+              "name": "sender",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "nonce",
+                  "type": "uint256"
+                },
+                {
+                  "name": "wallet",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "name": "current",
+                      "type": "int256"
+                    },
+                    {
+                      "name": "previous",
+                      "type": "int256"
+                    }
+                  ],
+                  "name": "balances",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "name": "originId",
+                          "type": "uint256"
+                        },
+                        {
+                          "components": [
+                            {
+                              "name": "amount",
+                              "type": "int256"
+                            },
+                            {
+                              "components": [
+                                {
+                                  "name": "ct",
+                                  "type": "address"
+                                },
+                                {
+                                  "name": "id",
+                                  "type": "uint256"
+                                }
+                              ],
+                              "name": "currency",
+                              "type": "tuple"
+                            }
+                          ],
+                          "name": "figure",
+                          "type": "tuple"
+                        }
+                      ],
+                      "name": "total",
+                      "type": "tuple[]"
+                    }
+                  ],
+                  "name": "fees",
+                  "type": "tuple"
+                }
+              ],
+              "name": "recipient",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "single",
+                  "type": "int256"
+                },
+                {
+                  "name": "total",
+                  "type": "int256"
+                }
+              ],
+              "name": "transfers",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "name": "hash",
+                      "type": "bytes32"
+                    },
+                    {
+                      "components": [
+                        {
+                          "name": "r",
+                          "type": "bytes32"
+                        },
+                        {
+                          "name": "s",
+                          "type": "bytes32"
+                        },
+                        {
+                          "name": "v",
+                          "type": "uint8"
+                        }
+                      ],
+                      "name": "signature",
+                      "type": "tuple"
+                    }
+                  ],
+                  "name": "wallet",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "name": "hash",
+                      "type": "bytes32"
+                    },
+                    {
+                      "components": [
+                        {
+                          "name": "r",
+                          "type": "bytes32"
+                        },
+                        {
+                          "name": "s",
+                          "type": "bytes32"
+                        },
+                        {
+                          "name": "v",
+                          "type": "uint8"
+                        }
+                      ],
+                      "name": "signature",
+                      "type": "tuple"
+                    }
+                  ],
+                  "name": "operator",
+                  "type": "tuple"
+                }
+              ],
+              "name": "seals",
+              "type": "tuple"
+            },
+            {
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "name": "operatorId",
+              "type": "uint256"
+            }
+          ],
+          "name": "",
+          "type": "tuple"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "challengeByPayment",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b506106dc806100206000396000f30060806040526004361061003d5763ffffffff60e060020a6000350416631592f0ab811461004257806326977d8b146100595780636926832c14610084575b600080fd5b34801561004e57600080fd5b506100576100a4565b005b34801561006557600080fd5b5061006e6100aa565b60405161007b9190610633565b60405180910390f35b34801561009057600080fd5b5061005761009f3660046105c0565b6100b0565b60008055565b60005481565b505060008054600101905550565b60006100ca8235610690565b9392505050565b6000601f820183136100e257600080fd5b81356100f56100f08261066d565b610647565b9150818183526020840193506020810190508385608084028201111561011a57600080fd5b60005b838110156101485781610130888261020a565b8452506020909201916080919091019060010161011d565b5050505092915050565b60006100ca823561068d565b60006040828403121561017057600080fd5b61017a6040610647565b9050600061018884846100be565b825250602061019984848301610152565b60208301525092915050565b6000604082840312156101b757600080fd5b6101c16040610647565b905060006101888484610152565b6000606082840312156101e157600080fd5b6101eb6040610647565b905060006101f98484610152565b82525060206101998484830161015e565b60006080828403121561021c57600080fd5b6102266040610647565b905060006102348484610152565b8252506020610199848483016101cf565b600060a0828403121561025757600080fd5b6102616080610647565b9050600061026f8484610152565b8252506020610280848483016100be565b6020830152506040610294848285016101a5565b60408301525060808201356001604060020a038111156102b357600080fd5b6102bf8482850161052f565b60608301525092915050565b600060a082840312156102dd57600080fd5b6102e76080610647565b905060006102f58484610152565b8252506020610306848483016100be565b602083015250604061031a848285016101a5565b60408301525060808201356001604060020a0381111561033957600080fd5b6102bf848285016104dd565b6000610240828403121561035857600080fd5b610363610120610647565b905060006103718484610152565b825250602061038284848301610152565b60208301525060406103968482850161015e565b60408301525060808201356001604060020a038111156103b557600080fd5b6103c1848285016102cb565b60608301525060a08201356001604060020a038111156103e057600080fd5b6103ec84828501610245565b60808301525060c0610400848285016101a5565b60a08301525061010061041584828501610578565b60c08301525061020061042a84828501610152565b60e08301525061022061043f84828501610152565b6101008301525092915050565b60006080828403121561045e57600080fd5b6104686040610647565b905060006104768484610152565b82525060206101998484830160006060828403121561049457600080fd5b61049e6060610647565b905060006104ac8484610152565b82525060206104bd84848301610152565b60208301525060406104d1848285016105b4565b60408301525092915050565b6000608082840312156104ef57600080fd5b6104f96040610647565b9050600061050784846101cf565b82525060608201356001604060020a0381111561052357600080fd5b610199848285016100d1565b60006020828403121561054157600080fd5b61054b6020610647565b905081356001604060020a0381111561056357600080fd5b61056f848285016100d1565b82525092915050565b6000610100828403121561058b57600080fd5b6105956040610647565b905060006105a3848461044c565b82525060806101998484830161044c565b60006100ca823561069c565b6000806000606084860312156105d557600080fd5b60006105e186866100be565b93505060208401356001604060020a038111156105fd57600080fd5b61060986828701610345565b925050604061061a868287016100be565b9150509250925092565b61062d8161068d565b82525050565b602081016106418284610624565b92915050565b6040518181016001604060020a038111828210171561066557600080fd5b604052919050565b60006001604060020a0382111561068357600080fd5b5060209081020190565b90565b600160a060020a031690565b60ff16905600a265627a7a72305820c82b8ba153430d5b1b709a5c7ac9c6cf5e595391c35b82514af9c0c98fabd0e76c6578706572696d656e74616cf50037",
+  "deployedBytecode": "0x60806040526004361061003d5763ffffffff60e060020a6000350416631592f0ab811461004257806326977d8b146100595780636926832c14610084575b600080fd5b34801561004e57600080fd5b506100576100a4565b005b34801561006557600080fd5b5061006e6100aa565b60405161007b9190610633565b60405180910390f35b34801561009057600080fd5b5061005761009f3660046105c0565b6100b0565b60008055565b60005481565b505060008054600101905550565b60006100ca8235610690565b9392505050565b6000601f820183136100e257600080fd5b81356100f56100f08261066d565b610647565b9150818183526020840193506020810190508385608084028201111561011a57600080fd5b60005b838110156101485781610130888261020a565b8452506020909201916080919091019060010161011d565b5050505092915050565b60006100ca823561068d565b60006040828403121561017057600080fd5b61017a6040610647565b9050600061018884846100be565b825250602061019984848301610152565b60208301525092915050565b6000604082840312156101b757600080fd5b6101c16040610647565b905060006101888484610152565b6000606082840312156101e157600080fd5b6101eb6040610647565b905060006101f98484610152565b82525060206101998484830161015e565b60006080828403121561021c57600080fd5b6102266040610647565b905060006102348484610152565b8252506020610199848483016101cf565b600060a0828403121561025757600080fd5b6102616080610647565b9050600061026f8484610152565b8252506020610280848483016100be565b6020830152506040610294848285016101a5565b60408301525060808201356001604060020a038111156102b357600080fd5b6102bf8482850161052f565b60608301525092915050565b600060a082840312156102dd57600080fd5b6102e76080610647565b905060006102f58484610152565b8252506020610306848483016100be565b602083015250604061031a848285016101a5565b60408301525060808201356001604060020a0381111561033957600080fd5b6102bf848285016104dd565b6000610240828403121561035857600080fd5b610363610120610647565b905060006103718484610152565b825250602061038284848301610152565b60208301525060406103968482850161015e565b60408301525060808201356001604060020a038111156103b557600080fd5b6103c1848285016102cb565b60608301525060a08201356001604060020a038111156103e057600080fd5b6103ec84828501610245565b60808301525060c0610400848285016101a5565b60a08301525061010061041584828501610578565b60c08301525061020061042a84828501610152565b60e08301525061022061043f84828501610152565b6101008301525092915050565b60006080828403121561045e57600080fd5b6104686040610647565b905060006104768484610152565b82525060206101998484830160006060828403121561049457600080fd5b61049e6060610647565b905060006104ac8484610152565b82525060206104bd84848301610152565b60208301525060406104d1848285016105b4565b60408301525092915050565b6000608082840312156104ef57600080fd5b6104f96040610647565b9050600061050784846101cf565b82525060608201356001604060020a0381111561052357600080fd5b610199848285016100d1565b60006020828403121561054157600080fd5b61054b6020610647565b905081356001604060020a0381111561056357600080fd5b61056f848285016100d1565b82525092915050565b6000610100828403121561058b57600080fd5b6105956040610647565b905060006105a3848461044c565b82525060806101998484830161044c565b60006100ca823561069c565b6000806000606084860312156105d557600080fd5b60006105e186866100be565b93505060208401356001604060020a038111156105fd57600080fd5b61060986828701610345565b925050604061061a868287016100be565b9150509250925092565b61062d8161068d565b82525050565b602081016106418284610624565b92915050565b6040518181016001604060020a038111828210171561066557600080fd5b604052919050565b60006001604060020a0382111561068357600080fd5b5060209081020190565b90565b600160a060020a031690565b60ff16905600a265627a7a72305820c82b8ba153430d5b1b709a5c7ac9c6cf5e595391c35b82514af9c0c98fabd0e76c6578706572696d656e74616cf50037",
+  "sourceMap": "376:314:106:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;376:314:106;;;;;;;",
+  "deployedSourceMap": "376:314:106:-;;;;;;;;;-1:-1:-1;;;376:314:106;;;;;;;;;;;;;;;;;;;;;;;475:78;;8:9:-1;5:2;;;30:1;27;20:12;5:2;475:78:106;;;;;;429:39;;8:9:-1;5:2;;;30:1;27;20:12;5:2;429:39:106;;;;;;;;;;;;;;;;;;;;559:129;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;559:129:106;;;;;;;;;475:78;545:1;518:28;;475:78::o;429:39::-;;;;:::o;559:129::-;-1:-1:-1;;655:24:106;:26;;;;;;-1:-1:-1;559:129:106:o;5:118:-1:-;;72:46;110:6;97:20;72:46;;;63:55;57:66;-1:-1;;;57:66;175:780;;308:4;296:17;;292:27;-1:-1;282:2;;333:1;330;323:12;282:2;370:6;357:20;392:103;407:87;487:6;407:87;;;392:103;;;383:112;;512:5;537:6;530:5;523:21;567:4;559:6;555:17;545:27;;589:4;584:3;580:14;573:21;;642:6;689:3;681:4;673:6;669:17;664:3;660:27;657:36;654:2;;;706:1;703;696:12;654:2;731:1;716:233;741:6;738:1;735:13;716:233;;;799:3;821:64;881:3;869:10;821:64;;;809:77;;-1:-1;909:4;900:14;;;;937:4;928:14;;;;;763:1;756:9;716:233;;;720:14;275:680;;;;;;;;963:118;;1030:46;1068:6;1055:20;1030:46;;1250:460;;1362:4;1350:9;1345:3;1341:19;1337:30;1334:2;;;1380:1;1377;1370:12;1334:2;1398:20;1413:4;1398:20;;;1389:29;-1:-1;1466:1;1497:49;1542:3;1522:9;1497:49;;;1473:74;;-1:-1;1606:2;1639:49;1684:3;1660:22;;;1639:49;;;1632:4;1625:5;1621:16;1614:75;1568:132;1328:382;;;;;1767:482;;1892:4;1880:9;1875:3;1871:19;1867:30;1864:2;;;1910:1;1907;1900:12;1864:2;1928:20;1943:4;1928:20;;;1919:29;-1:-1;2001:1;2032:48;2076:3;2056:9;2032:48;;2293:490;;2403:4;2391:9;2386:3;2382:19;2378:30;2375:2;;;2421:1;2418;2411:12;2375:2;2439:20;2454:4;2439:20;;;2430:29;-1:-1;2511:1;2542:48;2586:3;2566:9;2542:48;;;2518:73;;-1:-1;2656:2;2689:72;2757:3;2733:22;;;2689:72;;2831:495;;2947:4;2935:9;2930:3;2926:19;2922:30;2919:2;;;2965:1;2962;2955:12;2919:2;2983:20;2998:4;2983:20;;;2974:29;-1:-1;3057:1;3088:49;3133:3;3113:9;3088:49;;;3064:74;;-1:-1;3201:2;3234:70;3300:3;3276:22;;;3234:70;;3384:928;;3509:4;3497:9;3492:3;3488:19;3484:30;3481:2;;;3527:1;3524;3517:12;3481:2;3545:20;3560:4;3545:20;;;3536:29;-1:-1;3616:1;3647:49;3692:3;3672:9;3647:49;;;3623:74;;-1:-1;3760:2;3793:49;3838:3;3814:22;;;3793:49;;;3786:4;3779:5;3775:16;3768:75;3718:136;3908:2;3941:85;4022:3;4013:6;4002:9;3998:22;3941:85;;;3934:4;3927:5;3923:16;3916:111;3864:174;4116:3;4105:9;4101:19;4088:33;-1:-1;;;;;4133:6;4130:30;4127:2;;;4173:1;4170;4163:12;4127:2;4208:82;4286:3;4277:6;4266:9;4262:22;4208:82;;;4201:4;4194:5;4190:16;4183:108;4048:254;3475:837;;;;;4367:937;;4489:4;4477:9;4472:3;4468:19;4464:30;4461:2;;;4507:1;4504;4497:12;4461:2;4525:20;4540:4;4525:20;;;4516:29;-1:-1;4596:1;4627:49;4672:3;4652:9;4627:49;;;4603:74;;-1:-1;4740:2;4773:49;4818:3;4794:22;;;4773:49;;;4766:4;4759:5;4755:16;4748:75;4698:136;4888:2;4921:85;5002:3;4993:6;4982:9;4978:22;4921:85;;;4914:4;4907:5;4903:16;4896:111;4844:174;5096:3;5085:9;5081:19;5068:33;-1:-1;;;;;5113:6;5110:30;5107:2;;;5153:1;5150;5143:12;5107:2;5188:94;5278:3;5269:6;5258:9;5254:22;5188:94;;5348:1845;;5463:5;5451:9;5446:3;5442:19;5438:31;5435:2;;;5482:1;5479;5472:12;5435:2;5500:21;5515:5;5500:21;;;5491:30;-1:-1;5572:1;5603:49;5648:3;5628:9;5603:49;;;5579:74;;-1:-1;5716:2;5749:48;5793:3;5769:22;;;5749:48;;;5742:4;5735:5;5731:16;5724:74;5674:135;5863:2;5896:72;5964:3;5955:6;5944:9;5940:22;5896:72;;;5889:4;5882:5;5878:16;5871:98;5819:161;6060:3;6049:9;6045:19;6032:33;-1:-1;;;;;6077:6;6074:30;6071:2;;;6117:1;6114;6107:12;6071:2;6152:82;6230:3;6221:6;6210:9;6206:22;6152:82;;;6145:4;6138:5;6134:16;6127:108;5990:256;6329:3;6318:9;6314:19;6301:33;-1:-1;;;;;6346:6;6343:30;6340:2;;;6386:1;6383;6376:12;6340:2;6421:85;6502:3;6493:6;6482:9;6478:22;6421:85;;;6414:4;6407:5;6403:16;6396:111;6256:262;6573:3;6607:81;6684:3;6675:6;6664:9;6660:22;6607:81;;;6600:4;6593:5;6589:16;6582:107;6528:172;6751:3;6785:82;6863:3;6854:6;6843:9;6839:22;6785:82;;;6778:4;6771:5;6767:16;6760:108;6710:169;6936:3;6970:49;7015:3;7006:6;6995:9;6991:22;6970:49;;;6963:4;6956:5;6952:16;6945:75;6889:142;7087:3;7122:49;7167:3;7158:6;7147:9;7143:22;7122:49;;;7114:5;7107;7103:17;7096:76;7041:142;5429:1764;;;;;7233:489;;7341:4;7329:9;7324:3;7320:19;7316:30;7313:2;;;7359:1;7356;7349:12;7313:2;7377:20;7392:4;7377:20;;;7368:29;-1:-1;7447:1;7478:49;7523:3;7503:9;7478:49;;;7454:74;;-1:-1;7594:2;7627:73;7696:3;7672:22;;;7767:598;7880:4;7868:9;7863:3;7859:19;7855:30;7852:2;;;7898:1;7895;7888:12;7852:2;7916:20;7931:4;7916:20;;;7907:29;-1:-1;7983:1;8014:49;8059:3;8039:9;8014:49;;;7990:74;;-1:-1;8122:2;8155:49;8200:3;8176:22;;;8155:49;;;8148:4;8141:5;8137:16;8130:75;8085:131;8263:2;8296:47;8339:3;8330:6;8319:9;8315:22;8296:47;;;8289:4;8282:5;8278:16;8271:73;8226:129;7846:519;;;;;8431:644;;8565:4;8553:9;8548:3;8544:19;8540:30;8537:2;;;8583:1;8580;8573:12;8537:2;8601:20;8616:4;8601:20;;;8592:29;-1:-1;8673:1;8704:70;8770:3;8750:9;8704:70;;;8680:95;;-1:-1;8865:2;8850:18;;8837:32;-1:-1;;;;;8878:30;;8875:2;;;8921:1;8918;8911:12;8875:2;8956:97;9049:3;9040:6;9029:9;9025:22;8956:97;;9656:465;;9778:4;9766:9;9761:3;9757:19;9753:30;9750:2;;;9796:1;9793;9786:12;9750:2;9814:20;9829:4;9814:20;;;9805:29;-1:-1;9885:31;;-1:-1;;;;;9925:30;;9922:2;;;9968:1;9965;9958:12;9922:2;10002:97;10095:3;10086:6;10075:9;10071:22;10002:97;;;9978:122;;-1:-1;9989:5;9744:377;-1:-1;;9744:377;10175:520;;10297:5;10285:9;10280:3;10276:19;10272:31;10269:2;;;10316:1;10313;10306:12;10269:2;10334:20;10349:4;10334:20;;;10325:29;-1:-1;10406:1;10437:68;10501:3;10481:9;10437:68;;;10413:93;;-1:-1;10571:3;10605:68;10669:3;10645:22;;;10605:68;;10827:114;;10892:44;10928:6;10915:20;10892:44;;10948:629;;;;11112:2;11100:9;11091:7;11087:23;11083:32;11080:2;;;11128:1;11125;11118:12;11080:2;11163:1;11180:53;11225:7;11205:9;11180:53;;;11170:63;;11142:97;11298:2;11287:9;11283:18;11270:32;-1:-1;;;;;11314:6;11311:30;11308:2;;;11354:1;11351;11344:12;11308:2;11374:79;11445:7;11436:6;11425:9;11421:22;11374:79;;;11364:89;;11249:210;11490:2;11508:53;11553:7;11544:6;11533:9;11529:22;11508:53;;;11498:63;;11469:98;11074:503;;;;;;11584:110;11657:31;11682:5;11657:31;;;11652:3;11645:44;11639:55;;;11701:193;11809:2;11794:18;;11823:61;11798:9;11857:6;11823:61;;;11780:114;;;;;11901:256;11963:2;11957:9;11989:17;;;-1:-1;;;;;12049:34;;12085:22;;;12046:62;12043:2;;;12121:1;12118;12111:12;12043:2;12137;12130:22;11941:216;;-1:-1;11941:216;12164:281;;-1:-1;;;;;12338:6;12335:30;12332:2;;;12378:1;12375;12368:12;12332:2;-1:-1;12407:4;12395:17;;;12425:15;;12269:176;12452:79;12521:5;12504:27;12538:128;-1:-1;;;;;12607:54;;12590:76;12930:88;13008:4;12997:16;;12980:38",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\npragma experimental ABIEncoderV2;\n\nimport {PaymentTypesLib} from \"../PaymentTypesLib.sol\";\n\n/**\n * @title MockedDriipSettlementDisputeByPayment\n * @notice Mocked implementation of driip settlement dispute by payment contract\n */\ncontract MockedDriipSettlementDisputeByPayment {\n    uint256 public _challengeByPaymentCount;\n\n    function _reset()\n    public\n    {\n        _challengeByPaymentCount = 0;\n    }\n\n    function challengeByPayment(address, PaymentTypesLib.Payment, address)\n    public\n    {\n        _challengeByPaymentCount++;\n    }\n}",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedDriipSettlementDisputeByPayment.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedDriipSettlementDisputeByPayment.sol",
+    "exportedSymbols": {
+      "MockedDriipSettlementDisputeByPayment": [
+        43524
+      ]
+    },
+    "id": 43525,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 43497,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:106"
+      },
+      {
+        "id": 43498,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "147:33:106"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentTypesLib.sol",
+        "file": "../PaymentTypesLib.sol",
+        "id": 43500,
+        "nodeType": "ImportDirective",
+        "scope": 43525,
+        "sourceUnit": 27946,
+        "src": "182:55:106",
+        "symbolAliases": [
+          {
+            "foreign": 43499,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title MockedDriipSettlementDisputeByPayment\n@notice Mocked implementation of driip settlement dispute by payment contract",
+        "fullyImplemented": true,
+        "id": 43524,
+        "linearizedBaseContracts": [
+          43524
+        ],
+        "name": "MockedDriipSettlementDisputeByPayment",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 43502,
+            "name": "_challengeByPaymentCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 43524,
+            "src": "429:39:106",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 43501,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "429:7:106",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 43509,
+              "nodeType": "Block",
+              "src": "508:45:106",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 43507,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 43505,
+                      "name": "_challengeByPaymentCount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 43502,
+                      "src": "518:24:106",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 43506,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "545:1:106",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "518:28:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 43508,
+                  "nodeType": "ExpressionStatement",
+                  "src": "518:28:106"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 43510,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "_reset",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 43503,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "490:2:106"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 43504,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "508:0:106"
+            },
+            "scope": 43524,
+            "src": "475:78:106",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 43522,
+              "nodeType": "Block",
+              "src": "645:43:106",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 43520,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": false,
+                    "src": "655:26:106",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 43519,
+                      "name": "_challengeByPaymentCount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 43502,
+                      "src": "655:24:106",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 43521,
+                  "nodeType": "ExpressionStatement",
+                  "src": "655:26:106"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 43523,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "challengeByPayment",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 43517,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 43512,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43523,
+                  "src": "587:7:106",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 43511,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "587:7:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 43514,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43523,
+                  "src": "596:23:106",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 43513,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "596:23:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 43516,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43523,
+                  "src": "621:7:106",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 43515,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "621:7:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "586:43:106"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 43518,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "645:0:106"
+            },
+            "scope": 43524,
+            "src": "559:129:106",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 43525,
+        "src": "376:314:106"
+      }
+    ],
+    "src": "122:568:106"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedDriipSettlementDisputeByPayment.sol",
+    "exportedSymbols": {
+      "MockedDriipSettlementDisputeByPayment": [
+        43524
+      ]
+    },
+    "id": 43525,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 43497,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:106"
+      },
+      {
+        "id": 43498,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "147:33:106"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentTypesLib.sol",
+        "file": "../PaymentTypesLib.sol",
+        "id": 43500,
+        "nodeType": "ImportDirective",
+        "scope": 43525,
+        "sourceUnit": 27946,
+        "src": "182:55:106",
+        "symbolAliases": [
+          {
+            "foreign": 43499,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title MockedDriipSettlementDisputeByPayment\n@notice Mocked implementation of driip settlement dispute by payment contract",
+        "fullyImplemented": true,
+        "id": 43524,
+        "linearizedBaseContracts": [
+          43524
+        ],
+        "name": "MockedDriipSettlementDisputeByPayment",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 43502,
+            "name": "_challengeByPaymentCount",
+            "nodeType": "VariableDeclaration",
+            "scope": 43524,
+            "src": "429:39:106",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 43501,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "429:7:106",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 43509,
+              "nodeType": "Block",
+              "src": "508:45:106",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 43507,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 43505,
+                      "name": "_challengeByPaymentCount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 43502,
+                      "src": "518:24:106",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 43506,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "545:1:106",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "518:28:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 43508,
+                  "nodeType": "ExpressionStatement",
+                  "src": "518:28:106"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 43510,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "_reset",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 43503,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "490:2:106"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 43504,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "508:0:106"
+            },
+            "scope": 43524,
+            "src": "475:78:106",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 43522,
+              "nodeType": "Block",
+              "src": "645:43:106",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 43520,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": false,
+                    "src": "655:26:106",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 43519,
+                      "name": "_challengeByPaymentCount",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 43502,
+                      "src": "655:24:106",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 43521,
+                  "nodeType": "ExpressionStatement",
+                  "src": "655:26:106"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 43523,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "challengeByPayment",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 43517,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 43512,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43523,
+                  "src": "587:7:106",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 43511,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "587:7:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 43514,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43523,
+                  "src": "596:23:106",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 43513,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "596:23:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 43516,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43523,
+                  "src": "621:7:106",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 43515,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "621:7:106",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "586:43:106"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 43518,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "645:0:106"
+            },
+            "scope": 43524,
+            "src": "559:129:106",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 43525,
+        "src": "376:314:106"
+      }
+    ],
+    "src": "122:568:106"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T08:24:32.072Z"
+}

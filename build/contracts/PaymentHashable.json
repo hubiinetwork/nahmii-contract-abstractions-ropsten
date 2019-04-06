@@ -1,0 +1,1601 @@
+{
+  "contractName": "PaymentHashable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "paymentHasher",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldPaymentHasher",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newPaymentHasher",
+          "type": "address"
+        }
+      ],
+      "name": "SetPaymentHasherEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newPaymentHasher",
+          "type": "address"
+        }
+      ],
+      "name": "setPaymentHasher",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {PaymentHasher} from \"./PaymentHasher.sol\";\n\n/**\n * @title PaymentHashable\n * @notice An ownable that has a payment hasher property\n */\ncontract PaymentHashable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    PaymentHasher public paymentHasher;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetPaymentHasherEvent(PaymentHasher oldPaymentHasher, PaymentHasher newPaymentHasher);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the payment hasher contract\n    /// @param newPaymentHasher The (address of) PaymentHasher contract instance\n    function setPaymentHasher(PaymentHasher newPaymentHasher)\n    public\n    onlyDeployer\n    notNullAddress(newPaymentHasher)\n    notSameAddresses(newPaymentHasher, paymentHasher)\n    {\n        // Set new payment hasher\n        PaymentHasher oldPaymentHasher = paymentHasher;\n        paymentHasher = newPaymentHasher;\n\n        // Emit event\n        emit SetPaymentHasherEvent(oldPaymentHasher, newPaymentHasher);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier paymentHasherInitialized() {\n        require(paymentHasher != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentHashable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentHashable.sol",
+    "exportedSymbols": {
+      "PaymentHashable": [
+        27498
+      ]
+    },
+    "id": 27499,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 27443,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:65"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 27445,
+        "nodeType": "ImportDirective",
+        "scope": 27499,
+        "sourceUnit": 25427,
+        "src": "148:38:65",
+        "symbolAliases": [
+          {
+            "foreign": 27444,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentHasher.sol",
+        "file": "./PaymentHasher.sol",
+        "id": 27447,
+        "nodeType": "ImportDirective",
+        "scope": 27499,
+        "sourceUnit": 27891,
+        "src": "187:50:65",
+        "symbolAliases": [
+          {
+            "foreign": 27446,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 27448,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "358:7:65",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 27449,
+            "nodeType": "InheritanceSpecifier",
+            "src": "358:7:65"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title PaymentHashable\n@notice An ownable that has a payment hasher property",
+        "fullyImplemented": false,
+        "id": 27498,
+        "linearizedBaseContracts": [
+          27498,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "PaymentHashable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 27451,
+            "name": "paymentHasher",
+            "nodeType": "VariableDeclaration",
+            "scope": 27498,
+            "src": "517:34:65",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+              "typeString": "contract PaymentHasher"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 27450,
+              "name": "PaymentHasher",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 27890,
+              "src": "517:13:65",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                "typeString": "contract PaymentHasher"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 27457,
+            "name": "SetPaymentHasherEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 27456,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 27453,
+                  "indexed": false,
+                  "name": "oldPaymentHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27457,
+                  "src": "728:30:65",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                    "typeString": "contract PaymentHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 27452,
+                    "name": "PaymentHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27890,
+                    "src": "728:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 27455,
+                  "indexed": false,
+                  "name": "newPaymentHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27457,
+                  "src": "760:30:65",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                    "typeString": "contract PaymentHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 27454,
+                    "name": "PaymentHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27890,
+                    "src": "760:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "727:64:65"
+            },
+            "src": "700:92:65"
+          },
+          {
+            "body": {
+              "id": 27484,
+              "nodeType": "Block",
+              "src": "1253:234:65",
+              "statements": [
+                {
+                  "assignments": [
+                    27472
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 27472,
+                      "name": "oldPaymentHasher",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 27485,
+                      "src": "1297:30:65",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                        "typeString": "contract PaymentHasher"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 27471,
+                        "name": "PaymentHasher",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 27890,
+                        "src": "1297:13:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 27474,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 27473,
+                    "name": "paymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27451,
+                    "src": "1330:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1297:46:65"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 27477,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 27475,
+                      "name": "paymentHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 27451,
+                      "src": "1353:13:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                        "typeString": "contract PaymentHasher"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 27476,
+                      "name": "newPaymentHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 27459,
+                      "src": "1369:16:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                        "typeString": "contract PaymentHasher"
+                      }
+                    },
+                    "src": "1353:32:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "id": 27478,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1353:32:65"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 27480,
+                        "name": "oldPaymentHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 27472,
+                        "src": "1445:16:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 27481,
+                        "name": "newPaymentHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 27459,
+                        "src": "1463:16:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      ],
+                      "id": 27479,
+                      "name": "SetPaymentHasherEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 27457,
+                      "src": "1423:21:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_PaymentHasher_$27890_$_t_contract$_PaymentHasher_$27890_$returns$__$",
+                        "typeString": "function (contract PaymentHasher,contract PaymentHasher)"
+                      }
+                    },
+                    "id": 27482,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1423:57:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 27483,
+                  "nodeType": "EmitStatement",
+                  "src": "1418:62:65"
+                }
+              ]
+            },
+            "documentation": "@notice Set the payment hasher contract\n @param newPaymentHasher The (address of) PaymentHasher contract instance",
+            "id": 27485,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 27462,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 27461,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1145:12:65",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1145:12:65"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 27464,
+                    "name": "newPaymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27459,
+                    "src": "1177:16:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  }
+                ],
+                "id": 27465,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 27463,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1162:14:65",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1162:32:65"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 27467,
+                    "name": "newPaymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27459,
+                    "src": "1216:16:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 27468,
+                    "name": "paymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27451,
+                    "src": "1234:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  }
+                ],
+                "id": 27469,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 27466,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1199:16:65",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1199:49:65"
+              }
+            ],
+            "name": "setPaymentHasher",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 27460,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 27459,
+                  "name": "newPaymentHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27485,
+                  "src": "1098:30:65",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                    "typeString": "contract PaymentHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 27458,
+                    "name": "PaymentHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27890,
+                    "src": "1098:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1097:32:65"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 27470,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1253:0:65"
+            },
+            "scope": 27498,
+            "src": "1072:415:65",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 27496,
+              "nodeType": "Block",
+              "src": "1674:64:65",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 27492,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 27488,
+                          "name": "paymentHasher",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 27451,
+                          "src": "1692:13:65",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                            "typeString": "contract PaymentHasher"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 27490,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1717:1:65",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 27489,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1709:7:65",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 27491,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1709:10:65",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1692:27:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 27487,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1684:7:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 27493,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1684:36:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 27494,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1684:36:65"
+                },
+                {
+                  "id": 27495,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1730:1:65"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 27497,
+            "name": "paymentHasherInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 27486,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1671:2:65"
+            },
+            "src": "1638:100:65",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 27499,
+        "src": "330:1410:65"
+      }
+    ],
+    "src": "122:1619:65"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentHashable.sol",
+    "exportedSymbols": {
+      "PaymentHashable": [
+        27498
+      ]
+    },
+    "id": 27499,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 27443,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:65"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 27445,
+        "nodeType": "ImportDirective",
+        "scope": 27499,
+        "sourceUnit": 25427,
+        "src": "148:38:65",
+        "symbolAliases": [
+          {
+            "foreign": 27444,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentHasher.sol",
+        "file": "./PaymentHasher.sol",
+        "id": 27447,
+        "nodeType": "ImportDirective",
+        "scope": 27499,
+        "sourceUnit": 27891,
+        "src": "187:50:65",
+        "symbolAliases": [
+          {
+            "foreign": 27446,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 27448,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "358:7:65",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 27449,
+            "nodeType": "InheritanceSpecifier",
+            "src": "358:7:65"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title PaymentHashable\n@notice An ownable that has a payment hasher property",
+        "fullyImplemented": false,
+        "id": 27498,
+        "linearizedBaseContracts": [
+          27498,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "PaymentHashable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 27451,
+            "name": "paymentHasher",
+            "nodeType": "VariableDeclaration",
+            "scope": 27498,
+            "src": "517:34:65",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+              "typeString": "contract PaymentHasher"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 27450,
+              "name": "PaymentHasher",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 27890,
+              "src": "517:13:65",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                "typeString": "contract PaymentHasher"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 27457,
+            "name": "SetPaymentHasherEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 27456,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 27453,
+                  "indexed": false,
+                  "name": "oldPaymentHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27457,
+                  "src": "728:30:65",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                    "typeString": "contract PaymentHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 27452,
+                    "name": "PaymentHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27890,
+                    "src": "728:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 27455,
+                  "indexed": false,
+                  "name": "newPaymentHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27457,
+                  "src": "760:30:65",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                    "typeString": "contract PaymentHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 27454,
+                    "name": "PaymentHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27890,
+                    "src": "760:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "727:64:65"
+            },
+            "src": "700:92:65"
+          },
+          {
+            "body": {
+              "id": 27484,
+              "nodeType": "Block",
+              "src": "1253:234:65",
+              "statements": [
+                {
+                  "assignments": [
+                    27472
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 27472,
+                      "name": "oldPaymentHasher",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 27485,
+                      "src": "1297:30:65",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                        "typeString": "contract PaymentHasher"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 27471,
+                        "name": "PaymentHasher",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 27890,
+                        "src": "1297:13:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 27474,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 27473,
+                    "name": "paymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27451,
+                    "src": "1330:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1297:46:65"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 27477,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 27475,
+                      "name": "paymentHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 27451,
+                      "src": "1353:13:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                        "typeString": "contract PaymentHasher"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 27476,
+                      "name": "newPaymentHasher",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 27459,
+                      "src": "1369:16:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                        "typeString": "contract PaymentHasher"
+                      }
+                    },
+                    "src": "1353:32:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "id": 27478,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1353:32:65"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 27480,
+                        "name": "oldPaymentHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 27472,
+                        "src": "1445:16:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 27481,
+                        "name": "newPaymentHasher",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 27459,
+                        "src": "1463:16:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                          "typeString": "contract PaymentHasher"
+                        }
+                      ],
+                      "id": 27479,
+                      "name": "SetPaymentHasherEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 27457,
+                      "src": "1423:21:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_PaymentHasher_$27890_$_t_contract$_PaymentHasher_$27890_$returns$__$",
+                        "typeString": "function (contract PaymentHasher,contract PaymentHasher)"
+                      }
+                    },
+                    "id": 27482,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1423:57:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 27483,
+                  "nodeType": "EmitStatement",
+                  "src": "1418:62:65"
+                }
+              ]
+            },
+            "documentation": "@notice Set the payment hasher contract\n @param newPaymentHasher The (address of) PaymentHasher contract instance",
+            "id": 27485,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 27462,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 27461,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1145:12:65",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1145:12:65"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 27464,
+                    "name": "newPaymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27459,
+                    "src": "1177:16:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  }
+                ],
+                "id": 27465,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 27463,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1162:14:65",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1162:32:65"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 27467,
+                    "name": "newPaymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27459,
+                    "src": "1216:16:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 27468,
+                    "name": "paymentHasher",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 27451,
+                    "src": "1234:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  }
+                ],
+                "id": 27469,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 27466,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1199:16:65",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1199:49:65"
+              }
+            ],
+            "name": "setPaymentHasher",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 27460,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 27459,
+                  "name": "newPaymentHasher",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27485,
+                  "src": "1098:30:65",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                    "typeString": "contract PaymentHasher"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 27458,
+                    "name": "PaymentHasher",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27890,
+                    "src": "1098:13:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                      "typeString": "contract PaymentHasher"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1097:32:65"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 27470,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1253:0:65"
+            },
+            "scope": 27498,
+            "src": "1072:415:65",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 27496,
+              "nodeType": "Block",
+              "src": "1674:64:65",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 27492,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 27488,
+                          "name": "paymentHasher",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 27451,
+                          "src": "1692:13:65",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_PaymentHasher_$27890",
+                            "typeString": "contract PaymentHasher"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 27490,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1717:1:65",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 27489,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1709:7:65",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 27491,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1709:10:65",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1692:27:65",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 27487,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1684:7:65",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 27493,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1684:36:65",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 27494,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1684:36:65"
+                },
+                {
+                  "id": 27495,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1730:1:65"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 27497,
+            "name": "paymentHasherInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 27486,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1671:2:65"
+            },
+            "src": "1638:100:65",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 27499,
+        "src": "330:1410:65"
+      }
+    ],
+    "src": "122:1619:65"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:37.011Z"
+}

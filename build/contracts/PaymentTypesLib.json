@@ -1,0 +1,1385 @@
+{
+  "contractName": "PaymentTypesLib",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "PAYMENT_KIND",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x610109610030600b82828239805160001a6073146000811461002057610022565bfe5b5030600052607381538281f3007300000000000000000000000000000000000000003014608060405260043610603c5763ffffffff60e060020a6000350416635174abe981146041575b600080fd5b604760b9565b6040805160208082528351818301528351919283929083019185019080838360005b83811015607f5781810151838201526020016069565b50505050905090810190601f16801560ab5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b604080518082019091526007815260ca60020a661c185e5b595b9d026020820152905600a165627a7a7230582070e0fbbf74e5762a782189f5b28b36de882f99ec7c6d8b2d76c0d2f1e420e5ed0029",
+  "deployedBytecode": "0x7300000000000000000000000000000000000000003014608060405260043610603c5763ffffffff60e060020a6000350416635174abe981146041575b600080fd5b604760b9565b6040805160208082528351818301528351919283929083019185019080838360005b83811015607f5781810151838201526020016069565b50505050905090810190601f16801560ab5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b604080518082019091526007815260ca60020a661c185e5b595b9d026020820152905600a165627a7a7230582070e0fbbf74e5762a782189f5b28b36de882f99ec7c6d8b2d76c0d2f1e420e5ed0029",
+  "sourceMap": "346:1443:67:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "346:1443:67:-;;;;;;;;;;;;-1:-1:-1;;;346:1443:67;;;;;;;;;;;;;1685:102;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:100:-1;33:3;30:1;27:10;8:100;;;90:11;;;84:18;71:11;;;64:39;52:2;45:10;8:100;;;12:14;1685:102:67;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1764:16;;;;;;;;;;;;-1:-1:-1;;;;;1764:16:67;;;;1685:102;:::o",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\nimport {NahmiiTypesLib} from \"./NahmiiTypesLib.sol\";\n\n/**\n * @title     PaymentTypesLib\n * @dev       Data types centered around payment\n */\nlibrary PaymentTypesLib {\n    //\n    // Enums\n    // -----------------------------------------------------------------------------------------------------------------\n    enum PaymentPartyRole {Sender, Recipient}\n\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    struct PaymentSenderParty {\n        uint256 nonce;\n        address wallet;\n\n        NahmiiTypesLib.CurrentPreviousInt256 balances;\n\n        NahmiiTypesLib.SingleFigureTotalOriginFigures fees;\n    }\n\n    struct PaymentRecipientParty {\n        uint256 nonce;\n        address wallet;\n\n        NahmiiTypesLib.CurrentPreviousInt256 balances;\n\n        NahmiiTypesLib.TotalOriginFigures fees;\n    }\n\n    struct Payment {\n        uint256 nonce;\n\n        int256 amount;\n        MonetaryTypesLib.Currency currency;\n\n        PaymentSenderParty sender;\n        PaymentRecipientParty recipient;\n\n        // Positive transfer is always in direction from sender to recipient\n        NahmiiTypesLib.SingleTotalInt256 transfers;\n\n        NahmiiTypesLib.WalletOperatorSeal seals;\n        uint256 blockNumber;\n        uint256 operatorId;\n    }\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    function PAYMENT_KIND()\n    public\n    pure\n    returns (string)\n    {\n        return \"payment\";\n    }\n}",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentTypesLib.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentTypesLib.sol",
+    "exportedSymbols": {
+      "PaymentTypesLib": [
+        27945
+      ]
+    },
+    "id": 27946,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 27892,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:67"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
+        "file": "./MonetaryTypesLib.sol",
+        "id": 27894,
+        "nodeType": "ImportDirective",
+        "scope": 27946,
+        "sourceUnit": 19413,
+        "src": "148:56:67",
+        "symbolAliases": [
+          {
+            "foreign": 27893,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
+        "file": "./NahmiiTypesLib.sol",
+        "id": 27896,
+        "nodeType": "ImportDirective",
+        "scope": 27946,
+        "sourceUnit": 19539,
+        "src": "205:52:67",
+        "symbolAliases": [
+          {
+            "foreign": 27895,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": "@title     PaymentTypesLib\n@dev       Data types centered around payment",
+        "fullyImplemented": true,
+        "id": 27945,
+        "linearizedBaseContracts": [
+          27945
+        ],
+        "name": "PaymentTypesLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "PaymentTypesLib.PaymentPartyRole",
+            "id": 27899,
+            "members": [
+              {
+                "id": 27897,
+                "name": "Sender",
+                "nodeType": "EnumValue",
+                "src": "540:6:67"
+              },
+              {
+                "id": 27898,
+                "name": "Recipient",
+                "nodeType": "EnumValue",
+                "src": "548:9:67"
+              }
+            ],
+            "name": "PaymentPartyRole",
+            "nodeType": "EnumDefinition",
+            "src": "517:41:67"
+          },
+          {
+            "canonicalName": "PaymentTypesLib.PaymentSenderParty",
+            "id": 27908,
+            "members": [
+              {
+                "constant": false,
+                "id": 27901,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "746:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27900,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "746:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27903,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "769:14:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 27902,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "769:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27905,
+                "name": "balances",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "794:45:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27904,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "794:36:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27907,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "850:50:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27906,
+                  "name": "NahmiiTypesLib.SingleFigureTotalOriginFigures",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19491,
+                  "src": "850:45:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PaymentSenderParty",
+            "nodeType": "StructDefinition",
+            "scope": 27945,
+            "src": "710:197:67",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "PaymentTypesLib.PaymentRecipientParty",
+            "id": 27917,
+            "members": [
+              {
+                "constant": false,
+                "id": 27910,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "952:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27909,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "952:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27912,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "975:14:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 27911,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "975:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27914,
+                "name": "balances",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "1000:45:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27913,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "1000:36:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27916,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "1056:38:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TotalOriginFigures_$19495_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.TotalOriginFigures"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27915,
+                  "name": "NahmiiTypesLib.TotalOriginFigures",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19495,
+                  "src": "1056:33:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TotalOriginFigures_$19495_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.TotalOriginFigures"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PaymentRecipientParty",
+            "nodeType": "StructDefinition",
+            "scope": 27945,
+            "src": "913:188:67",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "PaymentTypesLib.Payment",
+            "id": 27936,
+            "members": [
+              {
+                "constant": false,
+                "id": 27919,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1132:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27918,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1132:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27921,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1156:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 27920,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1156:6:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27923,
+                "name": "currency",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1179:34:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeString": "struct MonetaryTypesLib.Currency"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27922,
+                  "name": "MonetaryTypesLib.Currency",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19401,
+                  "src": "1179:25:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeString": "struct MonetaryTypesLib.Currency"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27925,
+                "name": "sender",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1224:25:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_PaymentSenderParty_$27908_storage_ptr",
+                  "typeString": "struct PaymentTypesLib.PaymentSenderParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27924,
+                  "name": "PaymentSenderParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 27908,
+                  "src": "1224:18:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentSenderParty_$27908_storage_ptr",
+                    "typeString": "struct PaymentTypesLib.PaymentSenderParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27927,
+                "name": "recipient",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1259:31:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_PaymentRecipientParty_$27917_storage_ptr",
+                  "typeString": "struct PaymentTypesLib.PaymentRecipientParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27926,
+                  "name": "PaymentRecipientParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 27917,
+                  "src": "1259:21:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentRecipientParty_$27917_storage_ptr",
+                    "typeString": "struct PaymentTypesLib.PaymentRecipientParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27929,
+                "name": "transfers",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1378:42:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27928,
+                  "name": "NahmiiTypesLib.SingleTotalInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19505,
+                  "src": "1378:32:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27931,
+                "name": "seals",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1431:39:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27930,
+                  "name": "NahmiiTypesLib.WalletOperatorSeal",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19537,
+                  "src": "1431:33:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27933,
+                "name": "blockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1480:19:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27932,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1480:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27935,
+                "name": "operatorId",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1509:18:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27934,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1509:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Payment",
+            "nodeType": "StructDefinition",
+            "scope": 27945,
+            "src": "1107:427:67",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 27943,
+              "nodeType": "Block",
+              "src": "1754:33:67",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "7061796d656e74",
+                    "id": 27941,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "1771:9:67",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_1fab0c92eaead7da02fe29795732249e0861c98d6738709e6be992a170920770",
+                      "typeString": "literal_string \"payment\""
+                    },
+                    "value": "payment"
+                  },
+                  "functionReturnParameters": 27940,
+                  "id": 27942,
+                  "nodeType": "Return",
+                  "src": "1764:16:67"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 27944,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "PAYMENT_KIND",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 27937,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1706:2:67"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 27940,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 27939,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27944,
+                  "src": "1742:6:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 27938,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1742:6:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1741:8:67"
+            },
+            "scope": 27945,
+            "src": "1685:102:67",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 27946,
+        "src": "346:1443:67"
+      }
+    ],
+    "src": "122:1667:67"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentTypesLib.sol",
+    "exportedSymbols": {
+      "PaymentTypesLib": [
+        27945
+      ]
+    },
+    "id": 27946,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 27892,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:67"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
+        "file": "./MonetaryTypesLib.sol",
+        "id": 27894,
+        "nodeType": "ImportDirective",
+        "scope": 27946,
+        "sourceUnit": 19413,
+        "src": "148:56:67",
+        "symbolAliases": [
+          {
+            "foreign": 27893,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
+        "file": "./NahmiiTypesLib.sol",
+        "id": 27896,
+        "nodeType": "ImportDirective",
+        "scope": 27946,
+        "sourceUnit": 19539,
+        "src": "205:52:67",
+        "symbolAliases": [
+          {
+            "foreign": 27895,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": "@title     PaymentTypesLib\n@dev       Data types centered around payment",
+        "fullyImplemented": true,
+        "id": 27945,
+        "linearizedBaseContracts": [
+          27945
+        ],
+        "name": "PaymentTypesLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "PaymentTypesLib.PaymentPartyRole",
+            "id": 27899,
+            "members": [
+              {
+                "id": 27897,
+                "name": "Sender",
+                "nodeType": "EnumValue",
+                "src": "540:6:67"
+              },
+              {
+                "id": 27898,
+                "name": "Recipient",
+                "nodeType": "EnumValue",
+                "src": "548:9:67"
+              }
+            ],
+            "name": "PaymentPartyRole",
+            "nodeType": "EnumDefinition",
+            "src": "517:41:67"
+          },
+          {
+            "canonicalName": "PaymentTypesLib.PaymentSenderParty",
+            "id": 27908,
+            "members": [
+              {
+                "constant": false,
+                "id": 27901,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "746:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27900,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "746:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27903,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "769:14:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 27902,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "769:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27905,
+                "name": "balances",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "794:45:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27904,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "794:36:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27907,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 27908,
+                "src": "850:50:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27906,
+                  "name": "NahmiiTypesLib.SingleFigureTotalOriginFigures",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19491,
+                  "src": "850:45:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_SingleFigureTotalOriginFigures_$19491_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PaymentSenderParty",
+            "nodeType": "StructDefinition",
+            "scope": 27945,
+            "src": "710:197:67",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "PaymentTypesLib.PaymentRecipientParty",
+            "id": 27917,
+            "members": [
+              {
+                "constant": false,
+                "id": 27910,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "952:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27909,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "952:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27912,
+                "name": "wallet",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "975:14:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 27911,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "975:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27914,
+                "name": "balances",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "1000:45:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27913,
+                  "name": "NahmiiTypesLib.CurrentPreviousInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19500,
+                  "src": "1000:36:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27916,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 27917,
+                "src": "1056:38:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_TotalOriginFigures_$19495_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.TotalOriginFigures"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27915,
+                  "name": "NahmiiTypesLib.TotalOriginFigures",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19495,
+                  "src": "1056:33:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_TotalOriginFigures_$19495_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.TotalOriginFigures"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PaymentRecipientParty",
+            "nodeType": "StructDefinition",
+            "scope": 27945,
+            "src": "913:188:67",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "PaymentTypesLib.Payment",
+            "id": 27936,
+            "members": [
+              {
+                "constant": false,
+                "id": 27919,
+                "name": "nonce",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1132:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27918,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1132:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27921,
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1156:13:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_int256",
+                  "typeString": "int256"
+                },
+                "typeName": {
+                  "id": 27920,
+                  "name": "int256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1156:6:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_int256",
+                    "typeString": "int256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27923,
+                "name": "currency",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1179:34:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeString": "struct MonetaryTypesLib.Currency"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27922,
+                  "name": "MonetaryTypesLib.Currency",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19401,
+                  "src": "1179:25:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeString": "struct MonetaryTypesLib.Currency"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27925,
+                "name": "sender",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1224:25:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_PaymentSenderParty_$27908_storage_ptr",
+                  "typeString": "struct PaymentTypesLib.PaymentSenderParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27924,
+                  "name": "PaymentSenderParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 27908,
+                  "src": "1224:18:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentSenderParty_$27908_storage_ptr",
+                    "typeString": "struct PaymentTypesLib.PaymentSenderParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27927,
+                "name": "recipient",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1259:31:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_PaymentRecipientParty_$27917_storage_ptr",
+                  "typeString": "struct PaymentTypesLib.PaymentRecipientParty"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27926,
+                  "name": "PaymentRecipientParty",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 27917,
+                  "src": "1259:21:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_PaymentRecipientParty_$27917_storage_ptr",
+                    "typeString": "struct PaymentTypesLib.PaymentRecipientParty"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27929,
+                "name": "transfers",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1378:42:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27928,
+                  "name": "NahmiiTypesLib.SingleTotalInt256",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19505,
+                  "src": "1378:32:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27931,
+                "name": "seals",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1431:39:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                  "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 27930,
+                  "name": "NahmiiTypesLib.WalletOperatorSeal",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 19537,
+                  "src": "1431:33:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_WalletOperatorSeal_$19537_storage_ptr",
+                    "typeString": "struct NahmiiTypesLib.WalletOperatorSeal"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27933,
+                "name": "blockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1480:19:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27932,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1480:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 27935,
+                "name": "operatorId",
+                "nodeType": "VariableDeclaration",
+                "scope": 27936,
+                "src": "1509:18:67",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27934,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1509:7:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Payment",
+            "nodeType": "StructDefinition",
+            "scope": 27945,
+            "src": "1107:427:67",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 27943,
+              "nodeType": "Block",
+              "src": "1754:33:67",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "7061796d656e74",
+                    "id": 27941,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "1771:9:67",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_1fab0c92eaead7da02fe29795732249e0861c98d6738709e6be992a170920770",
+                      "typeString": "literal_string \"payment\""
+                    },
+                    "value": "payment"
+                  },
+                  "functionReturnParameters": 27940,
+                  "id": 27942,
+                  "nodeType": "Return",
+                  "src": "1764:16:67"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 27944,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "PAYMENT_KIND",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 27937,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1706:2:67"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 27940,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 27939,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 27944,
+                  "src": "1742:6:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 27938,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1742:6:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1741:8:67"
+            },
+            "scope": 27945,
+            "src": "1685:102:67",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 27946,
+        "src": "346:1443:67"
+      }
+    ],
+    "src": "122:1667:67"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0xfe1c52fe396cbb4a413c32209b6aabb7c585dd17",
+      "transactionHash": "0xc77eac483ba6b5e7730ce52608492629610a433cc448fac27d3fc69e06a56f98"
+    }
+  },
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T08:24:32.193Z"
+}

@@ -1,0 +1,1601 @@
+{
+  "contractName": "FraudChallengable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "fraudChallenge",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldFraudChallenge",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newFraudChallenge",
+          "type": "address"
+        }
+      ],
+      "name": "SetFraudChallengeEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newFraudChallenge",
+          "type": "address"
+        }
+      ],
+      "name": "setFraudChallenge",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {FraudChallenge} from \"./FraudChallenge.sol\";\n\n/**\n * @title FraudChallengable\n * @notice An ownable that has a fraud challenge property\n */\ncontract FraudChallengable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    FraudChallenge public fraudChallenge;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetFraudChallengeEvent(FraudChallenge oldFraudChallenge, FraudChallenge newFraudChallenge);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the fraud challenge contract\n    /// @param newFraudChallenge The (address of) FraudChallenge contract instance\n    function setFraudChallenge(FraudChallenge newFraudChallenge)\n    public\n    onlyDeployer\n    notNullAddress(newFraudChallenge)\n    notSameAddresses(newFraudChallenge, fraudChallenge)\n    {\n        // Set new fraud challenge\n        FraudChallenge oldFraudChallenge = fraudChallenge;\n        fraudChallenge = newFraudChallenge;\n\n        // Emit event\n        emit SetFraudChallengeEvent(oldFraudChallenge, newFraudChallenge);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier fraudChallengeInitialized() {\n        require(fraudChallenge != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/FraudChallengable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/FraudChallengable.sol",
+    "exportedSymbols": {
+      "FraudChallengable": [
+        15296
+      ]
+    },
+    "id": 15297,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 15241,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:35"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 15243,
+        "nodeType": "ImportDirective",
+        "scope": 15297,
+        "sourceUnit": 25427,
+        "src": "148:38:35",
+        "symbolAliases": [
+          {
+            "foreign": 15242,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/FraudChallenge.sol",
+        "file": "./FraudChallenge.sol",
+        "id": 15245,
+        "nodeType": "ImportDirective",
+        "scope": 15297,
+        "sourceUnit": 15585,
+        "src": "187:52:35",
+        "symbolAliases": [
+          {
+            "foreign": 15244,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 15246,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "365:7:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 15247,
+            "nodeType": "InheritanceSpecifier",
+            "src": "365:7:35"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title FraudChallengable\n@notice An ownable that has a fraud challenge property",
+        "fullyImplemented": false,
+        "id": 15296,
+        "linearizedBaseContracts": [
+          15296,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "FraudChallengable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 15249,
+            "name": "fraudChallenge",
+            "nodeType": "VariableDeclaration",
+            "scope": 15296,
+            "src": "524:36:35",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+              "typeString": "contract FraudChallenge"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 15248,
+              "name": "FraudChallenge",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 15584,
+              "src": "524:14:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                "typeString": "contract FraudChallenge"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 15255,
+            "name": "SetFraudChallengeEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 15254,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15251,
+                  "indexed": false,
+                  "name": "oldFraudChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15255,
+                  "src": "738:32:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                    "typeString": "contract FraudChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 15250,
+                    "name": "FraudChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 15584,
+                    "src": "738:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15253,
+                  "indexed": false,
+                  "name": "newFraudChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15255,
+                  "src": "772:32:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                    "typeString": "contract FraudChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 15252,
+                    "name": "FraudChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 15584,
+                    "src": "772:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "737:68:35"
+            },
+            "src": "709:97:35"
+          },
+          {
+            "body": {
+              "id": 15282,
+              "nodeType": "Block",
+              "src": "1276:243:35",
+              "statements": [
+                {
+                  "assignments": [
+                    15270
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 15270,
+                      "name": "oldFraudChallenge",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 15283,
+                      "src": "1321:32:35",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                        "typeString": "contract FraudChallenge"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 15269,
+                        "name": "FraudChallenge",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 15584,
+                        "src": "1321:14:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 15272,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 15271,
+                    "name": "fraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15249,
+                    "src": "1356:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1321:49:35"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 15275,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 15273,
+                      "name": "fraudChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 15249,
+                      "src": "1380:14:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                        "typeString": "contract FraudChallenge"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 15274,
+                      "name": "newFraudChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 15257,
+                      "src": "1397:17:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                        "typeString": "contract FraudChallenge"
+                      }
+                    },
+                    "src": "1380:34:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "id": 15276,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1380:34:35"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 15278,
+                        "name": "oldFraudChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 15270,
+                        "src": "1475:17:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 15279,
+                        "name": "newFraudChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 15257,
+                        "src": "1494:17:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      ],
+                      "id": 15277,
+                      "name": "SetFraudChallengeEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 15255,
+                      "src": "1452:22:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_FraudChallenge_$15584_$_t_contract$_FraudChallenge_$15584_$returns$__$",
+                        "typeString": "function (contract FraudChallenge,contract FraudChallenge)"
+                      }
+                    },
+                    "id": 15280,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1452:60:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 15281,
+                  "nodeType": "EmitStatement",
+                  "src": "1447:65:35"
+                }
+              ]
+            },
+            "documentation": "@notice Set the fraud challenge contract\n @param newFraudChallenge The (address of) FraudChallenge contract instance",
+            "id": 15283,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 15260,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 15259,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1165:12:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1165:12:35"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 15262,
+                    "name": "newFraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15257,
+                    "src": "1197:17:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  }
+                ],
+                "id": 15263,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 15261,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1182:14:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1182:33:35"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 15265,
+                    "name": "newFraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15257,
+                    "src": "1237:17:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 15266,
+                    "name": "fraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15249,
+                    "src": "1256:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  }
+                ],
+                "id": 15267,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 15264,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1220:16:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1220:51:35"
+              }
+            ],
+            "name": "setFraudChallenge",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15258,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15257,
+                  "name": "newFraudChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15283,
+                  "src": "1116:32:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                    "typeString": "contract FraudChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 15256,
+                    "name": "FraudChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 15584,
+                    "src": "1116:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1115:34:35"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 15268,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1276:0:35"
+            },
+            "scope": 15296,
+            "src": "1089:430:35",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 15294,
+              "nodeType": "Block",
+              "src": "1707:65:35",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 15290,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 15286,
+                          "name": "fraudChallenge",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 15249,
+                          "src": "1725:14:35",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                            "typeString": "contract FraudChallenge"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 15288,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1751:1:35",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 15287,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1743:7:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 15289,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1743:10:35",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1725:28:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 15285,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1717:7:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 15291,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1717:37:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 15292,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1717:37:35"
+                },
+                {
+                  "id": 15293,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1764:1:35"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 15295,
+            "name": "fraudChallengeInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 15284,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1704:2:35"
+            },
+            "src": "1670:102:35",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 15297,
+        "src": "335:1439:35"
+      }
+    ],
+    "src": "122:1653:35"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/FraudChallengable.sol",
+    "exportedSymbols": {
+      "FraudChallengable": [
+        15296
+      ]
+    },
+    "id": 15297,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 15241,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:35"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 15243,
+        "nodeType": "ImportDirective",
+        "scope": 15297,
+        "sourceUnit": 25427,
+        "src": "148:38:35",
+        "symbolAliases": [
+          {
+            "foreign": 15242,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/FraudChallenge.sol",
+        "file": "./FraudChallenge.sol",
+        "id": 15245,
+        "nodeType": "ImportDirective",
+        "scope": 15297,
+        "sourceUnit": 15585,
+        "src": "187:52:35",
+        "symbolAliases": [
+          {
+            "foreign": 15244,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 15246,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "365:7:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 15247,
+            "nodeType": "InheritanceSpecifier",
+            "src": "365:7:35"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title FraudChallengable\n@notice An ownable that has a fraud challenge property",
+        "fullyImplemented": false,
+        "id": 15296,
+        "linearizedBaseContracts": [
+          15296,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "FraudChallengable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 15249,
+            "name": "fraudChallenge",
+            "nodeType": "VariableDeclaration",
+            "scope": 15296,
+            "src": "524:36:35",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+              "typeString": "contract FraudChallenge"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 15248,
+              "name": "FraudChallenge",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 15584,
+              "src": "524:14:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                "typeString": "contract FraudChallenge"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 15255,
+            "name": "SetFraudChallengeEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 15254,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15251,
+                  "indexed": false,
+                  "name": "oldFraudChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15255,
+                  "src": "738:32:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                    "typeString": "contract FraudChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 15250,
+                    "name": "FraudChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 15584,
+                    "src": "738:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15253,
+                  "indexed": false,
+                  "name": "newFraudChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15255,
+                  "src": "772:32:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                    "typeString": "contract FraudChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 15252,
+                    "name": "FraudChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 15584,
+                    "src": "772:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "737:68:35"
+            },
+            "src": "709:97:35"
+          },
+          {
+            "body": {
+              "id": 15282,
+              "nodeType": "Block",
+              "src": "1276:243:35",
+              "statements": [
+                {
+                  "assignments": [
+                    15270
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 15270,
+                      "name": "oldFraudChallenge",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 15283,
+                      "src": "1321:32:35",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                        "typeString": "contract FraudChallenge"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 15269,
+                        "name": "FraudChallenge",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 15584,
+                        "src": "1321:14:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 15272,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 15271,
+                    "name": "fraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15249,
+                    "src": "1356:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1321:49:35"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 15275,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 15273,
+                      "name": "fraudChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 15249,
+                      "src": "1380:14:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                        "typeString": "contract FraudChallenge"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 15274,
+                      "name": "newFraudChallenge",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 15257,
+                      "src": "1397:17:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                        "typeString": "contract FraudChallenge"
+                      }
+                    },
+                    "src": "1380:34:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "id": 15276,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1380:34:35"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 15278,
+                        "name": "oldFraudChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 15270,
+                        "src": "1475:17:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 15279,
+                        "name": "newFraudChallenge",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 15257,
+                        "src": "1494:17:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                          "typeString": "contract FraudChallenge"
+                        }
+                      ],
+                      "id": 15277,
+                      "name": "SetFraudChallengeEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 15255,
+                      "src": "1452:22:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_FraudChallenge_$15584_$_t_contract$_FraudChallenge_$15584_$returns$__$",
+                        "typeString": "function (contract FraudChallenge,contract FraudChallenge)"
+                      }
+                    },
+                    "id": 15280,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1452:60:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 15281,
+                  "nodeType": "EmitStatement",
+                  "src": "1447:65:35"
+                }
+              ]
+            },
+            "documentation": "@notice Set the fraud challenge contract\n @param newFraudChallenge The (address of) FraudChallenge contract instance",
+            "id": 15283,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 15260,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 15259,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1165:12:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1165:12:35"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 15262,
+                    "name": "newFraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15257,
+                    "src": "1197:17:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  }
+                ],
+                "id": 15263,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 15261,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1182:14:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1182:33:35"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 15265,
+                    "name": "newFraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15257,
+                    "src": "1237:17:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 15266,
+                    "name": "fraudChallenge",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 15249,
+                    "src": "1256:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  }
+                ],
+                "id": 15267,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 15264,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1220:16:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1220:51:35"
+              }
+            ],
+            "name": "setFraudChallenge",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15258,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15257,
+                  "name": "newFraudChallenge",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15283,
+                  "src": "1116:32:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                    "typeString": "contract FraudChallenge"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 15256,
+                    "name": "FraudChallenge",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 15584,
+                    "src": "1116:14:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                      "typeString": "contract FraudChallenge"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1115:34:35"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 15268,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1276:0:35"
+            },
+            "scope": 15296,
+            "src": "1089:430:35",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 15294,
+              "nodeType": "Block",
+              "src": "1707:65:35",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 15290,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 15286,
+                          "name": "fraudChallenge",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 15249,
+                          "src": "1725:14:35",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_FraudChallenge_$15584",
+                            "typeString": "contract FraudChallenge"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 15288,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1751:1:35",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 15287,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1743:7:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 15289,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1743:10:35",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1725:28:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 15285,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1717:7:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 15291,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1717:37:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 15292,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1717:37:35"
+                },
+                {
+                  "id": 15293,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1764:1:35"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 15295,
+            "name": "fraudChallengeInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 15284,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1704:2:35"
+            },
+            "src": "1670:102:35",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 15297,
+        "src": "335:1439:35"
+      }
+    ],
+    "src": "122:1653:35"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:36.937Z"
+}

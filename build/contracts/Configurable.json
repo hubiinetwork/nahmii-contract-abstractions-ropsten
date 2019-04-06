@@ -1,0 +1,1601 @@
+{
+  "contractName": "Configurable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "configuration",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldConfiguration",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newConfiguration",
+          "type": "address"
+        }
+      ],
+      "name": "SetConfigurationEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newConfiguration",
+          "type": "address"
+        }
+      ],
+      "name": "setConfiguration",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {Configuration} from \"./Configuration.sol\";\n\n/**\n * @title Benefactor\n * @notice An ownable that has a client fund property\n */\ncontract Configurable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    Configuration public configuration;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetConfigurationEvent(Configuration oldConfiguration, Configuration newConfiguration);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the configuration contract\n    /// @param newConfiguration The (address of) Configuration contract instance\n    function setConfiguration(Configuration newConfiguration)\n    public\n    onlyDeployer\n    notNullAddress(newConfiguration)\n    notSameAddresses(newConfiguration, configuration)\n    {\n        // Set new configuration\n        Configuration oldConfiguration = configuration;\n        configuration = newConfiguration;\n\n        // Emit event\n        emit SetConfigurationEvent(oldConfiguration, newConfiguration);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier configurationInitialized() {\n        require(configuration != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/Configurable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configurable.sol",
+    "exportedSymbols": {
+      "Configurable": [
+        5788
+      ]
+    },
+    "id": 5789,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5733,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:19"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 5735,
+        "nodeType": "ImportDirective",
+        "scope": 5789,
+        "sourceUnit": 25427,
+        "src": "148:38:19",
+        "symbolAliases": [
+          {
+            "foreign": 5734,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configuration.sol",
+        "file": "./Configuration.sol",
+        "id": 5737,
+        "nodeType": "ImportDirective",
+        "scope": 5789,
+        "sourceUnit": 7173,
+        "src": "187:50:19",
+        "symbolAliases": [
+          {
+            "foreign": 5736,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5738,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "347:7:19",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 5739,
+            "nodeType": "InheritanceSpecifier",
+            "src": "347:7:19"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title Benefactor\n@notice An ownable that has a client fund property",
+        "fullyImplemented": false,
+        "id": 5788,
+        "linearizedBaseContracts": [
+          5788,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "Configurable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 5741,
+            "name": "configuration",
+            "nodeType": "VariableDeclaration",
+            "scope": 5788,
+            "src": "506:34:19",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_Configuration_$7172",
+              "typeString": "contract Configuration"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 5740,
+              "name": "Configuration",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 7172,
+              "src": "506:13:19",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Configuration_$7172",
+                "typeString": "contract Configuration"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5747,
+            "name": "SetConfigurationEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5746,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5743,
+                  "indexed": false,
+                  "name": "oldConfiguration",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5747,
+                  "src": "717:30:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_Configuration_$7172",
+                    "typeString": "contract Configuration"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5742,
+                    "name": "Configuration",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 7172,
+                    "src": "717:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5745,
+                  "indexed": false,
+                  "name": "newConfiguration",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5747,
+                  "src": "749:30:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_Configuration_$7172",
+                    "typeString": "contract Configuration"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5744,
+                    "name": "Configuration",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 7172,
+                    "src": "749:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "716:64:19"
+            },
+            "src": "689:92:19"
+          },
+          {
+            "body": {
+              "id": 5774,
+              "nodeType": "Block",
+              "src": "1241:233:19",
+              "statements": [
+                {
+                  "assignments": [
+                    5762
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 5762,
+                      "name": "oldConfiguration",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 5775,
+                      "src": "1284:30:19",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Configuration_$7172",
+                        "typeString": "contract Configuration"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5761,
+                        "name": "Configuration",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 7172,
+                        "src": "1284:13:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 5764,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 5763,
+                    "name": "configuration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5741,
+                    "src": "1317:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1284:46:19"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5767,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5765,
+                      "name": "configuration",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5741,
+                      "src": "1340:13:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Configuration_$7172",
+                        "typeString": "contract Configuration"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 5766,
+                      "name": "newConfiguration",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5749,
+                      "src": "1356:16:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Configuration_$7172",
+                        "typeString": "contract Configuration"
+                      }
+                    },
+                    "src": "1340:32:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "id": 5768,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1340:32:19"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5770,
+                        "name": "oldConfiguration",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5762,
+                        "src": "1432:16:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5771,
+                        "name": "newConfiguration",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5749,
+                        "src": "1450:16:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      ],
+                      "id": 5769,
+                      "name": "SetConfigurationEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5747,
+                      "src": "1410:21:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_Configuration_$7172_$_t_contract$_Configuration_$7172_$returns$__$",
+                        "typeString": "function (contract Configuration,contract Configuration)"
+                      }
+                    },
+                    "id": 5772,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1410:57:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5773,
+                  "nodeType": "EmitStatement",
+                  "src": "1405:62:19"
+                }
+              ]
+            },
+            "documentation": "@notice Set the configuration contract\n @param newConfiguration The (address of) Configuration contract instance",
+            "id": 5775,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5752,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5751,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1133:12:19",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1133:12:19"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5754,
+                    "name": "newConfiguration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5749,
+                    "src": "1165:16:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  }
+                ],
+                "id": 5755,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5753,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1150:14:19",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1150:32:19"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5757,
+                    "name": "newConfiguration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5749,
+                    "src": "1204:16:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 5758,
+                    "name": "configuration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5741,
+                    "src": "1222:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  }
+                ],
+                "id": 5759,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5756,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1187:16:19",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1187:49:19"
+              }
+            ],
+            "name": "setConfiguration",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5750,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5749,
+                  "name": "newConfiguration",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5775,
+                  "src": "1086:30:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_Configuration_$7172",
+                    "typeString": "contract Configuration"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5748,
+                    "name": "Configuration",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 7172,
+                    "src": "1086:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1085:32:19"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5760,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1241:0:19"
+            },
+            "scope": 5788,
+            "src": "1060:414:19",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5786,
+              "nodeType": "Block",
+              "src": "1661:64:19",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 5782,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 5778,
+                          "name": "configuration",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5741,
+                          "src": "1679:13:19",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Configuration_$7172",
+                            "typeString": "contract Configuration"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 5780,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1704:1:19",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 5779,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1696:7:19",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 5781,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1696:10:19",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1679:27:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5777,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1671:7:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5783,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1671:36:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5784,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1671:36:19"
+                },
+                {
+                  "id": 5785,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1717:1:19"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5787,
+            "name": "configurationInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5776,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1658:2:19"
+            },
+            "src": "1625:100:19",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5789,
+        "src": "322:1405:19"
+      }
+    ],
+    "src": "122:1606:19"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configurable.sol",
+    "exportedSymbols": {
+      "Configurable": [
+        5788
+      ]
+    },
+    "id": 5789,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5733,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:19"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 5735,
+        "nodeType": "ImportDirective",
+        "scope": 5789,
+        "sourceUnit": 25427,
+        "src": "148:38:19",
+        "symbolAliases": [
+          {
+            "foreign": 5734,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configuration.sol",
+        "file": "./Configuration.sol",
+        "id": 5737,
+        "nodeType": "ImportDirective",
+        "scope": 5789,
+        "sourceUnit": 7173,
+        "src": "187:50:19",
+        "symbolAliases": [
+          {
+            "foreign": 5736,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5738,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "347:7:19",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 5739,
+            "nodeType": "InheritanceSpecifier",
+            "src": "347:7:19"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title Benefactor\n@notice An ownable that has a client fund property",
+        "fullyImplemented": false,
+        "id": 5788,
+        "linearizedBaseContracts": [
+          5788,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "Configurable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 5741,
+            "name": "configuration",
+            "nodeType": "VariableDeclaration",
+            "scope": 5788,
+            "src": "506:34:19",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_Configuration_$7172",
+              "typeString": "contract Configuration"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 5740,
+              "name": "Configuration",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 7172,
+              "src": "506:13:19",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Configuration_$7172",
+                "typeString": "contract Configuration"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5747,
+            "name": "SetConfigurationEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5746,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5743,
+                  "indexed": false,
+                  "name": "oldConfiguration",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5747,
+                  "src": "717:30:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_Configuration_$7172",
+                    "typeString": "contract Configuration"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5742,
+                    "name": "Configuration",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 7172,
+                    "src": "717:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5745,
+                  "indexed": false,
+                  "name": "newConfiguration",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5747,
+                  "src": "749:30:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_Configuration_$7172",
+                    "typeString": "contract Configuration"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5744,
+                    "name": "Configuration",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 7172,
+                    "src": "749:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "716:64:19"
+            },
+            "src": "689:92:19"
+          },
+          {
+            "body": {
+              "id": 5774,
+              "nodeType": "Block",
+              "src": "1241:233:19",
+              "statements": [
+                {
+                  "assignments": [
+                    5762
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 5762,
+                      "name": "oldConfiguration",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 5775,
+                      "src": "1284:30:19",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Configuration_$7172",
+                        "typeString": "contract Configuration"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5761,
+                        "name": "Configuration",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 7172,
+                        "src": "1284:13:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 5764,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 5763,
+                    "name": "configuration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5741,
+                    "src": "1317:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1284:46:19"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5767,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5765,
+                      "name": "configuration",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5741,
+                      "src": "1340:13:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Configuration_$7172",
+                        "typeString": "contract Configuration"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 5766,
+                      "name": "newConfiguration",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5749,
+                      "src": "1356:16:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Configuration_$7172",
+                        "typeString": "contract Configuration"
+                      }
+                    },
+                    "src": "1340:32:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "id": 5768,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1340:32:19"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5770,
+                        "name": "oldConfiguration",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5762,
+                        "src": "1432:16:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5771,
+                        "name": "newConfiguration",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5749,
+                        "src": "1450:16:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_Configuration_$7172",
+                          "typeString": "contract Configuration"
+                        }
+                      ],
+                      "id": 5769,
+                      "name": "SetConfigurationEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5747,
+                      "src": "1410:21:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_Configuration_$7172_$_t_contract$_Configuration_$7172_$returns$__$",
+                        "typeString": "function (contract Configuration,contract Configuration)"
+                      }
+                    },
+                    "id": 5772,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1410:57:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5773,
+                  "nodeType": "EmitStatement",
+                  "src": "1405:62:19"
+                }
+              ]
+            },
+            "documentation": "@notice Set the configuration contract\n @param newConfiguration The (address of) Configuration contract instance",
+            "id": 5775,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5752,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5751,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1133:12:19",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1133:12:19"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5754,
+                    "name": "newConfiguration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5749,
+                    "src": "1165:16:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  }
+                ],
+                "id": 5755,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5753,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1150:14:19",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1150:32:19"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5757,
+                    "name": "newConfiguration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5749,
+                    "src": "1204:16:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 5758,
+                    "name": "configuration",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5741,
+                    "src": "1222:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  }
+                ],
+                "id": 5759,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5756,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1187:16:19",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1187:49:19"
+              }
+            ],
+            "name": "setConfiguration",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5750,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5749,
+                  "name": "newConfiguration",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5775,
+                  "src": "1086:30:19",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_Configuration_$7172",
+                    "typeString": "contract Configuration"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5748,
+                    "name": "Configuration",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 7172,
+                    "src": "1086:13:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Configuration_$7172",
+                      "typeString": "contract Configuration"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1085:32:19"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5760,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1241:0:19"
+            },
+            "scope": 5788,
+            "src": "1060:414:19",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5786,
+              "nodeType": "Block",
+              "src": "1661:64:19",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 5782,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 5778,
+                          "name": "configuration",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5741,
+                          "src": "1679:13:19",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Configuration_$7172",
+                            "typeString": "contract Configuration"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 5780,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1704:1:19",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 5779,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1696:7:19",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 5781,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1696:10:19",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1679:27:19",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5777,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1671:7:19",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5783,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1671:36:19",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5784,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1671:36:19"
+                },
+                {
+                  "id": 5785,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1717:1:19"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5787,
+            "name": "configurationInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5776,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1658:2:19"
+            },
+            "src": "1625:100:19",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5789,
+        "src": "322:1405:19"
+      }
+    ],
+    "src": "122:1606:19"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:36.879Z"
+}

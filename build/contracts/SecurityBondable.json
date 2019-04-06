@@ -1,0 +1,1601 @@
+{
+  "contractName": "SecurityBondable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "securityBond",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldSecurityBond",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newSecurityBond",
+          "type": "address"
+        }
+      ],
+      "name": "SetSecurityBondEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newSecurityBond",
+          "type": "address"
+        }
+      ],
+      "name": "setSecurityBond",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {SecurityBond} from \"./SecurityBond.sol\";\n\n/**\n * @title SecurityBondable\n * @notice An ownable that has a security bond property\n */\ncontract SecurityBondable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    SecurityBond public securityBond;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetSecurityBondEvent(SecurityBond oldSecurityBond, SecurityBond newSecurityBond);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the security bond contract\n    /// @param newSecurityBond The (address of) SecurityBond contract instance\n    function setSecurityBond(SecurityBond newSecurityBond)\n    public\n    onlyDeployer\n    notNullAddress(newSecurityBond)\n    notSameAddresses(newSecurityBond, securityBond)\n    {\n        //set new security bond\n        SecurityBond oldSecurityBond = securityBond;\n        securityBond = newSecurityBond;\n\n        // Emit event\n        emit SetSecurityBondEvent(oldSecurityBond, newSecurityBond);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier securityBondInitialized() {\n        require(securityBond != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/SecurityBondable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SecurityBondable.sol",
+    "exportedSymbols": {
+      "SecurityBondable": [
+        31547
+      ]
+    },
+    "id": 31548,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 31492,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:74"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 31494,
+        "nodeType": "ImportDirective",
+        "scope": 31548,
+        "sourceUnit": 25427,
+        "src": "148:38:74",
+        "symbolAliases": [
+          {
+            "foreign": 31493,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SecurityBond.sol",
+        "file": "./SecurityBond.sol",
+        "id": 31496,
+        "nodeType": "ImportDirective",
+        "scope": 31548,
+        "sourceUnit": 31491,
+        "src": "187:48:74",
+        "symbolAliases": [
+          {
+            "foreign": 31495,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 31497,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "357:7:74",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 31498,
+            "nodeType": "InheritanceSpecifier",
+            "src": "357:7:74"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title SecurityBondable\n@notice An ownable that has a security bond property",
+        "fullyImplemented": false,
+        "id": 31547,
+        "linearizedBaseContracts": [
+          31547,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "SecurityBondable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 31500,
+            "name": "securityBond",
+            "nodeType": "VariableDeclaration",
+            "scope": 31547,
+            "src": "516:32:74",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_SecurityBond_$31490",
+              "typeString": "contract SecurityBond"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 31499,
+              "name": "SecurityBond",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 31490,
+              "src": "516:12:74",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                "typeString": "contract SecurityBond"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 31506,
+            "name": "SetSecurityBondEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 31505,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 31502,
+                  "indexed": false,
+                  "name": "oldSecurityBond",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 31506,
+                  "src": "724:28:74",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                    "typeString": "contract SecurityBond"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 31501,
+                    "name": "SecurityBond",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 31490,
+                    "src": "724:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 31504,
+                  "indexed": false,
+                  "name": "newSecurityBond",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 31506,
+                  "src": "754:28:74",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                    "typeString": "contract SecurityBond"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 31503,
+                    "name": "SecurityBond",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 31490,
+                    "src": "754:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "723:60:74"
+            },
+            "src": "697:87:74"
+          },
+          {
+            "body": {
+              "id": 31533,
+              "nodeType": "Block",
+              "src": "1236:224:74",
+              "statements": [
+                {
+                  "assignments": [
+                    31521
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 31521,
+                      "name": "oldSecurityBond",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 31534,
+                      "src": "1278:28:74",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                        "typeString": "contract SecurityBond"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 31520,
+                        "name": "SecurityBond",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 31490,
+                        "src": "1278:12:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 31523,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 31522,
+                    "name": "securityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31500,
+                    "src": "1309:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1278:43:74"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 31526,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 31524,
+                      "name": "securityBond",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 31500,
+                      "src": "1331:12:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                        "typeString": "contract SecurityBond"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 31525,
+                      "name": "newSecurityBond",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 31508,
+                      "src": "1346:15:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                        "typeString": "contract SecurityBond"
+                      }
+                    },
+                    "src": "1331:30:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "id": 31527,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1331:30:74"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 31529,
+                        "name": "oldSecurityBond",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 31521,
+                        "src": "1420:15:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 31530,
+                        "name": "newSecurityBond",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 31508,
+                        "src": "1437:15:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      ],
+                      "id": 31528,
+                      "name": "SetSecurityBondEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 31506,
+                      "src": "1399:20:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_SecurityBond_$31490_$_t_contract$_SecurityBond_$31490_$returns$__$",
+                        "typeString": "function (contract SecurityBond,contract SecurityBond)"
+                      }
+                    },
+                    "id": 31531,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1399:54:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 31532,
+                  "nodeType": "EmitStatement",
+                  "src": "1394:59:74"
+                }
+              ]
+            },
+            "documentation": "@notice Set the security bond contract\n @param newSecurityBond The (address of) SecurityBond contract instance",
+            "id": 31534,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 31511,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 31510,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1131:12:74",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1131:12:74"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 31513,
+                    "name": "newSecurityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31508,
+                    "src": "1163:15:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  }
+                ],
+                "id": 31514,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 31512,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1148:14:74",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1148:31:74"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 31516,
+                    "name": "newSecurityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31508,
+                    "src": "1201:15:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 31517,
+                    "name": "securityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31500,
+                    "src": "1218:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  }
+                ],
+                "id": 31518,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 31515,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1184:16:74",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1184:47:74"
+              }
+            ],
+            "name": "setSecurityBond",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 31509,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 31508,
+                  "name": "newSecurityBond",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 31534,
+                  "src": "1086:28:74",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                    "typeString": "contract SecurityBond"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 31507,
+                    "name": "SecurityBond",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 31490,
+                    "src": "1086:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1085:30:74"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 31519,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1236:0:74"
+            },
+            "scope": 31547,
+            "src": "1061:399:74",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 31545,
+              "nodeType": "Block",
+              "src": "1646:63:74",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 31541,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 31537,
+                          "name": "securityBond",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 31500,
+                          "src": "1664:12:74",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                            "typeString": "contract SecurityBond"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 31539,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1688:1:74",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 31538,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1680:7:74",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 31540,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1680:10:74",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1664:26:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 31536,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1656:7:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 31542,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1656:35:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 31543,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1656:35:74"
+                },
+                {
+                  "id": 31544,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1701:1:74"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 31546,
+            "name": "securityBondInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 31535,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1643:2:74"
+            },
+            "src": "1611:98:74",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 31548,
+        "src": "328:1383:74"
+      }
+    ],
+    "src": "122:1590:74"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SecurityBondable.sol",
+    "exportedSymbols": {
+      "SecurityBondable": [
+        31547
+      ]
+    },
+    "id": 31548,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 31492,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:74"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 31494,
+        "nodeType": "ImportDirective",
+        "scope": 31548,
+        "sourceUnit": 25427,
+        "src": "148:38:74",
+        "symbolAliases": [
+          {
+            "foreign": 31493,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SecurityBond.sol",
+        "file": "./SecurityBond.sol",
+        "id": 31496,
+        "nodeType": "ImportDirective",
+        "scope": 31548,
+        "sourceUnit": 31491,
+        "src": "187:48:74",
+        "symbolAliases": [
+          {
+            "foreign": 31495,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 31497,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "357:7:74",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 31498,
+            "nodeType": "InheritanceSpecifier",
+            "src": "357:7:74"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title SecurityBondable\n@notice An ownable that has a security bond property",
+        "fullyImplemented": false,
+        "id": 31547,
+        "linearizedBaseContracts": [
+          31547,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "SecurityBondable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 31500,
+            "name": "securityBond",
+            "nodeType": "VariableDeclaration",
+            "scope": 31547,
+            "src": "516:32:74",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_SecurityBond_$31490",
+              "typeString": "contract SecurityBond"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 31499,
+              "name": "SecurityBond",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 31490,
+              "src": "516:12:74",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                "typeString": "contract SecurityBond"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 31506,
+            "name": "SetSecurityBondEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 31505,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 31502,
+                  "indexed": false,
+                  "name": "oldSecurityBond",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 31506,
+                  "src": "724:28:74",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                    "typeString": "contract SecurityBond"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 31501,
+                    "name": "SecurityBond",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 31490,
+                    "src": "724:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 31504,
+                  "indexed": false,
+                  "name": "newSecurityBond",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 31506,
+                  "src": "754:28:74",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                    "typeString": "contract SecurityBond"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 31503,
+                    "name": "SecurityBond",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 31490,
+                    "src": "754:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "723:60:74"
+            },
+            "src": "697:87:74"
+          },
+          {
+            "body": {
+              "id": 31533,
+              "nodeType": "Block",
+              "src": "1236:224:74",
+              "statements": [
+                {
+                  "assignments": [
+                    31521
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 31521,
+                      "name": "oldSecurityBond",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 31534,
+                      "src": "1278:28:74",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                        "typeString": "contract SecurityBond"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 31520,
+                        "name": "SecurityBond",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 31490,
+                        "src": "1278:12:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 31523,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 31522,
+                    "name": "securityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31500,
+                    "src": "1309:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1278:43:74"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 31526,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 31524,
+                      "name": "securityBond",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 31500,
+                      "src": "1331:12:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                        "typeString": "contract SecurityBond"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 31525,
+                      "name": "newSecurityBond",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 31508,
+                      "src": "1346:15:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                        "typeString": "contract SecurityBond"
+                      }
+                    },
+                    "src": "1331:30:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "id": 31527,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1331:30:74"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 31529,
+                        "name": "oldSecurityBond",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 31521,
+                        "src": "1420:15:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 31530,
+                        "name": "newSecurityBond",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 31508,
+                        "src": "1437:15:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                          "typeString": "contract SecurityBond"
+                        }
+                      ],
+                      "id": 31528,
+                      "name": "SetSecurityBondEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 31506,
+                      "src": "1399:20:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_SecurityBond_$31490_$_t_contract$_SecurityBond_$31490_$returns$__$",
+                        "typeString": "function (contract SecurityBond,contract SecurityBond)"
+                      }
+                    },
+                    "id": 31531,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1399:54:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 31532,
+                  "nodeType": "EmitStatement",
+                  "src": "1394:59:74"
+                }
+              ]
+            },
+            "documentation": "@notice Set the security bond contract\n @param newSecurityBond The (address of) SecurityBond contract instance",
+            "id": 31534,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 31511,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 31510,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1131:12:74",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1131:12:74"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 31513,
+                    "name": "newSecurityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31508,
+                    "src": "1163:15:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  }
+                ],
+                "id": 31514,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 31512,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1148:14:74",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1148:31:74"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 31516,
+                    "name": "newSecurityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31508,
+                    "src": "1201:15:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 31517,
+                    "name": "securityBond",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 31500,
+                    "src": "1218:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  }
+                ],
+                "id": 31518,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 31515,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1184:16:74",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1184:47:74"
+              }
+            ],
+            "name": "setSecurityBond",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 31509,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 31508,
+                  "name": "newSecurityBond",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 31534,
+                  "src": "1086:28:74",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                    "typeString": "contract SecurityBond"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 31507,
+                    "name": "SecurityBond",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 31490,
+                    "src": "1086:12:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                      "typeString": "contract SecurityBond"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1085:30:74"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 31519,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1236:0:74"
+            },
+            "scope": 31547,
+            "src": "1061:399:74",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 31545,
+              "nodeType": "Block",
+              "src": "1646:63:74",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 31541,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 31537,
+                          "name": "securityBond",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 31500,
+                          "src": "1664:12:74",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_SecurityBond_$31490",
+                            "typeString": "contract SecurityBond"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 31539,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1688:1:74",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 31538,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1680:7:74",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 31540,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1680:10:74",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1664:26:74",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 31536,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1656:7:74",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 31542,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1656:35:74",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 31543,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1656:35:74"
+                },
+                {
+                  "id": 31544,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1701:1:74"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 31546,
+            "name": "securityBondInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 31535,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1643:2:74"
+            },
+            "src": "1611:98:74",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 31548,
+        "src": "328:1383:74"
+      }
+    ],
+    "src": "122:1590:74"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:37.038Z"
+}

@@ -1,0 +1,2138 @@
+{
+  "contractName": "WalletLockable",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "walletLockerFrozen",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "walletLocker",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldWalletLocker",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newWalletLocker",
+          "type": "address"
+        }
+      ],
+      "name": "SetWalletLockerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "FreezeWalletLockerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newWalletLocker",
+          "type": "address"
+        }
+      ],
+      "name": "setWalletLocker",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "freezeWalletLocker",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {WalletLocker} from \"./WalletLocker.sol\";\n\n/**\n * @title WalletLockable\n * @notice An ownable that has a wallet locker property\n */\ncontract WalletLockable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    WalletLocker public walletLocker;\n    bool public walletLockerFrozen;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetWalletLockerEvent(WalletLocker oldWalletLocker, WalletLocker newWalletLocker);\n    event FreezeWalletLockerEvent();\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the wallet locker contract\n    /// @param newWalletLocker The (address of) WalletLocker contract instance\n    function setWalletLocker(WalletLocker newWalletLocker)\n    public\n    onlyDeployer\n    notNullAddress(newWalletLocker)\n    notSameAddresses(newWalletLocker, walletLocker)\n    {\n        // Require that this contract has not been frozen\n        require(!walletLockerFrozen);\n\n        // Update fields\n        WalletLocker oldWalletLocker = walletLocker;\n        walletLocker = newWalletLocker;\n\n        // Emit event\n        emit SetWalletLockerEvent(oldWalletLocker, newWalletLocker);\n    }\n\n    /// @notice Freeze the balance tracker from further updates\n    /// @dev This operation can not be undone\n    function freezeWalletLocker()\n    public\n    onlyDeployer\n    {\n        walletLockerFrozen = true;\n\n        // Emit event\n        emit FreezeWalletLockerEvent();\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier walletLockerInitialized() {\n        require(walletLocker != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/WalletLockable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/WalletLockable.sol",
+    "exportedSymbols": {
+      "WalletLockable": [
+        39764
+      ]
+    },
+    "id": 39765,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 39687,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:95"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 39689,
+        "nodeType": "ImportDirective",
+        "scope": 39765,
+        "sourceUnit": 25427,
+        "src": "148:38:95",
+        "symbolAliases": [
+          {
+            "foreign": 39688,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/WalletLocker.sol",
+        "file": "./WalletLocker.sol",
+        "id": 39691,
+        "nodeType": "ImportDirective",
+        "scope": 39765,
+        "sourceUnit": 41083,
+        "src": "187:48:95",
+        "symbolAliases": [
+          {
+            "foreign": 39690,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 39692,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "353:7:95",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 39693,
+            "nodeType": "InheritanceSpecifier",
+            "src": "353:7:95"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title WalletLockable\n@notice An ownable that has a wallet locker property",
+        "fullyImplemented": false,
+        "id": 39764,
+        "linearizedBaseContracts": [
+          39764,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "WalletLockable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 39695,
+            "name": "walletLocker",
+            "nodeType": "VariableDeclaration",
+            "scope": 39764,
+            "src": "512:32:95",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_WalletLocker_$41082",
+              "typeString": "contract WalletLocker"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 39694,
+              "name": "WalletLocker",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 41082,
+              "src": "512:12:95",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                "typeString": "contract WalletLocker"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 39697,
+            "name": "walletLockerFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 39764,
+            "src": "550:30:95",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 39696,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "550:4:95",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 39703,
+            "name": "SetWalletLockerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 39702,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 39699,
+                  "indexed": false,
+                  "name": "oldWalletLocker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39703,
+                  "src": "756:28:95",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                    "typeString": "contract WalletLocker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 39698,
+                    "name": "WalletLocker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 41082,
+                    "src": "756:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 39701,
+                  "indexed": false,
+                  "name": "newWalletLocker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39703,
+                  "src": "786:28:95",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                    "typeString": "contract WalletLocker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 39700,
+                    "name": "WalletLocker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 41082,
+                    "src": "786:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "755:60:95"
+            },
+            "src": "729:87:95"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 39705,
+            "name": "FreezeWalletLockerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 39704,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "850:2:95"
+            },
+            "src": "821:32:95"
+          },
+          {
+            "body": {
+              "id": 39737,
+              "nodeType": "Block",
+              "src": "1305:314:95",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 39721,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1381:19:95",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 39720,
+                          "name": "walletLockerFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 39697,
+                          "src": "1382:18:95",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 39719,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1373:7:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 39722,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1373:28:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39723,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1373:28:95"
+                },
+                {
+                  "assignments": [
+                    39725
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 39725,
+                      "name": "oldWalletLocker",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 39738,
+                      "src": "1437:28:95",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                        "typeString": "contract WalletLocker"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 39724,
+                        "name": "WalletLocker",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 41082,
+                        "src": "1437:12:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 39727,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 39726,
+                    "name": "walletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39695,
+                    "src": "1468:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1437:43:95"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 39730,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 39728,
+                      "name": "walletLocker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39695,
+                      "src": "1490:12:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                        "typeString": "contract WalletLocker"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 39729,
+                      "name": "newWalletLocker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39707,
+                      "src": "1505:15:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                        "typeString": "contract WalletLocker"
+                      }
+                    },
+                    "src": "1490:30:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "id": 39731,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1490:30:95"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 39733,
+                        "name": "oldWalletLocker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 39725,
+                        "src": "1579:15:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 39734,
+                        "name": "newWalletLocker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 39707,
+                        "src": "1596:15:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      ],
+                      "id": 39732,
+                      "name": "SetWalletLockerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39703,
+                      "src": "1558:20:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_WalletLocker_$41082_$_t_contract$_WalletLocker_$41082_$returns$__$",
+                        "typeString": "function (contract WalletLocker,contract WalletLocker)"
+                      }
+                    },
+                    "id": 39735,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1558:54:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39736,
+                  "nodeType": "EmitStatement",
+                  "src": "1553:59:95"
+                }
+              ]
+            },
+            "documentation": "@notice Set the wallet locker contract\n @param newWalletLocker The (address of) WalletLocker contract instance",
+            "id": 39738,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 39710,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39709,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1200:12:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1200:12:95"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 39712,
+                    "name": "newWalletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39707,
+                    "src": "1232:15:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  }
+                ],
+                "id": 39713,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39711,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1217:14:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1217:31:95"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 39715,
+                    "name": "newWalletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39707,
+                    "src": "1270:15:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 39716,
+                    "name": "walletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39695,
+                    "src": "1287:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  }
+                ],
+                "id": 39717,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39714,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1253:16:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1253:47:95"
+              }
+            ],
+            "name": "setWalletLocker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 39708,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 39707,
+                  "name": "newWalletLocker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39738,
+                  "src": "1155:28:95",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                    "typeString": "contract WalletLocker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 39706,
+                    "name": "WalletLocker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 41082,
+                    "src": "1155:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1154:30:95"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 39718,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1305:0:95"
+            },
+            "scope": 39764,
+            "src": "1130:489:95",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 39750,
+              "nodeType": "Block",
+              "src": "1797:105:95",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 39745,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 39743,
+                      "name": "walletLockerFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39697,
+                      "src": "1807:18:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 39744,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1828:4:95",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1807:25:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 39746,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1807:25:95"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 39747,
+                      "name": "FreezeWalletLockerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39705,
+                      "src": "1870:23:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 39748,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1870:25:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39749,
+                  "nodeType": "EmitStatement",
+                  "src": "1865:30:95"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the balance tracker from further updates\n @dev This operation can not be undone",
+            "id": 39751,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 39741,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39740,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1780:12:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1780:12:95"
+              }
+            ],
+            "name": "freezeWalletLocker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 39739,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1762:2:95"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 39742,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1797:0:95"
+            },
+            "scope": 39764,
+            "src": "1735:167:95",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 39762,
+              "nodeType": "Block",
+              "src": "2088:63:95",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 39758,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 39754,
+                          "name": "walletLocker",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 39695,
+                          "src": "2106:12:95",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                            "typeString": "contract WalletLocker"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 39756,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2130:1:95",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 39755,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2122:7:95",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 39757,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2122:10:95",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2106:26:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 39753,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2098:7:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 39759,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2098:35:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39760,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2098:35:95"
+                },
+                {
+                  "id": 39761,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2143:1:95"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 39763,
+            "name": "walletLockerInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 39752,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2085:2:95"
+            },
+            "src": "2053:98:95",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 39765,
+        "src": "326:1827:95"
+      }
+    ],
+    "src": "122:2032:95"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/WalletLockable.sol",
+    "exportedSymbols": {
+      "WalletLockable": [
+        39764
+      ]
+    },
+    "id": 39765,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 39687,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:95"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 39689,
+        "nodeType": "ImportDirective",
+        "scope": 39765,
+        "sourceUnit": 25427,
+        "src": "148:38:95",
+        "symbolAliases": [
+          {
+            "foreign": 39688,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/WalletLocker.sol",
+        "file": "./WalletLocker.sol",
+        "id": 39691,
+        "nodeType": "ImportDirective",
+        "scope": 39765,
+        "sourceUnit": 41083,
+        "src": "187:48:95",
+        "symbolAliases": [
+          {
+            "foreign": 39690,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 39692,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "353:7:95",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 39693,
+            "nodeType": "InheritanceSpecifier",
+            "src": "353:7:95"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title WalletLockable\n@notice An ownable that has a wallet locker property",
+        "fullyImplemented": false,
+        "id": 39764,
+        "linearizedBaseContracts": [
+          39764,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "WalletLockable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 39695,
+            "name": "walletLocker",
+            "nodeType": "VariableDeclaration",
+            "scope": 39764,
+            "src": "512:32:95",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_WalletLocker_$41082",
+              "typeString": "contract WalletLocker"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 39694,
+              "name": "WalletLocker",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 41082,
+              "src": "512:12:95",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                "typeString": "contract WalletLocker"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 39697,
+            "name": "walletLockerFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 39764,
+            "src": "550:30:95",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 39696,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "550:4:95",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 39703,
+            "name": "SetWalletLockerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 39702,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 39699,
+                  "indexed": false,
+                  "name": "oldWalletLocker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39703,
+                  "src": "756:28:95",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                    "typeString": "contract WalletLocker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 39698,
+                    "name": "WalletLocker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 41082,
+                    "src": "756:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 39701,
+                  "indexed": false,
+                  "name": "newWalletLocker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39703,
+                  "src": "786:28:95",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                    "typeString": "contract WalletLocker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 39700,
+                    "name": "WalletLocker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 41082,
+                    "src": "786:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "755:60:95"
+            },
+            "src": "729:87:95"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 39705,
+            "name": "FreezeWalletLockerEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 39704,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "850:2:95"
+            },
+            "src": "821:32:95"
+          },
+          {
+            "body": {
+              "id": 39737,
+              "nodeType": "Block",
+              "src": "1305:314:95",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 39721,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1381:19:95",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 39720,
+                          "name": "walletLockerFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 39697,
+                          "src": "1382:18:95",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 39719,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1373:7:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 39722,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1373:28:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39723,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1373:28:95"
+                },
+                {
+                  "assignments": [
+                    39725
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 39725,
+                      "name": "oldWalletLocker",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 39738,
+                      "src": "1437:28:95",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                        "typeString": "contract WalletLocker"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 39724,
+                        "name": "WalletLocker",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 41082,
+                        "src": "1437:12:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 39727,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 39726,
+                    "name": "walletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39695,
+                    "src": "1468:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1437:43:95"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 39730,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 39728,
+                      "name": "walletLocker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39695,
+                      "src": "1490:12:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                        "typeString": "contract WalletLocker"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 39729,
+                      "name": "newWalletLocker",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39707,
+                      "src": "1505:15:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                        "typeString": "contract WalletLocker"
+                      }
+                    },
+                    "src": "1490:30:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "id": 39731,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1490:30:95"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 39733,
+                        "name": "oldWalletLocker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 39725,
+                        "src": "1579:15:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 39734,
+                        "name": "newWalletLocker",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 39707,
+                        "src": "1596:15:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                          "typeString": "contract WalletLocker"
+                        }
+                      ],
+                      "id": 39732,
+                      "name": "SetWalletLockerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39703,
+                      "src": "1558:20:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_WalletLocker_$41082_$_t_contract$_WalletLocker_$41082_$returns$__$",
+                        "typeString": "function (contract WalletLocker,contract WalletLocker)"
+                      }
+                    },
+                    "id": 39735,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1558:54:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39736,
+                  "nodeType": "EmitStatement",
+                  "src": "1553:59:95"
+                }
+              ]
+            },
+            "documentation": "@notice Set the wallet locker contract\n @param newWalletLocker The (address of) WalletLocker contract instance",
+            "id": 39738,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 39710,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39709,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1200:12:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1200:12:95"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 39712,
+                    "name": "newWalletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39707,
+                    "src": "1232:15:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  }
+                ],
+                "id": 39713,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39711,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1217:14:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1217:31:95"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 39715,
+                    "name": "newWalletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39707,
+                    "src": "1270:15:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 39716,
+                    "name": "walletLocker",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 39695,
+                    "src": "1287:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  }
+                ],
+                "id": 39717,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39714,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1253:16:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1253:47:95"
+              }
+            ],
+            "name": "setWalletLocker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 39708,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 39707,
+                  "name": "newWalletLocker",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39738,
+                  "src": "1155:28:95",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                    "typeString": "contract WalletLocker"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 39706,
+                    "name": "WalletLocker",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 41082,
+                    "src": "1155:12:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                      "typeString": "contract WalletLocker"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1154:30:95"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 39718,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1305:0:95"
+            },
+            "scope": 39764,
+            "src": "1130:489:95",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 39750,
+              "nodeType": "Block",
+              "src": "1797:105:95",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 39745,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 39743,
+                      "name": "walletLockerFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39697,
+                      "src": "1807:18:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 39744,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1828:4:95",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1807:25:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 39746,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1807:25:95"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 39747,
+                      "name": "FreezeWalletLockerEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 39705,
+                      "src": "1870:23:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 39748,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1870:25:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39749,
+                  "nodeType": "EmitStatement",
+                  "src": "1865:30:95"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the balance tracker from further updates\n @dev This operation can not be undone",
+            "id": 39751,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 39741,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 39740,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1780:12:95",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1780:12:95"
+              }
+            ],
+            "name": "freezeWalletLocker",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 39739,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1762:2:95"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 39742,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1797:0:95"
+            },
+            "scope": 39764,
+            "src": "1735:167:95",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 39762,
+              "nodeType": "Block",
+              "src": "2088:63:95",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 39758,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 39754,
+                          "name": "walletLocker",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 39695,
+                          "src": "2106:12:95",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_WalletLocker_$41082",
+                            "typeString": "contract WalletLocker"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 39756,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2130:1:95",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 39755,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2122:7:95",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 39757,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2122:10:95",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2106:26:95",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 39753,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2098:7:95",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 39759,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2098:35:95",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 39760,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2098:35:95"
+                },
+                {
+                  "id": 39761,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2143:1:95"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 39763,
+            "name": "walletLockerInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 39752,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2085:2:95"
+            },
+            "src": "2053:98:95",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 39765,
+        "src": "326:1827:95"
+      }
+    ],
+    "src": "122:2032:95"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:37.091Z"
+}

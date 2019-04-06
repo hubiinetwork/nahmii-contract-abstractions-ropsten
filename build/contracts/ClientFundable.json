@@ -1,0 +1,1601 @@
+{
+  "contractName": "ClientFundable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "clientFund",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldClientFund",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newClientFund",
+          "type": "address"
+        }
+      ],
+      "name": "SetClientFundEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newClientFund",
+          "type": "address"
+        }
+      ],
+      "name": "setClientFund",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {ClientFund} from \"./ClientFund.sol\";\n\n/**\n * @title ClientFundable\n * @notice An ownable that has a client fund property\n */\ncontract ClientFundable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    ClientFund public clientFund;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetClientFundEvent(ClientFund oldClientFund, ClientFund newClientFund);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the client fund contract\n    /// @param newClientFund The (address of) ClientFund contract instance\n    function setClientFund(ClientFund newClientFund) public\n    onlyDeployer\n    notNullAddress(newClientFund)\n    notSameAddresses(newClientFund, clientFund)\n    {\n        // Update field\n        ClientFund oldClientFund = clientFund;\n        clientFund = newClientFund;\n\n        // Emit event\n        emit SetClientFundEvent(oldClientFund, newClientFund);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier clientFundInitialized() {\n        require(clientFund != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/ClientFundable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ClientFundable.sol",
+    "exportedSymbols": {
+      "ClientFundable": [
+        5586
+      ]
+    },
+    "id": 5587,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5531,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:16"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 5533,
+        "nodeType": "ImportDirective",
+        "scope": 5587,
+        "sourceUnit": 25427,
+        "src": "148:38:16",
+        "symbolAliases": [
+          {
+            "foreign": 5532,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ClientFund.sol",
+        "file": "./ClientFund.sol",
+        "id": 5535,
+        "nodeType": "ImportDirective",
+        "scope": 5587,
+        "sourceUnit": 5530,
+        "src": "187:44:16",
+        "symbolAliases": [
+          {
+            "foreign": 5534,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5536,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "347:7:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 5537,
+            "nodeType": "InheritanceSpecifier",
+            "src": "347:7:16"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title ClientFundable\n@notice An ownable that has a client fund property",
+        "fullyImplemented": false,
+        "id": 5586,
+        "linearizedBaseContracts": [
+          5586,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "ClientFundable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 5539,
+            "name": "clientFund",
+            "nodeType": "VariableDeclaration",
+            "scope": 5586,
+            "src": "506:28:16",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_ClientFund_$5529",
+              "typeString": "contract ClientFund"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 5538,
+              "name": "ClientFund",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5529,
+              "src": "506:10:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ClientFund_$5529",
+                "typeString": "contract ClientFund"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5545,
+            "name": "SetClientFundEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5544,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5541,
+                  "indexed": false,
+                  "name": "oldClientFund",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5545,
+                  "src": "708:24:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ClientFund_$5529",
+                    "typeString": "contract ClientFund"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5540,
+                    "name": "ClientFund",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5529,
+                    "src": "708:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5543,
+                  "indexed": false,
+                  "name": "newClientFund",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5545,
+                  "src": "734:24:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ClientFund_$5529",
+                    "typeString": "contract ClientFund"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5542,
+                    "name": "ClientFund",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5529,
+                    "src": "734:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "707:52:16"
+            },
+            "src": "683:77:16"
+          },
+          {
+            "body": {
+              "id": 5572,
+              "nodeType": "Block",
+              "src": "1190:200:16",
+              "statements": [
+                {
+                  "assignments": [
+                    5560
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 5560,
+                      "name": "oldClientFund",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 5573,
+                      "src": "1224:24:16",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ClientFund_$5529",
+                        "typeString": "contract ClientFund"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5559,
+                        "name": "ClientFund",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 5529,
+                        "src": "1224:10:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 5562,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 5561,
+                    "name": "clientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5539,
+                    "src": "1251:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1224:37:16"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5565,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5563,
+                      "name": "clientFund",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5539,
+                      "src": "1271:10:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ClientFund_$5529",
+                        "typeString": "contract ClientFund"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 5564,
+                      "name": "newClientFund",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5547,
+                      "src": "1284:13:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ClientFund_$5529",
+                        "typeString": "contract ClientFund"
+                      }
+                    },
+                    "src": "1271:26:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "id": 5566,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1271:26:16"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5568,
+                        "name": "oldClientFund",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5560,
+                        "src": "1354:13:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5569,
+                        "name": "newClientFund",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5547,
+                        "src": "1369:13:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      ],
+                      "id": 5567,
+                      "name": "SetClientFundEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5545,
+                      "src": "1335:18:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_ClientFund_$5529_$_t_contract$_ClientFund_$5529_$returns$__$",
+                        "typeString": "function (contract ClientFund,contract ClientFund)"
+                      }
+                    },
+                    "id": 5570,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1335:48:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5571,
+                  "nodeType": "EmitStatement",
+                  "src": "1330:53:16"
+                }
+              ]
+            },
+            "documentation": "@notice Set the client fund contract\n @param newClientFund The (address of) ClientFund contract instance",
+            "id": 5573,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5550,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5549,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1091:12:16",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1091:12:16"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5552,
+                    "name": "newClientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5547,
+                    "src": "1123:13:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  }
+                ],
+                "id": 5553,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5551,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1108:14:16",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1108:29:16"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5555,
+                    "name": "newClientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5547,
+                    "src": "1159:13:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 5556,
+                    "name": "clientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5539,
+                    "src": "1174:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  }
+                ],
+                "id": 5557,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5554,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1142:16:16",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1142:43:16"
+              }
+            ],
+            "name": "setClientFund",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5548,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5547,
+                  "name": "newClientFund",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5573,
+                  "src": "1054:24:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ClientFund_$5529",
+                    "typeString": "contract ClientFund"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5546,
+                    "name": "ClientFund",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5529,
+                    "src": "1054:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1053:26:16"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5558,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1190:0:16"
+            },
+            "scope": 5586,
+            "src": "1031:359:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5584,
+              "nodeType": "Block",
+              "src": "1574:61:16",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 5580,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 5576,
+                          "name": "clientFund",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5539,
+                          "src": "1592:10:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_ClientFund_$5529",
+                            "typeString": "contract ClientFund"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 5578,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1614:1:16",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 5577,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1606:7:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 5579,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1606:10:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1592:24:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5575,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1584:7:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5581,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1584:33:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5582,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1584:33:16"
+                },
+                {
+                  "id": 5583,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1627:1:16"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5585,
+            "name": "clientFundInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5574,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1571:2:16"
+            },
+            "src": "1541:94:16",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5587,
+        "src": "320:1317:16"
+      }
+    ],
+    "src": "122:1516:16"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ClientFundable.sol",
+    "exportedSymbols": {
+      "ClientFundable": [
+        5586
+      ]
+    },
+    "id": 5587,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5531,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:16"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 5533,
+        "nodeType": "ImportDirective",
+        "scope": 5587,
+        "sourceUnit": 25427,
+        "src": "148:38:16",
+        "symbolAliases": [
+          {
+            "foreign": 5532,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ClientFund.sol",
+        "file": "./ClientFund.sol",
+        "id": 5535,
+        "nodeType": "ImportDirective",
+        "scope": 5587,
+        "sourceUnit": 5530,
+        "src": "187:44:16",
+        "symbolAliases": [
+          {
+            "foreign": 5534,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5536,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "347:7:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 5537,
+            "nodeType": "InheritanceSpecifier",
+            "src": "347:7:16"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title ClientFundable\n@notice An ownable that has a client fund property",
+        "fullyImplemented": false,
+        "id": 5586,
+        "linearizedBaseContracts": [
+          5586,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "ClientFundable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 5539,
+            "name": "clientFund",
+            "nodeType": "VariableDeclaration",
+            "scope": 5586,
+            "src": "506:28:16",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_ClientFund_$5529",
+              "typeString": "contract ClientFund"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 5538,
+              "name": "ClientFund",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5529,
+              "src": "506:10:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ClientFund_$5529",
+                "typeString": "contract ClientFund"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5545,
+            "name": "SetClientFundEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5544,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5541,
+                  "indexed": false,
+                  "name": "oldClientFund",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5545,
+                  "src": "708:24:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ClientFund_$5529",
+                    "typeString": "contract ClientFund"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5540,
+                    "name": "ClientFund",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5529,
+                    "src": "708:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5543,
+                  "indexed": false,
+                  "name": "newClientFund",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5545,
+                  "src": "734:24:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ClientFund_$5529",
+                    "typeString": "contract ClientFund"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5542,
+                    "name": "ClientFund",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5529,
+                    "src": "734:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "707:52:16"
+            },
+            "src": "683:77:16"
+          },
+          {
+            "body": {
+              "id": 5572,
+              "nodeType": "Block",
+              "src": "1190:200:16",
+              "statements": [
+                {
+                  "assignments": [
+                    5560
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 5560,
+                      "name": "oldClientFund",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 5573,
+                      "src": "1224:24:16",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ClientFund_$5529",
+                        "typeString": "contract ClientFund"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5559,
+                        "name": "ClientFund",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 5529,
+                        "src": "1224:10:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 5562,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 5561,
+                    "name": "clientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5539,
+                    "src": "1251:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1224:37:16"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5565,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5563,
+                      "name": "clientFund",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5539,
+                      "src": "1271:10:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ClientFund_$5529",
+                        "typeString": "contract ClientFund"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 5564,
+                      "name": "newClientFund",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5547,
+                      "src": "1284:13:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ClientFund_$5529",
+                        "typeString": "contract ClientFund"
+                      }
+                    },
+                    "src": "1271:26:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "id": 5566,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1271:26:16"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5568,
+                        "name": "oldClientFund",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5560,
+                        "src": "1354:13:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5569,
+                        "name": "newClientFund",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5547,
+                        "src": "1369:13:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_ClientFund_$5529",
+                          "typeString": "contract ClientFund"
+                        }
+                      ],
+                      "id": 5567,
+                      "name": "SetClientFundEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5545,
+                      "src": "1335:18:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_ClientFund_$5529_$_t_contract$_ClientFund_$5529_$returns$__$",
+                        "typeString": "function (contract ClientFund,contract ClientFund)"
+                      }
+                    },
+                    "id": 5570,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1335:48:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5571,
+                  "nodeType": "EmitStatement",
+                  "src": "1330:53:16"
+                }
+              ]
+            },
+            "documentation": "@notice Set the client fund contract\n @param newClientFund The (address of) ClientFund contract instance",
+            "id": 5573,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5550,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5549,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1091:12:16",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1091:12:16"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5552,
+                    "name": "newClientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5547,
+                    "src": "1123:13:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  }
+                ],
+                "id": 5553,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5551,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1108:14:16",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1108:29:16"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5555,
+                    "name": "newClientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5547,
+                    "src": "1159:13:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 5556,
+                    "name": "clientFund",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5539,
+                    "src": "1174:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  }
+                ],
+                "id": 5557,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5554,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1142:16:16",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1142:43:16"
+              }
+            ],
+            "name": "setClientFund",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5548,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5547,
+                  "name": "newClientFund",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5573,
+                  "src": "1054:24:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ClientFund_$5529",
+                    "typeString": "contract ClientFund"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5546,
+                    "name": "ClientFund",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5529,
+                    "src": "1054:10:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ClientFund_$5529",
+                      "typeString": "contract ClientFund"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1053:26:16"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5558,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1190:0:16"
+            },
+            "scope": 5586,
+            "src": "1031:359:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5584,
+              "nodeType": "Block",
+              "src": "1574:61:16",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 5580,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 5576,
+                          "name": "clientFund",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5539,
+                          "src": "1592:10:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_ClientFund_$5529",
+                            "typeString": "contract ClientFund"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 5578,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1614:1:16",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 5577,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1606:7:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 5579,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1606:10:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1592:24:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5575,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1584:7:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5581,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1584:33:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5582,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1584:33:16"
+                },
+                {
+                  "id": 5583,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1627:1:16"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5585,
+            "name": "clientFundInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5574,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1571:2:16"
+            },
+            "src": "1541:94:16",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5587,
+        "src": "320:1317:16"
+      }
+    ],
+    "src": "122:1516:16"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T08:24:31.827Z"
+}

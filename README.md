@@ -7,7 +7,7 @@ This package hosts contract abstractions generated from the deployment of
 the Ropsten testnet.
 
 This particular version of the package contains abstractions from 
-**[nahmii-contracts v1.0.0-ropsten.9](https://github.com/hubiinetwork/nahmii-contracts/tree/v1.0-ropsten.9)**.  
+**[nahmii-contracts v1.0.0-ropsten.10](https://github.com/hubiinetwork/nahmii-contracts/tree/v1.0-ropsten.10)**.  
 
 ## About nahmii
 

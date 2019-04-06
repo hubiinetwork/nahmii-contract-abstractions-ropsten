@@ -1,0 +1,4579 @@
+{
+  "contractName": "ValidatableV2",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "validator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldValidator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newValidator",
+          "type": "address"
+        }
+      ],
+      "name": "SetValidatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newValidator",
+          "type": "address"
+        }
+      ],
+      "name": "setValidator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {ValidatorV2} from \"./ValidatorV2.sol\";\nimport {NahmiiTypesLib} from \"./NahmiiTypesLib.sol\";\nimport {PaymentTypesLib} from \"./PaymentTypesLib.sol\";\nimport {TradeTypesLib} from \"./TradeTypesLib.sol\";\n\n/**\n * @title ValidatableV2\n * @notice An ownable that has a validator (V2) property\n */\ncontract ValidatableV2 is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    ValidatorV2 public validator;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetValidatorEvent(ValidatorV2 oldValidator, ValidatorV2 newValidator);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the validator contract\n    /// @param newValidator The (address of) Validator contract instance\n    function setValidator(ValidatorV2 newValidator)\n    public\n    onlyDeployer\n    notNullAddress(newValidator)\n    notSameAddresses(newValidator, validator)\n    {\n        //set new validator\n        ValidatorV2 oldValidator = validator;\n        validator = newValidator;\n\n        // Emit event\n        emit SetValidatorEvent(oldValidator, newValidator);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier validatorInitialized() {\n        require(validator != address(0));\n        _;\n    }\n\n    modifier onlySealedOrder(TradeTypesLib.Order order) {\n        require(validator.isGenuineOrderSeals(order));\n        _;\n    }\n\n    modifier onlyOperatorSealedOrder(TradeTypesLib.Order order) {\n        require(validator.isGenuineOrderOperatorSeal(order));\n        _;\n    }\n\n    modifier onlySealedTrade(TradeTypesLib.Trade trade) {\n        require(validator.isGenuineTradeSeal(trade));\n        _;\n    }\n\n    modifier onlyOperatorSealedPayment(PaymentTypesLib.Payment payment) {\n        require(validator.isGenuinePaymentOperatorSeal(payment));\n        _;\n    }\n\n    modifier onlySealedPayment(PaymentTypesLib.Payment payment) {\n        require(validator.isGenuinePaymentSeals(payment));\n        _;\n    }\n\n    modifier onlyTradeParty(TradeTypesLib.Trade trade, address wallet) {\n        require(validator.isTradeParty(trade, wallet));\n        _;\n    }\n\n    modifier onlyPaymentParty(PaymentTypesLib.Payment payment, address wallet) {\n        require(validator.isPaymentParty(payment, wallet));\n        _;\n    }\n\n    modifier onlyPaymentSender(PaymentTypesLib.Payment payment, address wallet) {\n        require(validator.isPaymentSender(payment, wallet));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/ValidatableV2.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ValidatableV2.sol",
+    "exportedSymbols": {
+      "ValidatableV2": [
+        36465
+      ]
+    },
+    "id": 36466,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 36291,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:92"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 36293,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 25427,
+        "src": "148:38:92",
+        "symbolAliases": [
+          {
+            "foreign": 36292,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ValidatorV2.sol",
+        "file": "./ValidatorV2.sol",
+        "id": 36295,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 39686,
+        "src": "187:46:92",
+        "symbolAliases": [
+          {
+            "foreign": 36294,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
+        "file": "./NahmiiTypesLib.sol",
+        "id": 36297,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 19539,
+        "src": "234:52:92",
+        "symbolAliases": [
+          {
+            "foreign": 36296,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentTypesLib.sol",
+        "file": "./PaymentTypesLib.sol",
+        "id": 36299,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 27946,
+        "src": "287:54:92",
+        "symbolAliases": [
+          {
+            "foreign": 36298,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeTypesLib.sol",
+        "file": "./TradeTypesLib.sol",
+        "id": 36301,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 34565,
+        "src": "342:50:92",
+        "symbolAliases": [
+          {
+            "foreign": 36300,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 36302,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "509:7:92",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 36303,
+            "nodeType": "InheritanceSpecifier",
+            "src": "509:7:92"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title ValidatableV2\n@notice An ownable that has a validator (V2) property",
+        "fullyImplemented": false,
+        "id": 36465,
+        "linearizedBaseContracts": [
+          36465,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "ValidatableV2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 36305,
+            "name": "validator",
+            "nodeType": "VariableDeclaration",
+            "scope": 36465,
+            "src": "668:28:92",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+              "typeString": "contract ValidatorV2"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 36304,
+              "name": "ValidatorV2",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 39685,
+              "src": "668:11:92",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                "typeString": "contract ValidatorV2"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 36311,
+            "name": "SetValidatorEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 36310,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36307,
+                  "indexed": false,
+                  "name": "oldValidator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36311,
+                  "src": "869:24:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                    "typeString": "contract ValidatorV2"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36306,
+                    "name": "ValidatorV2",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 39685,
+                    "src": "869:11:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36309,
+                  "indexed": false,
+                  "name": "newValidator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36311,
+                  "src": "895:24:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                    "typeString": "contract ValidatorV2"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36308,
+                    "name": "ValidatorV2",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 39685,
+                    "src": "895:11:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "868:52:92"
+            },
+            "src": "845:76:92"
+          },
+          {
+            "body": {
+              "id": 36338,
+              "nodeType": "Block",
+              "src": "1347:198:92",
+              "statements": [
+                {
+                  "assignments": [
+                    36326
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 36326,
+                      "name": "oldValidator",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 36339,
+                      "src": "1385:24:92",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                        "typeString": "contract ValidatorV2"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 36325,
+                        "name": "ValidatorV2",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 39685,
+                        "src": "1385:11:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 36328,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 36327,
+                    "name": "validator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36305,
+                    "src": "1412:9:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1385:36:92"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 36331,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 36329,
+                      "name": "validator",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 36305,
+                      "src": "1431:9:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                        "typeString": "contract ValidatorV2"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 36330,
+                      "name": "newValidator",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 36313,
+                      "src": "1443:12:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                        "typeString": "contract ValidatorV2"
+                      }
+                    },
+                    "src": "1431:24:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "id": 36332,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1431:24:92"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 36334,
+                        "name": "oldValidator",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 36326,
+                        "src": "1511:12:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 36335,
+                        "name": "newValidator",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 36313,
+                        "src": "1525:12:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      ],
+                      "id": 36333,
+                      "name": "SetValidatorEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 36311,
+                      "src": "1493:17:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_ValidatorV2_$39685_$_t_contract$_ValidatorV2_$39685_$returns$__$",
+                        "typeString": "function (contract ValidatorV2,contract ValidatorV2)"
+                      }
+                    },
+                    "id": 36336,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1493:45:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36337,
+                  "nodeType": "EmitStatement",
+                  "src": "1488:50:92"
+                }
+              ]
+            },
+            "documentation": "@notice Set the validator contract\n @param newValidator The (address of) Validator contract instance",
+            "id": 36339,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 36316,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 36315,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1251:12:92",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1251:12:92"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 36318,
+                    "name": "newValidator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36313,
+                    "src": "1283:12:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  }
+                ],
+                "id": 36319,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 36317,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1268:14:92",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1268:28:92"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 36321,
+                    "name": "newValidator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36313,
+                    "src": "1318:12:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 36322,
+                    "name": "validator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36305,
+                    "src": "1332:9:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  }
+                ],
+                "id": 36323,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 36320,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1301:16:92",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1301:41:92"
+              }
+            ],
+            "name": "setValidator",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 36314,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36313,
+                  "name": "newValidator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36339,
+                  "src": "1210:24:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                    "typeString": "contract ValidatorV2"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36312,
+                    "name": "ValidatorV2",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 39685,
+                    "src": "1210:11:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1209:26:92"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 36324,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1347:0:92"
+            },
+            "scope": 36465,
+            "src": "1188:357:92",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 36350,
+              "nodeType": "Block",
+              "src": "1728:60:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 36346,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 36342,
+                          "name": "validator",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 36305,
+                          "src": "1746:9:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                            "typeString": "contract ValidatorV2"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 36344,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1767:1:92",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 36343,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1759:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 36345,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1759:10:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1746:23:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36341,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1738:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36347,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1738:32:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36348,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1738:32:92"
+                },
+                {
+                  "id": 36349,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1780:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36351,
+            "name": "validatorInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36340,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1725:2:92"
+            },
+            "src": "1696:92:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36363,
+              "nodeType": "Block",
+              "src": "1846:73:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36358,
+                            "name": "order",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36353,
+                            "src": "1894:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36356,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "1864:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36357,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuineOrderSeals",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 37988,
+                          "src": "1864:29:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Order_$34504_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Order memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36359,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1864:36:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36355,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1856:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36360,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1856:45:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36361,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1856:45:92"
+                },
+                {
+                  "id": 36362,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1911:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36364,
+            "name": "onlySealedOrder",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36354,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36353,
+                  "name": "order",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36364,
+                  "src": "1819:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Order"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36352,
+                    "name": "TradeTypesLib.Order",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34504,
+                    "src": "1819:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Order"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1818:27:92"
+            },
+            "src": "1794:125:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36376,
+              "nodeType": "Block",
+              "src": "1985:80:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36371,
+                            "name": "order",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36366,
+                            "src": "2040:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36369,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2003:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36370,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuineOrderOperatorSeal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 37972,
+                          "src": "2003:36:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Order_$34504_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Order memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36372,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2003:43:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36368,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1995:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36373,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1995:52:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36374,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1995:52:92"
+                },
+                {
+                  "id": 36375,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2057:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36377,
+            "name": "onlyOperatorSealedOrder",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36367,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36366,
+                  "name": "order",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36377,
+                  "src": "1958:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Order"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36365,
+                    "name": "TradeTypesLib.Order",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34504,
+                    "src": "1958:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Order"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1957:27:92"
+            },
+            "src": "1925:140:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36389,
+              "nodeType": "Block",
+              "src": "2123:72:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36384,
+                            "name": "trade",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36379,
+                            "src": "2170:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36382,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2141:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36383,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuineTradeSeal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 38026,
+                          "src": "2141:28:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Trade_$34547_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Trade memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36385,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2141:35:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36381,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2133:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36386,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2133:44:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36387,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2133:44:92"
+                },
+                {
+                  "id": 36388,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2187:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36390,
+            "name": "onlySealedTrade",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36380,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36379,
+                  "name": "trade",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36390,
+                  "src": "2096:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Trade"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36378,
+                    "name": "TradeTypesLib.Trade",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34547,
+                    "src": "2096:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Trade"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2095:27:92"
+            },
+            "src": "2071:124:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36402,
+              "nodeType": "Block",
+              "src": "2269:84:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36397,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36392,
+                            "src": "2326:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36395,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2287:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36396,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuinePaymentOperatorSeal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 38111,
+                          "src": "2287:38:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Payment_$27936_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36398,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2287:47:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36394,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2279:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36399,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2279:56:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36400,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2279:56:92"
+                },
+                {
+                  "id": 36401,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2345:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36403,
+            "name": "onlyOperatorSealedPayment",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36393,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36392,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36403,
+                  "src": "2236:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36391,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2236:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2235:33:92"
+            },
+            "src": "2201:152:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36415,
+              "nodeType": "Block",
+              "src": "2419:77:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36410,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36405,
+                            "src": "2469:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36408,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2437:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36409,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuinePaymentSeals",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 38127,
+                          "src": "2437:31:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Payment_$27936_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36411,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2437:40:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36407,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2429:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36412,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2429:49:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36413,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2429:49:92"
+                },
+                {
+                  "id": 36414,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2488:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36416,
+            "name": "onlySealedPayment",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36406,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36405,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36416,
+                  "src": "2386:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36404,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2386:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2385:33:92"
+            },
+            "src": "2359:137:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36431,
+              "nodeType": "Block",
+              "src": "2569:74:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36425,
+                            "name": "trade",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36418,
+                            "src": "2610:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            }
+                          },
+                          {
+                            "argumentTypes": null,
+                            "id": 36426,
+                            "name": "wallet",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36420,
+                            "src": "2617:6:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36423,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2587:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36424,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isTradeParty",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39314,
+                          "src": "2587:22:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_pure$_t_struct$_Trade_$34547_memory_ptr_$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Trade memory,address) pure external returns (bool)"
+                          }
+                        },
+                        "id": 36427,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2587:37:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36422,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2579:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36428,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2579:46:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36429,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2579:46:92"
+                },
+                {
+                  "id": 36430,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2635:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36432,
+            "name": "onlyTradeParty",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36421,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36418,
+                  "name": "trade",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36432,
+                  "src": "2526:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Trade"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36417,
+                    "name": "TradeTypesLib.Trade",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34547,
+                    "src": "2526:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Trade"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36420,
+                  "name": "wallet",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36432,
+                  "src": "2553:14:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 36419,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2553:7:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2525:43:92"
+            },
+            "src": "2502:141:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36447,
+              "nodeType": "Block",
+              "src": "2724:78:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36441,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36434,
+                            "src": "2767:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          },
+                          {
+                            "argumentTypes": null,
+                            "id": 36442,
+                            "name": "wallet",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36436,
+                            "src": "2776:6:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36439,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2742:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36440,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isPaymentParty",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39537,
+                          "src": "2742:24:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_pure$_t_struct$_Payment_$27936_memory_ptr_$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory,address) pure external returns (bool)"
+                          }
+                        },
+                        "id": 36443,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2742:41:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36438,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2734:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36444,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2734:50:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36445,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2734:50:92"
+                },
+                {
+                  "id": 36446,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2794:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36448,
+            "name": "onlyPaymentParty",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36437,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36434,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36448,
+                  "src": "2675:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36433,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2675:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36436,
+                  "name": "wallet",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36448,
+                  "src": "2708:14:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 36435,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2708:7:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2674:49:92"
+            },
+            "src": "2649:153:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36463,
+              "nodeType": "Block",
+              "src": "2884:79:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36457,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36450,
+                            "src": "2928:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          },
+                          {
+                            "argumentTypes": null,
+                            "id": 36458,
+                            "name": "wallet",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36452,
+                            "src": "2937:6:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36455,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2902:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36456,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isPaymentSender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39553,
+                          "src": "2902:25:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_pure$_t_struct$_Payment_$27936_memory_ptr_$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory,address) pure external returns (bool)"
+                          }
+                        },
+                        "id": 36459,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2902:42:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36454,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2894:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36460,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2894:51:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36461,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2894:51:92"
+                },
+                {
+                  "id": 36462,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2955:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36464,
+            "name": "onlyPaymentSender",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36453,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36450,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36464,
+                  "src": "2835:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36449,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2835:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36452,
+                  "name": "wallet",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36464,
+                  "src": "2868:14:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 36451,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2868:7:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2834:49:92"
+            },
+            "src": "2808:155:92",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 36466,
+        "src": "483:2482:92"
+      }
+    ],
+    "src": "122:2844:92"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ValidatableV2.sol",
+    "exportedSymbols": {
+      "ValidatableV2": [
+        36465
+      ]
+    },
+    "id": 36466,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 36291,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:24:92"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 36293,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 25427,
+        "src": "148:38:92",
+        "symbolAliases": [
+          {
+            "foreign": 36292,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ValidatorV2.sol",
+        "file": "./ValidatorV2.sol",
+        "id": 36295,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 39686,
+        "src": "187:46:92",
+        "symbolAliases": [
+          {
+            "foreign": 36294,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
+        "file": "./NahmiiTypesLib.sol",
+        "id": 36297,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 19539,
+        "src": "234:52:92",
+        "symbolAliases": [
+          {
+            "foreign": 36296,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PaymentTypesLib.sol",
+        "file": "./PaymentTypesLib.sol",
+        "id": 36299,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 27946,
+        "src": "287:54:92",
+        "symbolAliases": [
+          {
+            "foreign": 36298,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeTypesLib.sol",
+        "file": "./TradeTypesLib.sol",
+        "id": 36301,
+        "nodeType": "ImportDirective",
+        "scope": 36466,
+        "sourceUnit": 34565,
+        "src": "342:50:92",
+        "symbolAliases": [
+          {
+            "foreign": 36300,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 36302,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "509:7:92",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 36303,
+            "nodeType": "InheritanceSpecifier",
+            "src": "509:7:92"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title ValidatableV2\n@notice An ownable that has a validator (V2) property",
+        "fullyImplemented": false,
+        "id": 36465,
+        "linearizedBaseContracts": [
+          36465,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "ValidatableV2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 36305,
+            "name": "validator",
+            "nodeType": "VariableDeclaration",
+            "scope": 36465,
+            "src": "668:28:92",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+              "typeString": "contract ValidatorV2"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 36304,
+              "name": "ValidatorV2",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 39685,
+              "src": "668:11:92",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                "typeString": "contract ValidatorV2"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 36311,
+            "name": "SetValidatorEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 36310,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36307,
+                  "indexed": false,
+                  "name": "oldValidator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36311,
+                  "src": "869:24:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                    "typeString": "contract ValidatorV2"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36306,
+                    "name": "ValidatorV2",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 39685,
+                    "src": "869:11:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36309,
+                  "indexed": false,
+                  "name": "newValidator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36311,
+                  "src": "895:24:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                    "typeString": "contract ValidatorV2"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36308,
+                    "name": "ValidatorV2",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 39685,
+                    "src": "895:11:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "868:52:92"
+            },
+            "src": "845:76:92"
+          },
+          {
+            "body": {
+              "id": 36338,
+              "nodeType": "Block",
+              "src": "1347:198:92",
+              "statements": [
+                {
+                  "assignments": [
+                    36326
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 36326,
+                      "name": "oldValidator",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 36339,
+                      "src": "1385:24:92",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                        "typeString": "contract ValidatorV2"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 36325,
+                        "name": "ValidatorV2",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 39685,
+                        "src": "1385:11:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 36328,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 36327,
+                    "name": "validator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36305,
+                    "src": "1412:9:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1385:36:92"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 36331,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 36329,
+                      "name": "validator",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 36305,
+                      "src": "1431:9:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                        "typeString": "contract ValidatorV2"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 36330,
+                      "name": "newValidator",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 36313,
+                      "src": "1443:12:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                        "typeString": "contract ValidatorV2"
+                      }
+                    },
+                    "src": "1431:24:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "id": 36332,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1431:24:92"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 36334,
+                        "name": "oldValidator",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 36326,
+                        "src": "1511:12:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 36335,
+                        "name": "newValidator",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 36313,
+                        "src": "1525:12:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                          "typeString": "contract ValidatorV2"
+                        }
+                      ],
+                      "id": 36333,
+                      "name": "SetValidatorEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 36311,
+                      "src": "1493:17:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_ValidatorV2_$39685_$_t_contract$_ValidatorV2_$39685_$returns$__$",
+                        "typeString": "function (contract ValidatorV2,contract ValidatorV2)"
+                      }
+                    },
+                    "id": 36336,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1493:45:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36337,
+                  "nodeType": "EmitStatement",
+                  "src": "1488:50:92"
+                }
+              ]
+            },
+            "documentation": "@notice Set the validator contract\n @param newValidator The (address of) Validator contract instance",
+            "id": 36339,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 36316,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 36315,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1251:12:92",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1251:12:92"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 36318,
+                    "name": "newValidator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36313,
+                    "src": "1283:12:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  }
+                ],
+                "id": 36319,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 36317,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1268:14:92",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1268:28:92"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 36321,
+                    "name": "newValidator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36313,
+                    "src": "1318:12:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 36322,
+                    "name": "validator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 36305,
+                    "src": "1332:9:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  }
+                ],
+                "id": 36323,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 36320,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1301:16:92",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1301:41:92"
+              }
+            ],
+            "name": "setValidator",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 36314,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36313,
+                  "name": "newValidator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36339,
+                  "src": "1210:24:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                    "typeString": "contract ValidatorV2"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36312,
+                    "name": "ValidatorV2",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 39685,
+                    "src": "1210:11:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                      "typeString": "contract ValidatorV2"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1209:26:92"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 36324,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1347:0:92"
+            },
+            "scope": 36465,
+            "src": "1188:357:92",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 36350,
+              "nodeType": "Block",
+              "src": "1728:60:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 36346,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 36342,
+                          "name": "validator",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 36305,
+                          "src": "1746:9:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                            "typeString": "contract ValidatorV2"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 36344,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1767:1:92",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 36343,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1759:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 36345,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1759:10:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1746:23:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36341,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1738:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36347,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1738:32:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36348,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1738:32:92"
+                },
+                {
+                  "id": 36349,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1780:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36351,
+            "name": "validatorInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36340,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1725:2:92"
+            },
+            "src": "1696:92:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36363,
+              "nodeType": "Block",
+              "src": "1846:73:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36358,
+                            "name": "order",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36353,
+                            "src": "1894:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36356,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "1864:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36357,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuineOrderSeals",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 37988,
+                          "src": "1864:29:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Order_$34504_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Order memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36359,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1864:36:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36355,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1856:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36360,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1856:45:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36361,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1856:45:92"
+                },
+                {
+                  "id": 36362,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1911:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36364,
+            "name": "onlySealedOrder",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36354,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36353,
+                  "name": "order",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36364,
+                  "src": "1819:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Order"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36352,
+                    "name": "TradeTypesLib.Order",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34504,
+                    "src": "1819:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Order"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1818:27:92"
+            },
+            "src": "1794:125:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36376,
+              "nodeType": "Block",
+              "src": "1985:80:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36371,
+                            "name": "order",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36366,
+                            "src": "2040:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Order memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36369,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2003:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36370,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuineOrderOperatorSeal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 37972,
+                          "src": "2003:36:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Order_$34504_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Order memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36372,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2003:43:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36368,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1995:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36373,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1995:52:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36374,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1995:52:92"
+                },
+                {
+                  "id": 36375,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2057:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36377,
+            "name": "onlyOperatorSealedOrder",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36367,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36366,
+                  "name": "order",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36377,
+                  "src": "1958:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Order"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36365,
+                    "name": "TradeTypesLib.Order",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34504,
+                    "src": "1958:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Order"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1957:27:92"
+            },
+            "src": "1925:140:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36389,
+              "nodeType": "Block",
+              "src": "2123:72:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36384,
+                            "name": "trade",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36379,
+                            "src": "2170:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36382,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2141:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36383,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuineTradeSeal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 38026,
+                          "src": "2141:28:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Trade_$34547_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Trade memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36385,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2141:35:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36381,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2133:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36386,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2133:44:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36387,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2133:44:92"
+                },
+                {
+                  "id": 36388,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2187:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36390,
+            "name": "onlySealedTrade",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36380,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36379,
+                  "name": "trade",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36390,
+                  "src": "2096:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Trade"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36378,
+                    "name": "TradeTypesLib.Trade",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34547,
+                    "src": "2096:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Trade"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2095:27:92"
+            },
+            "src": "2071:124:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36402,
+              "nodeType": "Block",
+              "src": "2269:84:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36397,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36392,
+                            "src": "2326:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36395,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2287:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36396,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuinePaymentOperatorSeal",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 38111,
+                          "src": "2287:38:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Payment_$27936_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36398,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2287:47:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36394,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2279:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36399,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2279:56:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36400,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2279:56:92"
+                },
+                {
+                  "id": 36401,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2345:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36403,
+            "name": "onlyOperatorSealedPayment",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36393,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36392,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36403,
+                  "src": "2236:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36391,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2236:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2235:33:92"
+            },
+            "src": "2201:152:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36415,
+              "nodeType": "Block",
+              "src": "2419:77:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36410,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36405,
+                            "src": "2469:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36408,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2437:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36409,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isGenuinePaymentSeals",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 38127,
+                          "src": "2437:31:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_struct$_Payment_$27936_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory) view external returns (bool)"
+                          }
+                        },
+                        "id": 36411,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2437:40:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36407,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2429:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36412,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2429:49:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36413,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2429:49:92"
+                },
+                {
+                  "id": 36414,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2488:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36416,
+            "name": "onlySealedPayment",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36406,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36405,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36416,
+                  "src": "2386:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36404,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2386:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2385:33:92"
+            },
+            "src": "2359:137:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36431,
+              "nodeType": "Block",
+              "src": "2569:74:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36425,
+                            "name": "trade",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36418,
+                            "src": "2610:5:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            }
+                          },
+                          {
+                            "argumentTypes": null,
+                            "id": 36426,
+                            "name": "wallet",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36420,
+                            "src": "2617:6:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                              "typeString": "struct TradeTypesLib.Trade memory"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36423,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2587:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36424,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isTradeParty",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39314,
+                          "src": "2587:22:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_pure$_t_struct$_Trade_$34547_memory_ptr_$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (struct TradeTypesLib.Trade memory,address) pure external returns (bool)"
+                          }
+                        },
+                        "id": 36427,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2587:37:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36422,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2579:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36428,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2579:46:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36429,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2579:46:92"
+                },
+                {
+                  "id": 36430,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2635:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36432,
+            "name": "onlyTradeParty",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36421,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36418,
+                  "name": "trade",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36432,
+                  "src": "2526:25:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeString": "struct TradeTypesLib.Trade"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36417,
+                    "name": "TradeTypesLib.Trade",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 34547,
+                    "src": "2526:19:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeString": "struct TradeTypesLib.Trade"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36420,
+                  "name": "wallet",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36432,
+                  "src": "2553:14:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 36419,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2553:7:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2525:43:92"
+            },
+            "src": "2502:141:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36447,
+              "nodeType": "Block",
+              "src": "2724:78:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36441,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36434,
+                            "src": "2767:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          },
+                          {
+                            "argumentTypes": null,
+                            "id": 36442,
+                            "name": "wallet",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36436,
+                            "src": "2776:6:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36439,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2742:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36440,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isPaymentParty",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39537,
+                          "src": "2742:24:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_pure$_t_struct$_Payment_$27936_memory_ptr_$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory,address) pure external returns (bool)"
+                          }
+                        },
+                        "id": 36443,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2742:41:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36438,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2734:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36444,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2734:50:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36445,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2734:50:92"
+                },
+                {
+                  "id": 36446,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2794:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36448,
+            "name": "onlyPaymentParty",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36437,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36434,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36448,
+                  "src": "2675:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36433,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2675:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36436,
+                  "name": "wallet",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36448,
+                  "src": "2708:14:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 36435,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2708:7:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2674:49:92"
+            },
+            "src": "2649:153:92",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 36463,
+              "nodeType": "Block",
+              "src": "2884:79:92",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 36457,
+                            "name": "payment",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36450,
+                            "src": "2928:7:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            }
+                          },
+                          {
+                            "argumentTypes": null,
+                            "id": 36458,
+                            "name": "wallet",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36452,
+                            "src": "2937:6:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                              "typeString": "struct PaymentTypesLib.Payment memory"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 36455,
+                            "name": "validator",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36305,
+                            "src": "2902:9:92",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ValidatorV2_$39685",
+                              "typeString": "contract ValidatorV2"
+                            }
+                          },
+                          "id": 36456,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isPaymentSender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 39553,
+                          "src": "2902:25:92",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_pure$_t_struct$_Payment_$27936_memory_ptr_$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (struct PaymentTypesLib.Payment memory,address) pure external returns (bool)"
+                          }
+                        },
+                        "id": 36459,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "2902:42:92",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 36454,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2894:7:92",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 36460,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2894:51:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 36461,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2894:51:92"
+                },
+                {
+                  "id": 36462,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2955:1:92"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 36464,
+            "name": "onlyPaymentSender",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 36453,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 36450,
+                  "name": "payment",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36464,
+                  "src": "2835:31:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Payment_$27936_memory_ptr",
+                    "typeString": "struct PaymentTypesLib.Payment"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 36449,
+                    "name": "PaymentTypesLib.Payment",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 27936,
+                    "src": "2835:23:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Payment_$27936_storage_ptr",
+                      "typeString": "struct PaymentTypesLib.Payment"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 36452,
+                  "name": "wallet",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 36464,
+                  "src": "2868:14:92",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 36451,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2868:7:92",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2834:49:92"
+            },
+            "src": "2808:155:92",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 36466,
+        "src": "483:2482:92"
+      }
+    ],
+    "src": "122:2844:92"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T08:24:32.531Z"
+}

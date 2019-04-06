@@ -1,0 +1,2138 @@
+{
+  "contractName": "CommunityVotable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "communityVoteFrozen",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "communityVote",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldCommunityVote",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newCommunityVote",
+          "type": "address"
+        }
+      ],
+      "name": "SetCommunityVoteEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "FreezeCommunityVoteEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newCommunityVote",
+          "type": "address"
+        }
+      ],
+      "name": "setCommunityVote",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "freezeCommunityVote",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {CommunityVote} from \"./CommunityVote.sol\";\n\n/**\n * @title CommunityVotable\n * @notice An ownable that has a community vote property\n */\ncontract CommunityVotable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    CommunityVote public communityVote;\n    bool public communityVoteFrozen;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetCommunityVoteEvent(CommunityVote oldCommunityVote, CommunityVote newCommunityVote);\n    event FreezeCommunityVoteEvent();\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the community vote contract\n    /// @param newCommunityVote The (address of) CommunityVote contract instance\n    function setCommunityVote(CommunityVote newCommunityVote) \n    public \n    onlyDeployer\n    notNullAddress(newCommunityVote)\n    notSameAddresses(newCommunityVote, communityVote)\n    {\n        require(!communityVoteFrozen);\n\n        // Set new community vote\n        CommunityVote oldCommunityVote = communityVote;\n        communityVote = newCommunityVote;\n\n        // Emit event\n        emit SetCommunityVoteEvent(oldCommunityVote, newCommunityVote);\n    }\n\n    /// @notice Freeze the community vote from further updates\n    /// @dev This operation can not be undone\n    function freezeCommunityVote()\n    public\n    onlyDeployer\n    {\n        communityVoteFrozen = true;\n\n        // Emit event\n        emit FreezeCommunityVoteEvent();\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier communityVoteInitialized() {\n        require(communityVote != address(0));\n        _;\n    }\n}\n",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/CommunityVotable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CommunityVotable.sol",
+    "exportedSymbols": {
+      "CommunityVotable": [
+        5665
+      ]
+    },
+    "id": 5666,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5588,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "121:24:17"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 5590,
+        "nodeType": "ImportDirective",
+        "scope": 5666,
+        "sourceUnit": 25427,
+        "src": "147:38:17",
+        "symbolAliases": [
+          {
+            "foreign": 5589,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CommunityVote.sol",
+        "file": "./CommunityVote.sol",
+        "id": 5592,
+        "nodeType": "ImportDirective",
+        "scope": 5666,
+        "sourceUnit": 5732,
+        "src": "186:50:17",
+        "symbolAliases": [
+          {
+            "foreign": 5591,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5593,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "359:7:17",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 5594,
+            "nodeType": "InheritanceSpecifier",
+            "src": "359:7:17"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title CommunityVotable\n@notice An ownable that has a community vote property",
+        "fullyImplemented": false,
+        "id": 5665,
+        "linearizedBaseContracts": [
+          5665,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "CommunityVotable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 5596,
+            "name": "communityVote",
+            "nodeType": "VariableDeclaration",
+            "scope": 5665,
+            "src": "518:34:17",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_CommunityVote_$5731",
+              "typeString": "contract CommunityVote"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 5595,
+              "name": "CommunityVote",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5731,
+              "src": "518:13:17",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                "typeString": "contract CommunityVote"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 5598,
+            "name": "communityVoteFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 5665,
+            "src": "558:31:17",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 5597,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "558:4:17",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5604,
+            "name": "SetCommunityVoteEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5603,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5600,
+                  "indexed": false,
+                  "name": "oldCommunityVote",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5604,
+                  "src": "766:30:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                    "typeString": "contract CommunityVote"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5599,
+                    "name": "CommunityVote",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5731,
+                    "src": "766:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5602,
+                  "indexed": false,
+                  "name": "newCommunityVote",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5604,
+                  "src": "798:30:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                    "typeString": "contract CommunityVote"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5601,
+                    "name": "CommunityVote",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5731,
+                    "src": "798:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "765:64:17"
+            },
+            "src": "738:92:17"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5606,
+            "name": "FreezeCommunityVoteEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5605,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "865:2:17"
+            },
+            "src": "835:33:17"
+          },
+          {
+            "body": {
+              "id": 5638,
+              "nodeType": "Block",
+              "src": "1331:274:17",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5622,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1349:20:17",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 5621,
+                          "name": "communityVoteFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5598,
+                          "src": "1350:19:17",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5620,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1341:7:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5623,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1341:29:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5624,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1341:29:17"
+                },
+                {
+                  "assignments": [
+                    5626
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 5626,
+                      "name": "oldCommunityVote",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 5639,
+                      "src": "1415:30:17",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                        "typeString": "contract CommunityVote"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5625,
+                        "name": "CommunityVote",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 5731,
+                        "src": "1415:13:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 5628,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 5627,
+                    "name": "communityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5596,
+                    "src": "1448:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1415:46:17"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5631,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5629,
+                      "name": "communityVote",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5596,
+                      "src": "1471:13:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                        "typeString": "contract CommunityVote"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 5630,
+                      "name": "newCommunityVote",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5608,
+                      "src": "1487:16:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                        "typeString": "contract CommunityVote"
+                      }
+                    },
+                    "src": "1471:32:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "id": 5632,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1471:32:17"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5634,
+                        "name": "oldCommunityVote",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5626,
+                        "src": "1563:16:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5635,
+                        "name": "newCommunityVote",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5608,
+                        "src": "1581:16:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      ],
+                      "id": 5633,
+                      "name": "SetCommunityVoteEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5604,
+                      "src": "1541:21:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_CommunityVote_$5731_$_t_contract$_CommunityVote_$5731_$returns$__$",
+                        "typeString": "function (contract CommunityVote,contract CommunityVote)"
+                      }
+                    },
+                    "id": 5636,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1541:57:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5637,
+                  "nodeType": "EmitStatement",
+                  "src": "1536:62:17"
+                }
+              ]
+            },
+            "documentation": "@notice Set the community vote contract\n @param newCommunityVote The (address of) CommunityVote contract instance",
+            "id": 5639,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5611,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5610,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1223:12:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1223:12:17"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5613,
+                    "name": "newCommunityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5608,
+                    "src": "1255:16:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  }
+                ],
+                "id": 5614,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5612,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1240:14:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1240:32:17"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5616,
+                    "name": "newCommunityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5608,
+                    "src": "1294:16:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 5617,
+                    "name": "communityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5596,
+                    "src": "1312:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  }
+                ],
+                "id": 5618,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5615,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1277:16:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1277:49:17"
+              }
+            ],
+            "name": "setCommunityVote",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5609,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5608,
+                  "name": "newCommunityVote",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5639,
+                  "src": "1174:30:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                    "typeString": "contract CommunityVote"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5607,
+                    "name": "CommunityVote",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5731,
+                    "src": "1174:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1173:32:17"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5619,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1331:0:17"
+            },
+            "scope": 5665,
+            "src": "1148:457:17",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5651,
+              "nodeType": "Block",
+              "src": "1783:107:17",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5646,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5644,
+                      "name": "communityVoteFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5598,
+                      "src": "1793:19:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 5645,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1815:4:17",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1793:26:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 5647,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1793:26:17"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 5648,
+                      "name": "FreezeCommunityVoteEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5606,
+                      "src": "1857:24:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 5649,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1857:26:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5650,
+                  "nodeType": "EmitStatement",
+                  "src": "1852:31:17"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the community vote from further updates\n @dev This operation can not be undone",
+            "id": 5652,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5642,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5641,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1766:12:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1766:12:17"
+              }
+            ],
+            "name": "freezeCommunityVote",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5640,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1748:2:17"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5643,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1783:0:17"
+            },
+            "scope": 5665,
+            "src": "1720:170:17",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5663,
+              "nodeType": "Block",
+              "src": "2077:64:17",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 5659,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 5655,
+                          "name": "communityVote",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5596,
+                          "src": "2095:13:17",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                            "typeString": "contract CommunityVote"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 5657,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2120:1:17",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 5656,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2112:7:17",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 5658,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2112:10:17",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2095:27:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5654,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2087:7:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5660,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2087:36:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5661,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2087:36:17"
+                },
+                {
+                  "id": 5662,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2133:1:17"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5664,
+            "name": "communityVoteInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5653,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2074:2:17"
+            },
+            "src": "2041:100:17",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5666,
+        "src": "330:1813:17"
+      }
+    ],
+    "src": "121:2023:17"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CommunityVotable.sol",
+    "exportedSymbols": {
+      "CommunityVotable": [
+        5665
+      ]
+    },
+    "id": 5666,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5588,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".25"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "121:24:17"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 5590,
+        "nodeType": "ImportDirective",
+        "scope": 5666,
+        "sourceUnit": 25427,
+        "src": "147:38:17",
+        "symbolAliases": [
+          {
+            "foreign": 5589,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/CommunityVote.sol",
+        "file": "./CommunityVote.sol",
+        "id": 5592,
+        "nodeType": "ImportDirective",
+        "scope": 5666,
+        "sourceUnit": 5732,
+        "src": "186:50:17",
+        "symbolAliases": [
+          {
+            "foreign": 5591,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5593,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 25426,
+              "src": "359:7:17",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 5594,
+            "nodeType": "InheritanceSpecifier",
+            "src": "359:7:17"
+          }
+        ],
+        "contractDependencies": [
+          19393,
+          25426,
+          31613
+        ],
+        "contractKind": "contract",
+        "documentation": "@title CommunityVotable\n@notice An ownable that has a community vote property",
+        "fullyImplemented": false,
+        "id": 5665,
+        "linearizedBaseContracts": [
+          5665,
+          25426,
+          31613,
+          19393
+        ],
+        "name": "CommunityVotable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 5596,
+            "name": "communityVote",
+            "nodeType": "VariableDeclaration",
+            "scope": 5665,
+            "src": "518:34:17",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_CommunityVote_$5731",
+              "typeString": "contract CommunityVote"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 5595,
+              "name": "CommunityVote",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 5731,
+              "src": "518:13:17",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                "typeString": "contract CommunityVote"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 5598,
+            "name": "communityVoteFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 5665,
+            "src": "558:31:17",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 5597,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "558:4:17",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5604,
+            "name": "SetCommunityVoteEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5603,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5600,
+                  "indexed": false,
+                  "name": "oldCommunityVote",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5604,
+                  "src": "766:30:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                    "typeString": "contract CommunityVote"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5599,
+                    "name": "CommunityVote",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5731,
+                    "src": "766:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5602,
+                  "indexed": false,
+                  "name": "newCommunityVote",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5604,
+                  "src": "798:30:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                    "typeString": "contract CommunityVote"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5601,
+                    "name": "CommunityVote",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5731,
+                    "src": "798:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "765:64:17"
+            },
+            "src": "738:92:17"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 5606,
+            "name": "FreezeCommunityVoteEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5605,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "865:2:17"
+            },
+            "src": "835:33:17"
+          },
+          {
+            "body": {
+              "id": 5638,
+              "nodeType": "Block",
+              "src": "1331:274:17",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5622,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1349:20:17",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 5621,
+                          "name": "communityVoteFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5598,
+                          "src": "1350:19:17",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5620,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "1341:7:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5623,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1341:29:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5624,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1341:29:17"
+                },
+                {
+                  "assignments": [
+                    5626
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 5626,
+                      "name": "oldCommunityVote",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 5639,
+                      "src": "1415:30:17",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                        "typeString": "contract CommunityVote"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5625,
+                        "name": "CommunityVote",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 5731,
+                        "src": "1415:13:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 5628,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 5627,
+                    "name": "communityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5596,
+                    "src": "1448:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1415:46:17"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5631,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5629,
+                      "name": "communityVote",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5596,
+                      "src": "1471:13:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                        "typeString": "contract CommunityVote"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 5630,
+                      "name": "newCommunityVote",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5608,
+                      "src": "1487:16:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                        "typeString": "contract CommunityVote"
+                      }
+                    },
+                    "src": "1471:32:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "id": 5632,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1471:32:17"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5634,
+                        "name": "oldCommunityVote",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5626,
+                        "src": "1563:16:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5635,
+                        "name": "newCommunityVote",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5608,
+                        "src": "1581:16:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                          "typeString": "contract CommunityVote"
+                        }
+                      ],
+                      "id": 5633,
+                      "name": "SetCommunityVoteEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5604,
+                      "src": "1541:21:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_CommunityVote_$5731_$_t_contract$_CommunityVote_$5731_$returns$__$",
+                        "typeString": "function (contract CommunityVote,contract CommunityVote)"
+                      }
+                    },
+                    "id": 5636,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1541:57:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5637,
+                  "nodeType": "EmitStatement",
+                  "src": "1536:62:17"
+                }
+              ]
+            },
+            "documentation": "@notice Set the community vote contract\n @param newCommunityVote The (address of) CommunityVote contract instance",
+            "id": 5639,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5611,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5610,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1223:12:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1223:12:17"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5613,
+                    "name": "newCommunityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5608,
+                    "src": "1255:16:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  }
+                ],
+                "id": 5614,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5612,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19344,
+                  "src": "1240:14:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1240:32:17"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 5616,
+                    "name": "newCommunityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5608,
+                    "src": "1294:16:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "id": 5617,
+                    "name": "communityVote",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5596,
+                    "src": "1312:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  }
+                ],
+                "id": 5618,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5615,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 19392,
+                  "src": "1277:16:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1277:49:17"
+              }
+            ],
+            "name": "setCommunityVote",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5609,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5608,
+                  "name": "newCommunityVote",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5639,
+                  "src": "1174:30:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                    "typeString": "contract CommunityVote"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5607,
+                    "name": "CommunityVote",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5731,
+                    "src": "1174:13:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                      "typeString": "contract CommunityVote"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1173:32:17"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5619,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1331:0:17"
+            },
+            "scope": 5665,
+            "src": "1148:457:17",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5651,
+              "nodeType": "Block",
+              "src": "1783:107:17",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5646,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 5644,
+                      "name": "communityVoteFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5598,
+                      "src": "1793:19:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 5645,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1815:4:17",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1793:26:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 5647,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1793:26:17"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 5648,
+                      "name": "FreezeCommunityVoteEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5606,
+                      "src": "1857:24:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 5649,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1857:26:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5650,
+                  "nodeType": "EmitStatement",
+                  "src": "1852:31:17"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze the community vote from further updates\n @dev This operation can not be undone",
+            "id": 5652,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 5642,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 5641,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 25377,
+                  "src": "1766:12:17",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1766:12:17"
+              }
+            ],
+            "name": "freezeCommunityVote",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5640,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1748:2:17"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 5643,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1783:0:17"
+            },
+            "scope": 5665,
+            "src": "1720:170:17",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5663,
+              "nodeType": "Block",
+              "src": "2077:64:17",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 5659,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 5655,
+                          "name": "communityVote",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 5596,
+                          "src": "2095:13:17",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_CommunityVote_$5731",
+                            "typeString": "contract CommunityVote"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 5657,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "2120:1:17",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 5656,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2112:7:17",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 5658,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2112:10:17",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "2095:27:17",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 5654,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        50297,
+                        50298
+                      ],
+                      "referencedDeclaration": 50297,
+                      "src": "2087:7:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 5660,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2087:36:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5661,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2087:36:17"
+                },
+                {
+                  "id": 5662,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2133:1:17"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5664,
+            "name": "communityVoteInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 5653,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2074:2:17"
+            },
+            "src": "2041:100:17",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5666,
+        "src": "330:1813:17"
+      }
+    ],
+    "src": "121:2023:17"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.2",
+  "updatedAt": "2019-04-02T06:20:36.878Z"
+}
