@@ -6,6 +6,9 @@ This package hosts contract abstractions generated from the deployment of
 [nahmii contracts](https://github.com/hubiinetwork/nahmii-contracts.git) to 
 the Ropsten testnet.
 
+This particular version of the package contains abstractions from 
+**[nahmii-contracts v1.0.0-ropsten.9](https://github.com/hubiinetwork/nahmii-contracts/tree/v1.0-ropsten.9)**.  
+
 ## About nahmii
 
 _nahmii_ is _hubii_'s scaling solution for the Ethereum block chain. It is a
