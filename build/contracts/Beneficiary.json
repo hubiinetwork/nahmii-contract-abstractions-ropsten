@@ -5,10 +5,12 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "wallet",
           "type": "address"
         },
         {
+          "internalType": "string",
           "name": "balanceType",
           "type": "string"
         }
@@ -23,26 +25,32 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "wallet",
           "type": "address"
         },
         {
+          "internalType": "string",
           "name": "balanceType",
           "type": "string"
         },
         {
+          "internalType": "int256",
           "name": "amount",
           "type": "int256"
         },
         {
+          "internalType": "address",
           "name": "currencyCt",
           "type": "address"
         },
         {
+          "internalType": "uint256",
           "name": "currencyId",
           "type": "uint256"
         },
         {
+          "internalType": "string",
           "name": "standard",
           "type": "string"
         }
@@ -58,28 +66,31 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\n/**\n * @title Beneficiary\n * @notice A recipient of ethers and tokens\n */\ncontract Beneficiary {\n    /// @notice Receive ethers to the given wallet's given balance type\n    /// @param wallet The address of the concerned wallet\n    /// @param balanceType The target balance type of the wallet\n    function receiveEthersTo(address wallet, string balanceType)\n    public\n    payable;\n\n    /// @notice Receive token to the given wallet's given balance type\n    /// @dev The wallet must approve of the token transfer prior to calling this function\n    /// @param wallet The address of the concerned wallet\n    /// @param balanceType The target balance type of the wallet\n    /// @param amount The amount to deposit\n    /// @param currencyCt The address of the concerned currency contract (address(0) == ETH)\n    /// @param currencyId The ID of the concerned currency (0 for ETH and ERC20)\n    /// @param standard The standard of the token (\"\" for default registered, \"ERC20\", \"ERC721\")\n    function receiveTokensTo(address wallet, string balanceType, int256 amount, address currencyCt,\n        uint256 currencyId, string standard)\n    public;\n}\n",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\n/**\n * @title Beneficiary\n * @notice A recipient of ethers and tokens\n */\ncontract Beneficiary {\n    /// @notice Receive ethers to the given wallet's given balance type\n    /// @param wallet The address of the concerned wallet\n    /// @param balanceType The target balance type of the wallet\n    function receiveEthersTo(address wallet, string memory balanceType)\n    public\n    payable;\n\n    /// @notice Receive token to the given wallet's given balance type\n    /// @dev The wallet must approve of the token transfer prior to calling this function\n    /// @param wallet The address of the concerned wallet\n    /// @param balanceType The target balance type of the wallet\n    /// @param amount The amount to deposit\n    /// @param currencyCt The address of the concerned currency contract (address(0) == ETH)\n    /// @param currencyId The ID of the concerned currency (0 for ETH and ERC20)\n    /// @param standard The standard of the token (\"\" for default registered, \"ERC20\", \"ERC721\")\n    function receiveTokensTo(address wallet, string memory balanceType, int256 amount, address currencyCt,\n        uint256 currencyId, string memory standard)\n    public;\n}\n",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/Beneficiary.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Beneficiary.sol",
     "exportedSymbols": {
       "Beneficiary": [
-        2158
+        2224
       ]
     },
-    "id": 2159,
+    "id": 2225,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2135,
+        "id": 2201,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:7"
+        "src": "122:32:7"
       },
       {
         "baseContracts": [],
@@ -87,9 +98,9 @@
         "contractKind": "contract",
         "documentation": "@title Beneficiary\n@notice A recipient of ethers and tokens",
         "fullyImplemented": false,
-        "id": 2158,
+        "id": 2224,
         "linearizedBaseContracts": [
-          2158
+          2224
         ],
         "name": "Beneficiary",
         "nodeType": "ContractDefinition",
@@ -97,24 +108,23 @@
           {
             "body": null,
             "documentation": "@notice Receive ethers to the given wallet's given balance type\n @param wallet The address of the concerned wallet\n @param balanceType The target balance type of the wallet",
-            "id": 2142,
+            "id": 2208,
             "implemented": false,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "receiveEthersTo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2140,
+              "id": 2206,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2137,
+                  "id": 2203,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2142,
-                  "src": "469:14:7",
+                  "scope": 2208,
+                  "src": "477:14:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -122,10 +132,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2136,
+                    "id": 2202,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "469:7:7",
+                    "src": "477:7:7",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -136,22 +147,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 2139,
+                  "id": 2205,
                   "name": "balanceType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2142,
-                  "src": "485:18:7",
+                  "scope": 2208,
+                  "src": "493:25:7",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2138,
+                    "id": 2204,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "485:6:7",
+                    "src": "493:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -161,17 +172,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "468:36:7"
+              "src": "476:43:7"
             },
-            "payable": true,
             "returnParameters": {
-              "id": 2141,
+              "id": 2207,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "527:0:7"
+              "src": "542:0:7"
             },
-            "scope": 2158,
-            "src": "444:84:7",
+            "scope": 2224,
+            "src": "452:91:7",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "public"
@@ -179,24 +189,23 @@
           {
             "body": null,
             "documentation": "@notice Receive token to the given wallet's given balance type\n @dev The wallet must approve of the token transfer prior to calling this function\n @param wallet The address of the concerned wallet\n @param balanceType The target balance type of the wallet\n @param amount The amount to deposit\n @param currencyCt The address of the concerned currency contract (address(0) == ETH)\n @param currencyId The ID of the concerned currency (0 for ETH and ERC20)\n @param standard The standard of the token (\"\" for default registered, \"ERC20\", \"ERC721\")",
-            "id": 2157,
+            "id": 2223,
             "implemented": false,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "receiveTokensTo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2155,
+              "id": 2221,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2144,
+                  "id": 2210,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1158:14:7",
+                  "scope": 2223,
+                  "src": "1173:14:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -204,10 +213,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2143,
+                    "id": 2209,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1158:7:7",
+                    "src": "1173:7:7",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -218,22 +228,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 2146,
+                  "id": 2212,
                   "name": "balanceType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1174:18:7",
+                  "scope": 2223,
+                  "src": "1189:25:7",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2145,
+                    "id": 2211,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1174:6:7",
+                    "src": "1189:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -244,11 +254,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2148,
+                  "id": 2214,
                   "name": "amount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1194:13:7",
+                  "scope": 2223,
+                  "src": "1216:13:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -256,10 +266,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 2147,
+                    "id": 2213,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1194:6:7",
+                    "src": "1216:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -270,11 +280,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2150,
+                  "id": 2216,
                   "name": "currencyCt",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1209:18:7",
+                  "scope": 2223,
+                  "src": "1231:18:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -282,10 +292,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2149,
+                    "id": 2215,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1209:7:7",
+                    "src": "1231:7:7",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -296,11 +307,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2152,
+                  "id": 2218,
                   "name": "currencyId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1237:18:7",
+                  "scope": 2223,
+                  "src": "1259:18:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -308,10 +319,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2151,
+                    "id": 2217,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1237:7:7",
+                    "src": "1259:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -322,22 +333,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 2154,
+                  "id": 2220,
                   "name": "standard",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1257:15:7",
+                  "scope": 2223,
+                  "src": "1279:22:7",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2153,
+                    "id": 2219,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1257:6:7",
+                    "src": "1279:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -347,48 +358,50 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1157:116:7"
+              "src": "1172:130:7"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 2156,
+              "id": 2222,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1284:0:7"
+              "src": "1313:0:7"
             },
-            "scope": 2158,
-            "src": "1133:152:7",
+            "scope": 2224,
+            "src": "1148:166:7",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2159,
-        "src": "222:1065:7"
+        "scope": 2225,
+        "src": "230:1086:7"
       }
     ],
-    "src": "122:1166:7"
+    "src": "122:1195:7"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Beneficiary.sol",
     "exportedSymbols": {
       "Beneficiary": [
-        2158
+        2224
       ]
     },
-    "id": 2159,
+    "id": 2225,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2135,
+        "id": 2201,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:7"
+        "src": "122:32:7"
       },
       {
         "baseContracts": [],
@@ -396,9 +409,9 @@
         "contractKind": "contract",
         "documentation": "@title Beneficiary\n@notice A recipient of ethers and tokens",
         "fullyImplemented": false,
-        "id": 2158,
+        "id": 2224,
         "linearizedBaseContracts": [
-          2158
+          2224
         ],
         "name": "Beneficiary",
         "nodeType": "ContractDefinition",
@@ -406,24 +419,23 @@
           {
             "body": null,
             "documentation": "@notice Receive ethers to the given wallet's given balance type\n @param wallet The address of the concerned wallet\n @param balanceType The target balance type of the wallet",
-            "id": 2142,
+            "id": 2208,
             "implemented": false,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "receiveEthersTo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2140,
+              "id": 2206,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2137,
+                  "id": 2203,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2142,
-                  "src": "469:14:7",
+                  "scope": 2208,
+                  "src": "477:14:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -431,10 +443,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2136,
+                    "id": 2202,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "469:7:7",
+                    "src": "477:7:7",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -445,22 +458,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 2139,
+                  "id": 2205,
                   "name": "balanceType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2142,
-                  "src": "485:18:7",
+                  "scope": 2208,
+                  "src": "493:25:7",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2138,
+                    "id": 2204,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "485:6:7",
+                    "src": "493:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -470,17 +483,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "468:36:7"
+              "src": "476:43:7"
             },
-            "payable": true,
             "returnParameters": {
-              "id": 2141,
+              "id": 2207,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "527:0:7"
+              "src": "542:0:7"
             },
-            "scope": 2158,
-            "src": "444:84:7",
+            "scope": 2224,
+            "src": "452:91:7",
             "stateMutability": "payable",
             "superFunction": null,
             "visibility": "public"
@@ -488,24 +500,23 @@
           {
             "body": null,
             "documentation": "@notice Receive token to the given wallet's given balance type\n @dev The wallet must approve of the token transfer prior to calling this function\n @param wallet The address of the concerned wallet\n @param balanceType The target balance type of the wallet\n @param amount The amount to deposit\n @param currencyCt The address of the concerned currency contract (address(0) == ETH)\n @param currencyId The ID of the concerned currency (0 for ETH and ERC20)\n @param standard The standard of the token (\"\" for default registered, \"ERC20\", \"ERC721\")",
-            "id": 2157,
+            "id": 2223,
             "implemented": false,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "receiveTokensTo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2155,
+              "id": 2221,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2144,
+                  "id": 2210,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1158:14:7",
+                  "scope": 2223,
+                  "src": "1173:14:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -513,10 +524,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2143,
+                    "id": 2209,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1158:7:7",
+                    "src": "1173:7:7",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -527,22 +539,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 2146,
+                  "id": 2212,
                   "name": "balanceType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1174:18:7",
+                  "scope": 2223,
+                  "src": "1189:25:7",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2145,
+                    "id": 2211,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1174:6:7",
+                    "src": "1189:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -553,11 +565,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2148,
+                  "id": 2214,
                   "name": "amount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1194:13:7",
+                  "scope": 2223,
+                  "src": "1216:13:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -565,10 +577,10 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 2147,
+                    "id": 2213,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1194:6:7",
+                    "src": "1216:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
@@ -579,11 +591,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2150,
+                  "id": 2216,
                   "name": "currencyCt",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1209:18:7",
+                  "scope": 2223,
+                  "src": "1231:18:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -591,10 +603,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2149,
+                    "id": 2215,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1209:7:7",
+                    "src": "1231:7:7",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -605,11 +618,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2152,
+                  "id": 2218,
                   "name": "currencyId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1237:18:7",
+                  "scope": 2223,
+                  "src": "1259:18:7",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -617,10 +630,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2151,
+                    "id": 2217,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1237:7:7",
+                    "src": "1259:7:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -631,22 +644,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 2154,
+                  "id": 2220,
                   "name": "standard",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2157,
-                  "src": "1257:15:7",
+                  "scope": 2223,
+                  "src": "1279:22:7",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2153,
+                    "id": 2219,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1257:6:7",
+                    "src": "1279:6:7",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -656,33 +669,32 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1157:116:7"
+              "src": "1172:130:7"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 2156,
+              "id": 2222,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1284:0:7"
+              "src": "1313:0:7"
             },
-            "scope": 2158,
-            "src": "1133:152:7",
+            "scope": 2224,
+            "src": "1148:166:7",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2159,
-        "src": "222:1065:7"
+        "scope": 2225,
+        "src": "230:1086:7"
       }
     ],
-    "src": "122:1166:7"
+    "src": "122:1195:7"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T06:20:36.861Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.274Z"
 }

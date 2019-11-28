@@ -2,11 +2,18 @@
   "contractName": "MockedRevenueTokenManager",
   "abi": [
     {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
       "constant": true,
       "inputs": [],
       "name": "_releasedAmountBlocksIn",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -21,6 +28,7 @@
       "name": "token",
       "outputs": [
         {
+          "internalType": "contract MockedRevenueToken",
           "name": "",
           "type": "address"
         }
@@ -28,12 +36,6 @@
       "payable": false,
       "stateMutability": "view",
       "type": "function"
-    },
-    {
-      "inputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "constructor"
     },
     {
       "constant": false,
@@ -48,10 +50,12 @@
       "constant": true,
       "inputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         },
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -59,6 +63,7 @@
       "name": "releasedAmountBlocksIn",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -71,6 +76,7 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "uint256",
           "name": "_rabIn",
           "type": "uint256"
         }
@@ -82,53 +88,56 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b5061001961005b565b604051809103906000f080158015610035573d6000803e3d6000fd5b5060008054600160a060020a031916600160a060020a039290921691909117905561006b565b6040516102088061029c83390190565b6102228061007a6000396000f3006080604052600436106100535763ffffffff60e060020a6000350416631592f0ab81146100585780637603a7fd1461006f57806385a4757e1461008f578063e96e8695146100c5578063fc0c546a146100da575b600080fd5b34801561006457600080fd5b5061006d6100fc565b005b34801561007b57600080fd5b5061006d61008a36600461013a565b610103565b34801561009b57600080fd5b506100af6100aa366004610160565b610108565b6040516100bc91906101c0565b60405180910390f35b3480156100d157600080fd5b506100af610112565b3480156100e657600080fd5b506100ef610118565b6040516100bc91906101b2565b6000600155565b600155565b6001545b92915050565b60015481565b600054600160a060020a031681565b600061013382356101da565b9392505050565b60006020828403121561014c57600080fd5b60006101588484610127565b949350505050565b6000806040838503121561017357600080fd5b600061017f8585610127565b925050602061019085828601610127565b9150509250929050565b6101a3816101dd565b82525050565b6101a3816101da565b6020810161010c828461019a565b6020810161010c82846101a9565b600160a060020a031690565b90565b600061010c826101ce5600a265627a7a72305820ef0fc771afcd498311a6d94acef3bde051d20ed4e7a2d471c447ceb81f0715b76c6578706572696d656e74616cf50037608060405234801561001057600080fd5b506101e8806100206000396000f3006080604052600436106100485763ffffffff60e060020a6000350416631592f0ab811461004d57806355f729c81461006457806394c9446e1461008f578063a52079ea146100af575b600080fd5b34801561005957600080fd5b506100626100cf565b005b34801561007057600080fd5b506100796100d5565b604051610086919061018b565b60405180910390f35b34801561009b57600080fd5b506100626100aa366004610156565b6100db565b3480156100bb57600080fd5b506100796100ca366004610109565b6100e0565b60008055565b60005481565b600055565b6000549392505050565b60006100f682356101a2565b9392505050565b60006100f6823561019f565b60008060006060848603121561011e57600080fd5b600061012a86866100ea565b935050602061013b868287016100fd565b925050604061014c868287016100fd565b9150509250925092565b60006020828403121561016857600080fd5b600061017484846100fd565b949350505050565b6101858161019f565b82525050565b60208101610199828461017c565b92915050565b90565b600160a060020a0316905600a265627a7a72305820a69c4a6fb8a867da25cbe99a38d95e8cdeef384ff9ffcf8ba03d7970e415d5486c6578706572696d656e74616cf50037",
-  "deployedBytecode": "0x6080604052600436106100535763ffffffff60e060020a6000350416631592f0ab81146100585780637603a7fd1461006f57806385a4757e1461008f578063e96e8695146100c5578063fc0c546a146100da575b600080fd5b34801561006457600080fd5b5061006d6100fc565b005b34801561007b57600080fd5b5061006d61008a36600461013a565b610103565b34801561009b57600080fd5b506100af6100aa366004610160565b610108565b6040516100bc91906101c0565b60405180910390f35b3480156100d157600080fd5b506100af610112565b3480156100e657600080fd5b506100ef610118565b6040516100bc91906101b2565b6000600155565b600155565b6001545b92915050565b60015481565b600054600160a060020a031681565b600061013382356101da565b9392505050565b60006020828403121561014c57600080fd5b60006101588484610127565b949350505050565b6000806040838503121561017357600080fd5b600061017f8585610127565b925050602061019085828601610127565b9150509250929050565b6101a3816101dd565b82525050565b6101a3816101da565b6020810161010c828461019a565b6020810161010c82846101a9565b600160a060020a031690565b90565b600061010c826101ce5600a265627a7a72305820ef0fc771afcd498311a6d94acef3bde051d20ed4e7a2d471c447ceb81f0715b76c6578706572696d656e74616cf50037",
-  "sourceMap": "344:990:115:-;;;759:74;8:9:-1;5:2;;;30:1;27;20:12;5:2;759:74:115;802:24;;:::i;:::-;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;794:5:115;:32;;-1:-1:-1;;;;;;794:32:115;-1:-1:-1;;;;;794:32:115;;;;;;;;;;344:990;;;;;;;;;;;;:::o;:::-;;;;;;;",
-  "deployedSourceMap": "344:990:115:-;;;;;;;;;-1:-1:-1;;;344:990:115;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;984:77;;8:9:-1;5:2;;;30:1;27;20:12;5:2;984:77:115;;;;;;1216:116;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1216:116:115;;;;;;;;;1067:143;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1067:143:115;;;;;;;;;;;;;;;;;;;;;;;;;567:38;;8:9:-1;5:2;;;30:1;27;20:12;5:2;567:38:115;;;;530:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;530:31:115;;;;;;;;;;;;984:77;1053:1;1027:23;:27;984:77::o;1216:116::-;1293:23;:32;1216:116::o;1067:143::-;1180:23;;1067:143;;;;;:::o;567:38::-;;;;:::o;530:31::-;;;-1:-1:-1;;;;;530:31:115;;:::o;5:118:-1:-;;72:46;110:6;97:20;72:46;;;63:55;57:66;-1:-1;;;57:66;130:241;;234:2;222:9;213:7;209:23;205:32;202:2;;;250:1;247;240:12;202:2;285:1;302:53;347:7;327:9;302:53;;;292:63;196:175;-1:-1;;;;196:175;378:366;;;499:2;487:9;478:7;474:23;470:32;467:2;;;515:1;512;505:12;467:2;550:1;567:53;612:7;592:9;567:53;;;557:63;;529:97;657:2;675:53;720:7;711:6;700:9;696:22;675:53;;;665:63;;636:98;461:283;;;;;;751:172;852:65;911:5;852:65;;;847:3;840:78;834:89;;;930:110;1003:31;1028:5;1003:31;;1047:249;1183:2;1168:18;;1197:89;1172:9;1259:6;1197:89;;1303:193;1411:2;1396:18;;1425:61;1400:9;1459:6;1425:61;;1503:128;-1:-1;;;;;1572:54;;1555:76;1638:79;1707:5;1690:27;1810:143;;1917:31;1942:5;1917:31;",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\npragma experimental ABIEncoderV2;\n\nimport {MockedRevenueToken} from \"./MockedRevenueToken.sol\";\n\n/**\n * @title MockedRevenueTokenManager\n * @notice Mocked implementation of RevenueTokenManager\n */\ncontract MockedRevenueTokenManager {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    MockedRevenueToken public token;\n    uint256 public _releasedAmountBlocksIn;\n\n    //\n    // Constructor\n    // -----------------------------------------------------------------------------------------------------------------\n    constructor() public\n    {\n        token = new MockedRevenueToken();\n    }\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    function _reset()\n    public\n    {\n        _releasedAmountBlocksIn = 0;\n    }\n\n    function releasedAmountBlocksIn(uint256, uint256)\n    public\n    view\n    returns (uint256)\n    {\n        return _releasedAmountBlocksIn;\n    }\n\n    function _setReleasedAmountBlocksIn(uint256 _rabIn)\n    public\n    {\n        _releasedAmountBlocksIn = _rabIn;\n    }\n}\n",
+  "bytecode": "0x608060405234801561001057600080fd5b5060405161001d9061005f565b604051809103906000f080158015610039573d6000803e3d6000fd5b50600080546001600160a01b0319166001600160a01b039290921691909117905561006c565b6101fd8061027e83390190565b6102038061007b6000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80631592f0ab1461005c5780637603a7fd1461006657806385a4757e14610079578063e96e8695146100a2578063fc0c546a146100aa575b600080fd5b6100646100bf565b005b6100646100743660046100f5565b6100c6565b61008c61008736600461011b565b6100cb565b604051610099919061017b565b60405180910390f35b61008c6100d5565b6100b26100db565b604051610099919061016d565b6000600155565b600155565b6001545b92915050565b60015481565b6000546001600160a01b031681565b80356100cf816101a9565b60006020828403121561010757600080fd5b600061011384846100ea565b949350505050565b6000806040838503121561012e57600080fd5b600061013a85856100ea565b925050602061014b858286016100ea565b9150509250929050565b61015e81610198565b82525050565b61015e81610195565b602081016100cf8284610155565b602081016100cf8284610164565b6001600160a01b031690565b90565b60006100cf8260006100cf82610189565b6101b281610195565b81146101bd57600080fd5b5056fea365627a7a723158208cc554730b6b35d573111d5f1f2046ff7bdbb48d0da36c39e81d19b5d9a917626c6578706572696d656e74616cf564736f6c634300050c0040608060405234801561001057600080fd5b506101dd806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80631592f0ab1461005157806355f729c81461005b57806394c9446e14610079578063a52079ea1461008c575b600080fd5b61005961009f565b005b6100636100a5565b6040516100709190610158565b60405180910390f35b610059610087366004610123565b6100ab565b61006361009a3660046100d6565b6100b0565b60008055565b60005481565b600055565b6000549392505050565b80356100c58161017a565b92915050565b80356100c581610191565b6000806000606084860312156100eb57600080fd5b60006100f786866100ba565b9350506020610108868287016100cb565b9250506040610119868287016100cb565b9150509250925092565b60006020828403121561013557600080fd5b600061014184846100cb565b949350505050565b61015281610177565b82525050565b602081016100c58284610149565b60006001600160a01b0382166100c5565b90565b61018381610166565b811461018e57600080fd5b50565b6101838161017756fea365627a7a72315820522e36c91d56cabd9afcb89cb23266fbc6d6f241c26a7a497345cd324be5712a6c6578706572696d656e74616cf564736f6c634300050c0040",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80631592f0ab1461005c5780637603a7fd1461006657806385a4757e14610079578063e96e8695146100a2578063fc0c546a146100aa575b600080fd5b6100646100bf565b005b6100646100743660046100f5565b6100c6565b61008c61008736600461011b565b6100cb565b604051610099919061017b565b60405180910390f35b61008c6100d5565b6100b26100db565b604051610099919061016d565b6000600155565b600155565b6001545b92915050565b60015481565b6000546001600160a01b031681565b80356100cf816101a9565b60006020828403121561010757600080fd5b600061011384846100ea565b949350505050565b6000806040838503121561012e57600080fd5b600061013a85856100ea565b925050602061014b858286016100ea565b9150509250929050565b61015e81610198565b82525050565b61015e81610195565b602081016100cf8284610155565b602081016100cf8284610164565b6001600160a01b031690565b90565b60006100cf8260006100cf82610189565b6101b281610195565b81146101bd57600080fd5b5056fea365627a7a723158208cc554730b6b35d573111d5f1f2046ff7bdbb48d0da36c39e81d19b5d9a917626c6578706572696d656e74616cf564736f6c634300050c0040",
+  "sourceMap": "352:990:124:-;;;767:74;8:9:-1;5:2;;;30:1;27;20:12;5:2;767:74:124;810:24;;;;;:::i;:::-;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;802:5:124;:32;;-1:-1:-1;;;;;;802:32:124;-1:-1:-1;;;;;802:32:124;;;;;;;;;;352:990;;;;;;;;;;:::o;:::-;;;;;;;",
+  "deployedSourceMap": "352:990:124:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;352:990:124;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;992:77;;;:::i;:::-;;1224:116;;;;;;;;;:::i;1075:143::-;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;575:38;;;:::i;538:31::-;;;:::i;:::-;;;;;;;;992:77;1061:1;1035:23;:27;992:77::o;1224:116::-;1301:23;:32;1224:116::o;1075:143::-;1188:23;;1075:143;;;;;:::o;575:38::-;;;;:::o;538:31::-;;;-1:-1:-1;;;;;538:31:124;;:::o;5:130:-1:-;72:20;;97:33;72:20;97:33;;142:241;;246:2;234:9;225:7;221:23;217:32;214:2;;;262:1;259;252:12;214:2;297:1;314:53;359:7;339:9;314:53;;;304:63;208:175;-1:-1;;;;208:175;390:366;;;511:2;499:9;490:7;486:23;482:32;479:2;;;527:1;524;517:12;479:2;562:1;579:53;624:7;604:9;579:53;;;569:63;;541:97;669:2;687:53;732:7;723:6;712:9;708:22;687:53;;;677:63;;648:98;473:283;;;;;;763:182;874:65;933:5;874:65;;;869:3;862:78;856:89;;;952:113;1035:24;1053:5;1035:24;;1072:269;1218:2;1203:18;;1232:99;1207:9;1304:6;1232:99;;1348:213;1466:2;1451:18;;1480:71;1455:9;1524:6;1480:71;;1568:121;-1:-1;;;;;1630:54;;1613:76;1696:72;1758:5;1741:27;1775:177;;1882:65;1941:5;1959:136;2066:24;2084:5;2066:24;;2102:117;2171:24;2189:5;2171:24;;;2164:5;2161:35;2151:2;;2210:1;2207;2200:12;2151:2;2145:74;",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\npragma experimental ABIEncoderV2;\n\nimport {MockedRevenueToken} from \"./MockedRevenueToken.sol\";\n\n/**\n * @title MockedRevenueTokenManager\n * @notice Mocked implementation of RevenueTokenManager\n */\ncontract MockedRevenueTokenManager {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    MockedRevenueToken public token;\n    uint256 public _releasedAmountBlocksIn;\n\n    //\n    // Constructor\n    // -----------------------------------------------------------------------------------------------------------------\n    constructor() public\n    {\n        token = new MockedRevenueToken();\n    }\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    function _reset()\n    public\n    {\n        _releasedAmountBlocksIn = 0;\n    }\n\n    function releasedAmountBlocksIn(uint256, uint256)\n    public\n    view\n    returns (uint256)\n    {\n        return _releasedAmountBlocksIn;\n    }\n\n    function _setReleasedAmountBlocksIn(uint256 _rabIn)\n    public\n    {\n        _releasedAmountBlocksIn = _rabIn;\n    }\n}\n",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedRevenueTokenManager.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedRevenueTokenManager.sol",
     "exportedSymbols": {
       "MockedRevenueTokenManager": [
-        45065
+        51997
       ]
     },
-    "id": 45066,
+    "id": 51998,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 45017,
+        "id": 51949,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:115"
+        "src": "122:32:124"
       },
       {
-        "id": 45018,
+        "id": 51950,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:115"
+        "src": "155:33:124"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedRevenueToken.sol",
         "file": "./MockedRevenueToken.sol",
-        "id": 45020,
+        "id": 51952,
         "nodeType": "ImportDirective",
-        "scope": 45066,
-        "sourceUnit": 45016,
-        "src": "182:60:115",
+        "scope": 51998,
+        "sourceUnit": 51948,
+        "src": "190:60:124",
         "symbolAliases": [
           {
-            "foreign": 45019,
+            "foreign": 51951,
             "local": null
           }
         ],
@@ -137,40 +146,40 @@
       {
         "baseContracts": [],
         "contractDependencies": [
-          45015
+          51947
         ],
         "contractKind": "contract",
         "documentation": "@title MockedRevenueTokenManager\n@notice Mocked implementation of RevenueTokenManager",
         "fullyImplemented": true,
-        "id": 45065,
+        "id": 51997,
         "linearizedBaseContracts": [
-          45065
+          51997
         ],
         "name": "MockedRevenueTokenManager",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 45022,
+            "id": 51954,
             "name": "token",
             "nodeType": "VariableDeclaration",
-            "scope": 45065,
-            "src": "530:31:115",
+            "scope": 51997,
+            "src": "538:31:124",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+              "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
               "typeString": "contract MockedRevenueToken"
             },
             "typeName": {
               "contractScope": null,
-              "id": 45021,
+              "id": 51953,
               "name": "MockedRevenueToken",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 45015,
-              "src": "530:18:115",
+              "referencedDeclaration": 51947,
+              "src": "538:18:124",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                 "typeString": "contract MockedRevenueToken"
               }
             },
@@ -179,11 +188,11 @@
           },
           {
             "constant": false,
-            "id": 45024,
+            "id": 51956,
             "name": "_releasedAmountBlocksIn",
             "nodeType": "VariableDeclaration",
-            "scope": 45065,
-            "src": "567:38:115",
+            "scope": 51997,
+            "src": "575:38:124",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -191,10 +200,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 45023,
+              "id": 51955,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "567:7:115",
+              "src": "575:7:124",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -205,28 +214,28 @@
           },
           {
             "body": {
-              "id": 45033,
+              "id": 51965,
               "nodeType": "Block",
-              "src": "784:49:115",
+              "src": "792:49:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45031,
+                    "id": 51963,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 45027,
+                      "id": 51959,
                       "name": "token",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45022,
-                      "src": "794:5:115",
+                      "referencedDeclaration": 51954,
+                      "src": "802:5:124",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                        "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                         "typeString": "contract MockedRevenueToken"
                       }
                     },
@@ -237,31 +246,31 @@
                       "arguments": [],
                       "expression": {
                         "argumentTypes": [],
-                        "id": 45029,
+                        "id": 51961,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "NewExpression",
-                        "src": "802:22:115",
+                        "src": "810:22:124",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_function_creation_nonpayable$__$returns$_t_contract$_MockedRevenueToken_$45015_$",
+                          "typeIdentifier": "t_function_creation_nonpayable$__$returns$_t_contract$_MockedRevenueToken_$51947_$",
                           "typeString": "function () returns (contract MockedRevenueToken)"
                         },
                         "typeName": {
                           "contractScope": null,
-                          "id": 45028,
+                          "id": 51960,
                           "name": "MockedRevenueToken",
                           "nodeType": "UserDefinedTypeName",
-                          "referencedDeclaration": 45015,
-                          "src": "806:18:115",
+                          "referencedDeclaration": 51947,
+                          "src": "814:18:124",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                            "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                             "typeString": "contract MockedRevenueToken"
                           }
                         }
                       },
-                      "id": 45030,
+                      "id": 51962,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -269,73 +278,71 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "802:24:115",
+                      "src": "810:24:124",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                        "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                         "typeString": "contract MockedRevenueToken"
                       }
                     },
-                    "src": "794:32:115",
+                    "src": "802:32:124",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                      "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                       "typeString": "contract MockedRevenueToken"
                     }
                   },
-                  "id": 45032,
+                  "id": 51964,
                   "nodeType": "ExpressionStatement",
-                  "src": "794:32:115"
+                  "src": "802:32:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45034,
+            "id": 51966,
             "implemented": true,
-            "isConstructor": true,
-            "isDeclaredConst": false,
+            "kind": "constructor",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45025,
+              "id": 51957,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "770:2:115"
+              "src": "778:2:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45026,
+              "id": 51958,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "784:0:115"
+              "src": "792:0:124"
             },
-            "scope": 45065,
-            "src": "759:74:115",
+            "scope": 51997,
+            "src": "767:74:124",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 45041,
+              "id": 51973,
               "nodeType": "Block",
-              "src": "1017:44:115",
+              "src": "1025:44:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45039,
+                    "id": 51971,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 45037,
+                      "id": 51969,
                       "name": "_releasedAmountBlocksIn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45024,
-                      "src": "1027:23:115",
+                      "referencedDeclaration": 51956,
+                      "src": "1035:23:124",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -346,14 +353,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 45038,
+                      "id": 51970,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "1053:1:115",
+                      "src": "1061:1:124",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_0_by_1",
@@ -361,91 +368,88 @@
                       },
                       "value": "0"
                     },
-                    "src": "1027:27:115",
+                    "src": "1035:27:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 45040,
+                  "id": 51972,
                   "nodeType": "ExpressionStatement",
-                  "src": "1027:27:115"
+                  "src": "1035:27:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45042,
+            "id": 51974,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_reset",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45035,
+              "id": 51967,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "999:2:115"
+              "src": "1007:2:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45036,
+              "id": 51968,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1017:0:115"
+              "src": "1025:0:124"
             },
-            "scope": 45065,
-            "src": "984:77:115",
+            "scope": 51997,
+            "src": "992:77:124",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 45053,
+              "id": 51985,
               "nodeType": "Block",
-              "src": "1163:47:115",
+              "src": "1171:47:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45051,
+                    "id": 51983,
                     "name": "_releasedAmountBlocksIn",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 45024,
-                    "src": "1180:23:115",
+                    "referencedDeclaration": 51956,
+                    "src": "1188:23:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 45050,
-                  "id": 45052,
+                  "functionReturnParameters": 51982,
+                  "id": 51984,
                   "nodeType": "Return",
-                  "src": "1173:30:115"
+                  "src": "1181:30:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45054,
+            "id": 51986,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "releasedAmountBlocksIn",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45047,
+              "id": 51979,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45044,
+                  "id": 51976,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45054,
-                  "src": "1099:7:115",
+                  "scope": 51986,
+                  "src": "1107:7:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -453,10 +457,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45043,
+                    "id": 51975,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1099:7:115",
+                    "src": "1107:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -467,11 +471,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 45046,
+                  "id": 51978,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45054,
-                  "src": "1108:7:115",
+                  "scope": 51986,
+                  "src": "1116:7:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -479,10 +483,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45045,
+                    "id": 51977,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1108:7:115",
+                    "src": "1116:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -492,20 +496,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1098:18:115"
+              "src": "1106:18:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45050,
+              "id": 51982,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45049,
+                  "id": 51981,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45054,
-                  "src": "1150:7:115",
+                  "scope": 51986,
+                  "src": "1158:7:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -513,10 +516,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45048,
+                    "id": 51980,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1150:7:115",
+                    "src": "1158:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -526,36 +529,36 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1149:9:115"
+              "src": "1157:9:124"
             },
-            "scope": 45065,
-            "src": "1067:143:115",
+            "scope": 51997,
+            "src": "1075:143:124",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 45063,
+              "id": 51995,
               "nodeType": "Block",
-              "src": "1283:49:115",
+              "src": "1291:49:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45061,
+                    "id": 51993,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 45059,
+                      "id": 51991,
                       "name": "_releasedAmountBlocksIn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45024,
-                      "src": "1293:23:115",
+                      "referencedDeclaration": 51956,
+                      "src": "1301:23:124",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -565,48 +568,47 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 45060,
+                      "id": 51992,
                       "name": "_rabIn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45056,
-                      "src": "1319:6:115",
+                      "referencedDeclaration": 51988,
+                      "src": "1327:6:124",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "1293:32:115",
+                    "src": "1301:32:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 45062,
+                  "id": 51994,
                   "nodeType": "ExpressionStatement",
-                  "src": "1293:32:115"
+                  "src": "1301:32:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45064,
+            "id": 51996,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_setReleasedAmountBlocksIn",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45057,
+              "id": 51989,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45056,
+                  "id": 51988,
                   "name": "_rabIn",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45064,
-                  "src": "1252:14:115",
+                  "scope": 51996,
+                  "src": "1260:14:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -614,10 +616,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45055,
+                    "id": 51987,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1252:7:115",
+                    "src": "1260:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -627,69 +629,71 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1251:16:115"
+              "src": "1259:16:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45058,
+              "id": 51990,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1283:0:115"
+              "src": "1291:0:124"
             },
-            "scope": 45065,
-            "src": "1216:116:115",
+            "scope": 51997,
+            "src": "1224:116:124",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 45066,
-        "src": "344:990:115"
+        "scope": 51998,
+        "src": "352:990:124"
       }
     ],
-    "src": "122:1213:115"
+    "src": "122:1221:124"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedRevenueTokenManager.sol",
     "exportedSymbols": {
       "MockedRevenueTokenManager": [
-        45065
+        51997
       ]
     },
-    "id": 45066,
+    "id": 51998,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 45017,
+        "id": 51949,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:115"
+        "src": "122:32:124"
       },
       {
-        "id": 45018,
+        "id": 51950,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:115"
+        "src": "155:33:124"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedRevenueToken.sol",
         "file": "./MockedRevenueToken.sol",
-        "id": 45020,
+        "id": 51952,
         "nodeType": "ImportDirective",
-        "scope": 45066,
-        "sourceUnit": 45016,
-        "src": "182:60:115",
+        "scope": 51998,
+        "sourceUnit": 51948,
+        "src": "190:60:124",
         "symbolAliases": [
           {
-            "foreign": 45019,
+            "foreign": 51951,
             "local": null
           }
         ],
@@ -698,40 +702,40 @@
       {
         "baseContracts": [],
         "contractDependencies": [
-          45015
+          51947
         ],
         "contractKind": "contract",
         "documentation": "@title MockedRevenueTokenManager\n@notice Mocked implementation of RevenueTokenManager",
         "fullyImplemented": true,
-        "id": 45065,
+        "id": 51997,
         "linearizedBaseContracts": [
-          45065
+          51997
         ],
         "name": "MockedRevenueTokenManager",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 45022,
+            "id": 51954,
             "name": "token",
             "nodeType": "VariableDeclaration",
-            "scope": 45065,
-            "src": "530:31:115",
+            "scope": 51997,
+            "src": "538:31:124",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+              "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
               "typeString": "contract MockedRevenueToken"
             },
             "typeName": {
               "contractScope": null,
-              "id": 45021,
+              "id": 51953,
               "name": "MockedRevenueToken",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 45015,
-              "src": "530:18:115",
+              "referencedDeclaration": 51947,
+              "src": "538:18:124",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                 "typeString": "contract MockedRevenueToken"
               }
             },
@@ -740,11 +744,11 @@
           },
           {
             "constant": false,
-            "id": 45024,
+            "id": 51956,
             "name": "_releasedAmountBlocksIn",
             "nodeType": "VariableDeclaration",
-            "scope": 45065,
-            "src": "567:38:115",
+            "scope": 51997,
+            "src": "575:38:124",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -752,10 +756,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 45023,
+              "id": 51955,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "567:7:115",
+              "src": "575:7:124",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -766,28 +770,28 @@
           },
           {
             "body": {
-              "id": 45033,
+              "id": 51965,
               "nodeType": "Block",
-              "src": "784:49:115",
+              "src": "792:49:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45031,
+                    "id": 51963,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 45027,
+                      "id": 51959,
                       "name": "token",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45022,
-                      "src": "794:5:115",
+                      "referencedDeclaration": 51954,
+                      "src": "802:5:124",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                        "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                         "typeString": "contract MockedRevenueToken"
                       }
                     },
@@ -798,31 +802,31 @@
                       "arguments": [],
                       "expression": {
                         "argumentTypes": [],
-                        "id": 45029,
+                        "id": 51961,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "NewExpression",
-                        "src": "802:22:115",
+                        "src": "810:22:124",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_function_creation_nonpayable$__$returns$_t_contract$_MockedRevenueToken_$45015_$",
+                          "typeIdentifier": "t_function_creation_nonpayable$__$returns$_t_contract$_MockedRevenueToken_$51947_$",
                           "typeString": "function () returns (contract MockedRevenueToken)"
                         },
                         "typeName": {
                           "contractScope": null,
-                          "id": 45028,
+                          "id": 51960,
                           "name": "MockedRevenueToken",
                           "nodeType": "UserDefinedTypeName",
-                          "referencedDeclaration": 45015,
-                          "src": "806:18:115",
+                          "referencedDeclaration": 51947,
+                          "src": "814:18:124",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                            "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                             "typeString": "contract MockedRevenueToken"
                           }
                         }
                       },
-                      "id": 45030,
+                      "id": 51962,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -830,73 +834,71 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "802:24:115",
+                      "src": "810:24:124",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                        "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                         "typeString": "contract MockedRevenueToken"
                       }
                     },
-                    "src": "794:32:115",
+                    "src": "802:32:124",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_MockedRevenueToken_$45015",
+                      "typeIdentifier": "t_contract$_MockedRevenueToken_$51947",
                       "typeString": "contract MockedRevenueToken"
                     }
                   },
-                  "id": 45032,
+                  "id": 51964,
                   "nodeType": "ExpressionStatement",
-                  "src": "794:32:115"
+                  "src": "802:32:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45034,
+            "id": 51966,
             "implemented": true,
-            "isConstructor": true,
-            "isDeclaredConst": false,
+            "kind": "constructor",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45025,
+              "id": 51957,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "770:2:115"
+              "src": "778:2:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45026,
+              "id": 51958,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "784:0:115"
+              "src": "792:0:124"
             },
-            "scope": 45065,
-            "src": "759:74:115",
+            "scope": 51997,
+            "src": "767:74:124",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 45041,
+              "id": 51973,
               "nodeType": "Block",
-              "src": "1017:44:115",
+              "src": "1025:44:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45039,
+                    "id": 51971,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 45037,
+                      "id": 51969,
                       "name": "_releasedAmountBlocksIn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45024,
-                      "src": "1027:23:115",
+                      "referencedDeclaration": 51956,
+                      "src": "1035:23:124",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -907,14 +909,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 45038,
+                      "id": 51970,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "1053:1:115",
+                      "src": "1061:1:124",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_0_by_1",
@@ -922,91 +924,88 @@
                       },
                       "value": "0"
                     },
-                    "src": "1027:27:115",
+                    "src": "1035:27:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 45040,
+                  "id": 51972,
                   "nodeType": "ExpressionStatement",
-                  "src": "1027:27:115"
+                  "src": "1035:27:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45042,
+            "id": 51974,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_reset",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45035,
+              "id": 51967,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "999:2:115"
+              "src": "1007:2:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45036,
+              "id": 51968,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1017:0:115"
+              "src": "1025:0:124"
             },
-            "scope": 45065,
-            "src": "984:77:115",
+            "scope": 51997,
+            "src": "992:77:124",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 45053,
+              "id": 51985,
               "nodeType": "Block",
-              "src": "1163:47:115",
+              "src": "1171:47:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45051,
+                    "id": 51983,
                     "name": "_releasedAmountBlocksIn",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 45024,
-                    "src": "1180:23:115",
+                    "referencedDeclaration": 51956,
+                    "src": "1188:23:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 45050,
-                  "id": 45052,
+                  "functionReturnParameters": 51982,
+                  "id": 51984,
                   "nodeType": "Return",
-                  "src": "1173:30:115"
+                  "src": "1181:30:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45054,
+            "id": 51986,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "releasedAmountBlocksIn",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45047,
+              "id": 51979,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45044,
+                  "id": 51976,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45054,
-                  "src": "1099:7:115",
+                  "scope": 51986,
+                  "src": "1107:7:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1014,10 +1013,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45043,
+                    "id": 51975,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1099:7:115",
+                    "src": "1107:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1028,11 +1027,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 45046,
+                  "id": 51978,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45054,
-                  "src": "1108:7:115",
+                  "scope": 51986,
+                  "src": "1116:7:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1040,10 +1039,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45045,
+                    "id": 51977,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1108:7:115",
+                    "src": "1116:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1053,20 +1052,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1098:18:115"
+              "src": "1106:18:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45050,
+              "id": 51982,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45049,
+                  "id": 51981,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45054,
-                  "src": "1150:7:115",
+                  "scope": 51986,
+                  "src": "1158:7:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1074,10 +1072,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45048,
+                    "id": 51980,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1150:7:115",
+                    "src": "1158:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1087,36 +1085,36 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1149:9:115"
+              "src": "1157:9:124"
             },
-            "scope": 45065,
-            "src": "1067:143:115",
+            "scope": 51997,
+            "src": "1075:143:124",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 45063,
+              "id": 51995,
               "nodeType": "Block",
-              "src": "1283:49:115",
+              "src": "1291:49:124",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 45061,
+                    "id": 51993,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 45059,
+                      "id": 51991,
                       "name": "_releasedAmountBlocksIn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45024,
-                      "src": "1293:23:115",
+                      "referencedDeclaration": 51956,
+                      "src": "1301:23:124",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1126,48 +1124,47 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 45060,
+                      "id": 51992,
                       "name": "_rabIn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45056,
-                      "src": "1319:6:115",
+                      "referencedDeclaration": 51988,
+                      "src": "1327:6:124",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "1293:32:115",
+                    "src": "1301:32:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 45062,
+                  "id": 51994,
                   "nodeType": "ExpressionStatement",
-                  "src": "1293:32:115"
+                  "src": "1301:32:124"
                 }
               ]
             },
             "documentation": null,
-            "id": 45064,
+            "id": 51996,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_setReleasedAmountBlocksIn",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 45057,
+              "id": 51989,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45056,
+                  "id": 51988,
                   "name": "_rabIn",
                   "nodeType": "VariableDeclaration",
-                  "scope": 45064,
-                  "src": "1252:14:115",
+                  "scope": 51996,
+                  "src": "1260:14:124",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1175,10 +1172,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 45055,
+                    "id": 51987,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1252:7:115",
+                    "src": "1260:7:124",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1188,33 +1185,32 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1251:16:115"
+              "src": "1259:16:124"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 45058,
+              "id": 51990,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1283:0:115"
+              "src": "1291:0:124"
             },
-            "scope": 45065,
-            "src": "1216:116:115",
+            "scope": 51997,
+            "src": "1224:116:124",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 45066,
-        "src": "344:990:115"
+        "scope": 51998,
+        "src": "352:990:124"
       }
     ],
-    "src": "122:1213:115"
+    "src": "122:1221:124"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T06:20:37.134Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.588Z"
 }

@@ -1,0 +1,1967 @@
+{
+  "contractName": "PartnerBenefactorable",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "contract PartnerBenefactor",
+          "name": "oldPartnerBenefactor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "contract PartnerBenefactor",
+          "name": "newPartnerBenefactor",
+          "type": "address"
+        }
+      ],
+      "name": "SetPartnerBenefactorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "deployer",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "destructor",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "partnerBenefactor",
+      "outputs": [
+        {
+          "internalType": "contract PartnerBenefactor",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "setDeployer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "setOperator",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "contract PartnerBenefactor",
+          "name": "newPartnerBenefactor",
+          "type": "address"
+        }
+      ],
+      "name": "setPartnerBenefactor",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {PartnerBenefactor} from \"./PartnerBenefactor.sol\";\n\n/**\n * @title PartnerBenefactorable\n * @notice An ownable that has a partner benefactor property\n */\ncontract PartnerBenefactorable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    PartnerBenefactor public partnerBenefactor;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetPartnerBenefactorEvent(PartnerBenefactor oldPartnerBenefactor, PartnerBenefactor newPartnerBenefactor);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the partner benefactor contract\n    /// @param newPartnerBenefactor The (address of) PartnerBenefactor contract instance\n    function setPartnerBenefactor(PartnerBenefactor newPartnerBenefactor)\n    public\n    onlyDeployer\n    notNullAddress(address(newPartnerBenefactor))\n    notSameAddresses(address(newPartnerBenefactor), address(partnerBenefactor))\n    {\n        // Set new partner benefactor\n        PartnerBenefactor oldPartnerBenefactor = partnerBenefactor;\n        partnerBenefactor = newPartnerBenefactor;\n\n        // Emit event\n        emit SetPartnerBenefactorEvent(oldPartnerBenefactor, newPartnerBenefactor);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier partnerBenefactorInitialized() {\n        require(address(partnerBenefactor) != address(0), \"Partner benefactor not initialized [PartnerBenefactorable.sol:52]\");\n        _;\n    }\n}",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/PartnerBenefactorable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PartnerBenefactorable.sol",
+    "exportedSymbols": {
+      "PartnerBenefactorable": [
+        30773
+      ]
+    },
+    "id": 30774,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 30709,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".25",
+          "<",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:32:67"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 30711,
+        "nodeType": "ImportDirective",
+        "scope": 30774,
+        "sourceUnit": 30686,
+        "src": "156:38:67",
+        "symbolAliases": [
+          {
+            "foreign": 30710,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PartnerBenefactor.sol",
+        "file": "./PartnerBenefactor.sol",
+        "id": 30713,
+        "nodeType": "ImportDirective",
+        "scope": 30774,
+        "sourceUnit": 30708,
+        "src": "195:58:67",
+        "symbolAliases": [
+          {
+            "foreign": 30712,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 30714,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30685,
+              "src": "390:7:67",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$30685",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 30715,
+            "nodeType": "InheritanceSpecifier",
+            "src": "390:7:67"
+          }
+        ],
+        "contractDependencies": [
+          23037,
+          30685,
+          37143
+        ],
+        "contractKind": "contract",
+        "documentation": "@title PartnerBenefactorable\n@notice An ownable that has a partner benefactor property",
+        "fullyImplemented": false,
+        "id": 30773,
+        "linearizedBaseContracts": [
+          30773,
+          30685,
+          37143,
+          23037
+        ],
+        "name": "PartnerBenefactorable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 30717,
+            "name": "partnerBenefactor",
+            "nodeType": "VariableDeclaration",
+            "scope": 30773,
+            "src": "549:42:67",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+              "typeString": "contract PartnerBenefactor"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 30716,
+              "name": "PartnerBenefactor",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30707,
+              "src": "549:17:67",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                "typeString": "contract PartnerBenefactor"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 30723,
+            "name": "SetPartnerBenefactorEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 30722,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 30719,
+                  "indexed": false,
+                  "name": "oldPartnerBenefactor",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 30723,
+                  "src": "772:38:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                    "typeString": "contract PartnerBenefactor"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 30718,
+                    "name": "PartnerBenefactor",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 30707,
+                    "src": "772:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 30721,
+                  "indexed": false,
+                  "name": "newPartnerBenefactor",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 30723,
+                  "src": "812:38:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                    "typeString": "contract PartnerBenefactor"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 30720,
+                    "name": "PartnerBenefactor",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 30707,
+                    "src": "812:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "771:80:67"
+            },
+            "src": "740:112:67"
+          },
+          {
+            "body": {
+              "id": 30756,
+              "nodeType": "Block",
+              "src": "1376:270:67",
+              "statements": [
+                {
+                  "assignments": [
+                    30744
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 30744,
+                      "name": "oldPartnerBenefactor",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 30756,
+                      "src": "1424:38:67",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                        "typeString": "contract PartnerBenefactor"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 30743,
+                        "name": "PartnerBenefactor",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 30707,
+                        "src": "1424:17:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 30746,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 30745,
+                    "name": "partnerBenefactor",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 30717,
+                    "src": "1465:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1424:58:67"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 30749,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 30747,
+                      "name": "partnerBenefactor",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 30717,
+                      "src": "1492:17:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                        "typeString": "contract PartnerBenefactor"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 30748,
+                      "name": "newPartnerBenefactor",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 30725,
+                      "src": "1512:20:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                        "typeString": "contract PartnerBenefactor"
+                      }
+                    },
+                    "src": "1492:40:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "id": 30750,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1492:40:67"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30752,
+                        "name": "oldPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30744,
+                        "src": "1596:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 30753,
+                        "name": "newPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30725,
+                        "src": "1618:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30751,
+                      "name": "SetPartnerBenefactorEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 30723,
+                      "src": "1570:25:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_PartnerBenefactor_$30707_$_t_contract$_PartnerBenefactor_$30707_$returns$__$",
+                        "typeString": "function (contract PartnerBenefactor,contract PartnerBenefactor)"
+                      }
+                    },
+                    "id": 30754,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1570:69:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 30755,
+                  "nodeType": "EmitStatement",
+                  "src": "1565:74:67"
+                }
+              ]
+            },
+            "documentation": "@notice Set the partner benefactor contract\n @param newPartnerBenefactor The (address of) PartnerBenefactor contract instance",
+            "id": 30757,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 30728,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 30727,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 30636,
+                  "src": "1229:12:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1229:12:67"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30731,
+                        "name": "newPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30725,
+                        "src": "1269:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30730,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1261:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 30732,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1261:29:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 30733,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 30729,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 22988,
+                  "src": "1246:14:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1246:45:67"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30736,
+                        "name": "newPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30725,
+                        "src": "1321:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30735,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1313:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 30737,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1313:29:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30739,
+                        "name": "partnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30717,
+                        "src": "1352:17:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30738,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1344:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 30740,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1344:26:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 30741,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 30734,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 23036,
+                  "src": "1296:16:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1296:75:67"
+              }
+            ],
+            "name": "setPartnerBenefactor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 30726,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 30725,
+                  "name": "newPartnerBenefactor",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 30757,
+                  "src": "1174:38:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                    "typeString": "contract PartnerBenefactor"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 30724,
+                    "name": "PartnerBenefactor",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 30707,
+                    "src": "1174:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1173:40:67"
+            },
+            "returnParameters": {
+              "id": 30742,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1376:0:67"
+            },
+            "scope": 30773,
+            "src": "1144:502:67",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 30771,
+              "nodeType": "Block",
+              "src": "1837:146:67",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 30766,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 30761,
+                              "name": "partnerBenefactor",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 30717,
+                              "src": "1863:17:67",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                                "typeString": "contract PartnerBenefactor"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                                "typeString": "contract PartnerBenefactor"
+                              }
+                            ],
+                            "id": 30760,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1855:7:67",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 30762,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1855:26:67",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 30764,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1893:1:67",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 30763,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1885:7:67",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 30765,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1885:10:67",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "src": "1855:40:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "506172746e65722062656e65666163746f72206e6f7420696e697469616c697a6564205b506172746e657242656e65666163746f7261626c652e736f6c3a35325d",
+                        "id": 30767,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1897:67:67",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_189de001046d3ffa51b11aabf54e8e777814b4786b5f4d318c4a92c31116a248",
+                          "typeString": "literal_string \"Partner benefactor not initialized [PartnerBenefactorable.sol:52]\""
+                        },
+                        "value": "Partner benefactor not initialized [PartnerBenefactorable.sol:52]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_189de001046d3ffa51b11aabf54e8e777814b4786b5f4d318c4a92c31116a248",
+                          "typeString": "literal_string \"Partner benefactor not initialized [PartnerBenefactorable.sol:52]\""
+                        }
+                      ],
+                      "id": 30759,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1847:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 30768,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1847:118:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 30769,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1847:118:67"
+                },
+                {
+                  "id": 30770,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1975:1:67"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 30772,
+            "name": "partnerBenefactorInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 30758,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1834:2:67"
+            },
+            "src": "1797:186:67",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 30774,
+        "src": "356:1629:67"
+      }
+    ],
+    "src": "122:1863:67"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PartnerBenefactorable.sol",
+    "exportedSymbols": {
+      "PartnerBenefactorable": [
+        30773
+      ]
+    },
+    "id": 30774,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 30709,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".25",
+          "<",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:32:67"
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
+        "file": "./Ownable.sol",
+        "id": 30711,
+        "nodeType": "ImportDirective",
+        "scope": 30774,
+        "sourceUnit": 30686,
+        "src": "156:38:67",
+        "symbolAliases": [
+          {
+            "foreign": 30710,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/PartnerBenefactor.sol",
+        "file": "./PartnerBenefactor.sol",
+        "id": 30713,
+        "nodeType": "ImportDirective",
+        "scope": 30774,
+        "sourceUnit": 30708,
+        "src": "195:58:67",
+        "symbolAliases": [
+          {
+            "foreign": 30712,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 30714,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30685,
+              "src": "390:7:67",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$30685",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 30715,
+            "nodeType": "InheritanceSpecifier",
+            "src": "390:7:67"
+          }
+        ],
+        "contractDependencies": [
+          23037,
+          30685,
+          37143
+        ],
+        "contractKind": "contract",
+        "documentation": "@title PartnerBenefactorable\n@notice An ownable that has a partner benefactor property",
+        "fullyImplemented": false,
+        "id": 30773,
+        "linearizedBaseContracts": [
+          30773,
+          30685,
+          37143,
+          23037
+        ],
+        "name": "PartnerBenefactorable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 30717,
+            "name": "partnerBenefactor",
+            "nodeType": "VariableDeclaration",
+            "scope": 30773,
+            "src": "549:42:67",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+              "typeString": "contract PartnerBenefactor"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 30716,
+              "name": "PartnerBenefactor",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 30707,
+              "src": "549:17:67",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                "typeString": "contract PartnerBenefactor"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 30723,
+            "name": "SetPartnerBenefactorEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 30722,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 30719,
+                  "indexed": false,
+                  "name": "oldPartnerBenefactor",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 30723,
+                  "src": "772:38:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                    "typeString": "contract PartnerBenefactor"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 30718,
+                    "name": "PartnerBenefactor",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 30707,
+                    "src": "772:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 30721,
+                  "indexed": false,
+                  "name": "newPartnerBenefactor",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 30723,
+                  "src": "812:38:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                    "typeString": "contract PartnerBenefactor"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 30720,
+                    "name": "PartnerBenefactor",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 30707,
+                    "src": "812:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "771:80:67"
+            },
+            "src": "740:112:67"
+          },
+          {
+            "body": {
+              "id": 30756,
+              "nodeType": "Block",
+              "src": "1376:270:67",
+              "statements": [
+                {
+                  "assignments": [
+                    30744
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 30744,
+                      "name": "oldPartnerBenefactor",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 30756,
+                      "src": "1424:38:67",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                        "typeString": "contract PartnerBenefactor"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 30743,
+                        "name": "PartnerBenefactor",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 30707,
+                        "src": "1424:17:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 30746,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 30745,
+                    "name": "partnerBenefactor",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 30717,
+                    "src": "1465:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1424:58:67"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 30749,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 30747,
+                      "name": "partnerBenefactor",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 30717,
+                      "src": "1492:17:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                        "typeString": "contract PartnerBenefactor"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 30748,
+                      "name": "newPartnerBenefactor",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 30725,
+                      "src": "1512:20:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                        "typeString": "contract PartnerBenefactor"
+                      }
+                    },
+                    "src": "1492:40:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "id": 30750,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1492:40:67"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30752,
+                        "name": "oldPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30744,
+                        "src": "1596:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 30753,
+                        "name": "newPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30725,
+                        "src": "1618:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        },
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30751,
+                      "name": "SetPartnerBenefactorEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 30723,
+                      "src": "1570:25:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_PartnerBenefactor_$30707_$_t_contract$_PartnerBenefactor_$30707_$returns$__$",
+                        "typeString": "function (contract PartnerBenefactor,contract PartnerBenefactor)"
+                      }
+                    },
+                    "id": 30754,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1570:69:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 30755,
+                  "nodeType": "EmitStatement",
+                  "src": "1565:74:67"
+                }
+              ]
+            },
+            "documentation": "@notice Set the partner benefactor contract\n @param newPartnerBenefactor The (address of) PartnerBenefactor contract instance",
+            "id": 30757,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 30728,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 30727,
+                  "name": "onlyDeployer",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 30636,
+                  "src": "1229:12:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1229:12:67"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30731,
+                        "name": "newPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30725,
+                        "src": "1269:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30730,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1261:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 30732,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1261:29:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 30733,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 30729,
+                  "name": "notNullAddress",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 22988,
+                  "src": "1246:14:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1246:45:67"
+              },
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30736,
+                        "name": "newPartnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30725,
+                        "src": "1321:20:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30735,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1313:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 30737,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1313:29:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 30739,
+                        "name": "partnerBenefactor",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 30717,
+                        "src": "1352:17:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                          "typeString": "contract PartnerBenefactor"
+                        }
+                      ],
+                      "id": 30738,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1344:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 30740,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1344:26:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 30741,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 30734,
+                  "name": "notSameAddresses",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 23036,
+                  "src": "1296:16:67",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
+                    "typeString": "modifier (address,address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1296:75:67"
+              }
+            ],
+            "name": "setPartnerBenefactor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 30726,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 30725,
+                  "name": "newPartnerBenefactor",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 30757,
+                  "src": "1174:38:67",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                    "typeString": "contract PartnerBenefactor"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 30724,
+                    "name": "PartnerBenefactor",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 30707,
+                    "src": "1174:17:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                      "typeString": "contract PartnerBenefactor"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1173:40:67"
+            },
+            "returnParameters": {
+              "id": 30742,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1376:0:67"
+            },
+            "scope": 30773,
+            "src": "1144:502:67",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 30771,
+              "nodeType": "Block",
+              "src": "1837:146:67",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 30766,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 30761,
+                              "name": "partnerBenefactor",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 30717,
+                              "src": "1863:17:67",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                                "typeString": "contract PartnerBenefactor"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_contract$_PartnerBenefactor_$30707",
+                                "typeString": "contract PartnerBenefactor"
+                              }
+                            ],
+                            "id": 30760,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1855:7:67",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 30762,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1855:26:67",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 30764,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1893:1:67",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 30763,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1885:7:67",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 30765,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1885:10:67",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "src": "1855:40:67",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "506172746e65722062656e65666163746f72206e6f7420696e697469616c697a6564205b506172746e657242656e65666163746f7261626c652e736f6c3a35325d",
+                        "id": 30767,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1897:67:67",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_189de001046d3ffa51b11aabf54e8e777814b4786b5f4d318c4a92c31116a248",
+                          "typeString": "literal_string \"Partner benefactor not initialized [PartnerBenefactorable.sol:52]\""
+                        },
+                        "value": "Partner benefactor not initialized [PartnerBenefactorable.sol:52]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_189de001046d3ffa51b11aabf54e8e777814b4786b5f4d318c4a92c31116a248",
+                          "typeString": "literal_string \"Partner benefactor not initialized [PartnerBenefactorable.sol:52]\""
+                        }
+                      ],
+                      "id": 30759,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1847:7:67",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 30768,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1847:118:67",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 30769,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1847:118:67"
+                },
+                {
+                  "id": 30770,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1975:1:67"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 30772,
+            "name": "partnerBenefactorInitialized",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 30758,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1834:2:67"
+            },
+            "src": "1797:186:67",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 30774,
+        "src": "356:1629:67"
+      }
+    ],
+    "src": "122:1863:67"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.446Z"
+}

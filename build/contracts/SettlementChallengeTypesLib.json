@@ -1,53 +1,56 @@
 {
   "contractName": "SettlementChallengeTypesLib",
   "abi": [],
-  "bytecode": "0x605a602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a265627a7a7230582090031c236880bafb2968320bd61bc2042582a1083afe6079d96e9b8b5f3b062f6c6578706572696d656e74616cf50037",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a265627a7a7230582090031c236880bafb2968320bd61bc2042582a1083afe6079d96e9b8b5f3b062f6c6578706572696d656e74616cf50037",
-  "sourceMap": "336:1311:77:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
-  "deployedSourceMap": "336:1311:77:-;;;;;;;;",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\npragma experimental ABIEncoderV2;\n\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\n\n/**\n * @title     SettlementChallengeTypesLib\n * @dev       Types for settlement challenges\n */\nlibrary SettlementChallengeTypesLib {\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    enum Status {Qualified, Disqualified}\n\n    struct Proposal {\n        address wallet;\n        uint256 nonce;\n        uint256 blockNumber;\n\n        uint256 expirationTime;\n\n        // Status\n        Status status;\n\n        // Amounts\n        Amounts amounts;\n\n        // Currency\n        MonetaryTypesLib.Currency currency;\n\n        // Info on challenged driip\n        Driip challenged;\n\n        // True if reward is from wallet balance\n        bool walletInitiated;\n\n        // Disqualification\n        Disqualification disqualification;\n    }\n\n    struct Amounts {\n        // Cumulative (relative) transfer info\n        int256 cumulativeTransfer;\n\n        // Stage info\n        int256 stage;\n\n        // Balances after amounts have been staged\n        int256 targetBalance;\n    }\n\n    struct Driip {\n        // Kind (\"payment\", \"trade\", ...)\n        string kind;\n\n        // Hash (of operator)\n        bytes32 hash;\n    }\n\n    struct Disqualification {\n        // Challenger\n        address challenger;\n        uint256 nonce;\n        uint256 blockNumber;\n\n        // Info on candidate driip\n        Driip candidate;\n    }\n}",
+  "bytecode": "0x60636023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea365627a7a7231582046ae934cda8a7b37bda4cd7a143be795fbf0bfc1c9ca44f980911909878e5ab26c6578706572696d656e74616cf564736f6c634300050c0040",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea365627a7a7231582046ae934cda8a7b37bda4cd7a143be795fbf0bfc1c9ca44f980911909878e5ab26c6578706572696d656e74616cf564736f6c634300050c0040",
+  "sourceMap": "344:1453:82:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
+  "deployedSourceMap": "344:1453:82:-;;;;;;;;",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\npragma experimental ABIEncoderV2;\n\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\n\n/**\n * @title     SettlementChallengeTypesLib\n * @dev       Types for settlement challenges\n */\nlibrary SettlementChallengeTypesLib {\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    enum Status {Qualified, Disqualified}\n\n    struct Proposal {\n        address wallet;\n        uint256 nonce;\n        uint256 referenceBlockNumber;\n        uint256 definitionBlockNumber;\n\n        uint256 expirationTime;\n\n        // Status\n        Status status;\n\n        // Amounts\n        Amounts amounts;\n\n        // Currency\n        MonetaryTypesLib.Currency currency;\n\n        // Info on challenged driip\n        Driip challenged;\n\n        // True is equivalent to reward coming from wallet's balance\n        bool walletInitiated;\n\n        // True if proposal has been terminated\n        bool terminated;\n\n        // Disqualification\n        Disqualification disqualification;\n    }\n\n    struct Amounts {\n        // Cumulative (relative) transfer info\n        int256 cumulativeTransfer;\n\n        // Stage info\n        int256 stage;\n\n        // Balances after amounts have been staged\n        int256 targetBalance;\n    }\n\n    struct Driip {\n        // Kind (\"payment\", \"trade\", ...)\n        string kind;\n\n        // Hash (of operator)\n        bytes32 hash;\n    }\n\n    struct Disqualification {\n        // Challenger\n        address challenger;\n        uint256 nonce;\n        uint256 blockNumber;\n\n        // Info on candidate driip\n        Driip candidate;\n    }\n}",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/SettlementChallengeTypesLib.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SettlementChallengeTypesLib.sol",
     "exportedSymbols": {
       "SettlementChallengeTypesLib": [
-        32037
+        37571
       ]
     },
-    "id": 32038,
+    "id": 37572,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 31988,
+        "id": 37518,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:77"
+        "src": "122:32:82"
       },
       {
-        "id": 31989,
+        "id": 37519,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:77"
+        "src": "155:33:82"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "./MonetaryTypesLib.sol",
-        "id": 31991,
+        "id": 37521,
         "nodeType": "ImportDirective",
-        "scope": 32038,
-        "sourceUnit": 19413,
-        "src": "182:56:77",
+        "scope": 37572,
+        "sourceUnit": 23057,
+        "src": "190:56:82",
         "symbolAliases": [
           {
-            "foreign": 31990,
+            "foreign": 37520,
             "local": null
           }
         ],
@@ -59,45 +62,45 @@
         "contractKind": "library",
         "documentation": "@title     SettlementChallengeTypesLib\n@dev       Types for settlement challenges",
         "fullyImplemented": true,
-        "id": 32037,
+        "id": 37571,
         "linearizedBaseContracts": [
-          32037
+          37571
         ],
         "name": "SettlementChallengeTypesLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "SettlementChallengeTypesLib.Status",
-            "id": 31994,
+            "id": 37524,
             "members": [
               {
-                "id": 31992,
+                "id": 37522,
                 "name": "Qualified",
                 "nodeType": "EnumValue",
-                "src": "537:9:77"
+                "src": "545:9:82"
               },
               {
-                "id": 31993,
+                "id": 37523,
                 "name": "Disqualified",
                 "nodeType": "EnumValue",
-                "src": "548:12:77"
+                "src": "556:12:82"
               }
             ],
             "name": "Status",
             "nodeType": "EnumDefinition",
-            "src": "524:37:77"
+            "src": "532:37:82"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Proposal",
-            "id": 32015,
+            "id": 37549,
             "members": [
               {
                 "constant": false,
-                "id": 31996,
+                "id": 37526,
                 "name": "wallet",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "593:14:77",
+                "scope": 37549,
+                "src": "601:14:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -105,10 +108,11 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 31995,
+                  "id": 37525,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "593:7:77",
+                  "src": "601:7:82",
+                  "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -119,11 +123,11 @@
               },
               {
                 "constant": false,
-                "id": 31998,
+                "id": 37528,
                 "name": "nonce",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "617:13:77",
+                "scope": 37549,
+                "src": "625:13:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -131,10 +135,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 31997,
+                  "id": 37527,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "617:7:77",
+                  "src": "625:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -145,11 +149,11 @@
               },
               {
                 "constant": false,
-                "id": 32000,
-                "name": "blockNumber",
+                "id": 37530,
+                "name": "referenceBlockNumber",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "640:19:77",
+                "scope": 37549,
+                "src": "648:28:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -157,10 +161,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 31999,
+                  "id": 37529,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "640:7:77",
+                  "src": "648:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -171,11 +175,37 @@
               },
               {
                 "constant": false,
-                "id": 32002,
+                "id": 37532,
+                "name": "definitionBlockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 37549,
+                "src": "686:29:82",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 37531,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "686:7:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 37534,
                 "name": "expirationTime",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "670:22:77",
+                "scope": 37549,
+                "src": "726:22:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -183,10 +213,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 32001,
+                  "id": 37533,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "670:7:77",
+                  "src": "726:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -197,26 +227,26 @@
               },
               {
                 "constant": false,
-                "id": 32004,
+                "id": 37536,
                 "name": "status",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "721:13:77",
+                "scope": 37549,
+                "src": "777:13:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_Status_$31994",
+                  "typeIdentifier": "t_enum$_Status_$37524",
                   "typeString": "enum SettlementChallengeTypesLib.Status"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32003,
+                  "id": 37535,
                   "name": "Status",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 31994,
-                  "src": "721:6:77",
+                  "referencedDeclaration": 37524,
+                  "src": "777:6:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Status_$31994",
+                    "typeIdentifier": "t_enum$_Status_$37524",
                     "typeString": "enum SettlementChallengeTypesLib.Status"
                   }
                 },
@@ -225,26 +255,26 @@
               },
               {
                 "constant": false,
-                "id": 32006,
+                "id": 37538,
                 "name": "amounts",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "764:15:77",
+                "scope": 37549,
+                "src": "820:15:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Amounts_$32022_storage_ptr",
+                  "typeIdentifier": "t_struct$_Amounts_$37556_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Amounts"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32005,
+                  "id": 37537,
                   "name": "Amounts",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32022,
-                  "src": "764:7:77",
+                  "referencedDeclaration": 37556,
+                  "src": "820:7:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Amounts_$32022_storage_ptr",
+                    "typeIdentifier": "t_struct$_Amounts_$37556_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Amounts"
                   }
                 },
@@ -253,26 +283,26 @@
               },
               {
                 "constant": false,
-                "id": 32008,
+                "id": 37540,
                 "name": "currency",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "810:34:77",
+                "scope": 37549,
+                "src": "866:34:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32007,
+                  "id": 37539,
                   "name": "MonetaryTypesLib.Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19401,
-                  "src": "810:25:77",
+                  "referencedDeclaration": 23045,
+                  "src": "866:25:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -281,26 +311,26 @@
               },
               {
                 "constant": false,
-                "id": 32010,
+                "id": 37542,
                 "name": "challenged",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "891:16:77",
+                "scope": 37549,
+                "src": "947:16:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                  "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Driip"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32009,
+                  "id": 37541,
                   "name": "Driip",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32027,
-                  "src": "891:5:77",
+                  "referencedDeclaration": 37561,
+                  "src": "947:5:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                    "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Driip"
                   }
                 },
@@ -309,11 +339,11 @@
               },
               {
                 "constant": false,
-                "id": 32012,
+                "id": 37544,
                 "name": "walletInitiated",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "967:20:77",
+                "scope": 37549,
+                "src": "1043:20:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -321,10 +351,10 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 32011,
+                  "id": 37543,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "967:4:77",
+                  "src": "1043:4:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -335,26 +365,52 @@
               },
               {
                 "constant": false,
-                "id": 32014,
-                "name": "disqualification",
+                "id": 37546,
+                "name": "terminated",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "1026:33:77",
+                "scope": 37549,
+                "src": "1122:15:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Disqualification_$32036_storage_ptr",
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 37545,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1122:4:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 37548,
+                "name": "disqualification",
+                "nodeType": "VariableDeclaration",
+                "scope": 37549,
+                "src": "1176:33:82",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Disqualification_$37570_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Disqualification"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32013,
+                  "id": 37547,
                   "name": "Disqualification",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32036,
-                  "src": "1026:16:77",
+                  "referencedDeclaration": 37570,
+                  "src": "1176:16:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Disqualification_$32036_storage_ptr",
+                    "typeIdentifier": "t_struct$_Disqualification_$37570_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Disqualification"
                   }
                 },
@@ -364,21 +420,21 @@
             ],
             "name": "Proposal",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "567:499:77",
+            "scope": 37571,
+            "src": "575:641:82",
             "visibility": "public"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Amounts",
-            "id": 32022,
+            "id": 37556,
             "members": [
               {
                 "constant": false,
-                "id": 32017,
+                "id": 37551,
                 "name": "cumulativeTransfer",
                 "nodeType": "VariableDeclaration",
-                "scope": 32022,
-                "src": "1144:25:77",
+                "scope": 37556,
+                "src": "1294:25:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -386,10 +442,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 32016,
+                  "id": 37550,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1144:6:77",
+                  "src": "1294:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -400,11 +456,11 @@
               },
               {
                 "constant": false,
-                "id": 32019,
+                "id": 37553,
                 "name": "stage",
                 "nodeType": "VariableDeclaration",
-                "scope": 32022,
-                "src": "1202:12:77",
+                "scope": 37556,
+                "src": "1352:12:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -412,10 +468,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 32018,
+                  "id": 37552,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1202:6:77",
+                  "src": "1352:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -426,11 +482,11 @@
               },
               {
                 "constant": false,
-                "id": 32021,
+                "id": 37555,
                 "name": "targetBalance",
                 "nodeType": "VariableDeclaration",
-                "scope": 32022,
-                "src": "1276:20:77",
+                "scope": 37556,
+                "src": "1426:20:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -438,10 +494,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 32020,
+                  "id": 37554,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1276:6:77",
+                  "src": "1426:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -453,21 +509,21 @@
             ],
             "name": "Amounts",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "1072:231:77",
+            "scope": 37571,
+            "src": "1222:231:82",
             "visibility": "public"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Driip",
-            "id": 32027,
+            "id": 37561,
             "members": [
               {
                 "constant": false,
-                "id": 32024,
+                "id": 37558,
                 "name": "kind",
                 "nodeType": "VariableDeclaration",
-                "scope": 32027,
-                "src": "1374:11:77",
+                "scope": 37561,
+                "src": "1524:11:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -475,10 +531,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 32023,
+                  "id": 37557,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1374:6:77",
+                  "src": "1524:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -489,11 +545,11 @@
               },
               {
                 "constant": false,
-                "id": 32026,
+                "id": 37560,
                 "name": "hash",
                 "nodeType": "VariableDeclaration",
-                "scope": 32027,
-                "src": "1426:12:77",
+                "scope": 37561,
+                "src": "1576:12:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -501,10 +557,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 32025,
+                  "id": 37559,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1426:7:77",
+                  "src": "1576:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -516,21 +572,21 @@
             ],
             "name": "Driip",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "1309:136:77",
+            "scope": 37571,
+            "src": "1459:136:82",
             "visibility": "public"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Disqualification",
-            "id": 32036,
+            "id": 37570,
             "members": [
               {
                 "constant": false,
-                "id": 32029,
+                "id": 37563,
                 "name": "challenger",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1507:18:77",
+                "scope": 37570,
+                "src": "1657:18:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -538,10 +594,11 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 32028,
+                  "id": 37562,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1507:7:77",
+                  "src": "1657:7:82",
+                  "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -552,11 +609,11 @@
               },
               {
                 "constant": false,
-                "id": 32031,
+                "id": 37565,
                 "name": "nonce",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1535:13:77",
+                "scope": 37570,
+                "src": "1685:13:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -564,10 +621,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 32030,
+                  "id": 37564,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1535:7:77",
+                  "src": "1685:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -578,11 +635,11 @@
               },
               {
                 "constant": false,
-                "id": 32033,
+                "id": 37567,
                 "name": "blockNumber",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1558:19:77",
+                "scope": 37570,
+                "src": "1708:19:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -590,10 +647,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 32032,
+                  "id": 37566,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1558:7:77",
+                  "src": "1708:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -604,26 +661,26 @@
               },
               {
                 "constant": false,
-                "id": 32035,
+                "id": 37569,
                 "name": "candidate",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1623:15:77",
+                "scope": 37570,
+                "src": "1773:15:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                  "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Driip"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32034,
+                  "id": 37568,
                   "name": "Driip",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32027,
-                  "src": "1623:5:77",
+                  "referencedDeclaration": 37561,
+                  "src": "1773:5:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                    "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Driip"
                   }
                 },
@@ -633,58 +690,61 @@
             ],
             "name": "Disqualification",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "1451:194:77",
+            "scope": 37571,
+            "src": "1601:194:82",
             "visibility": "public"
           }
         ],
-        "scope": 32038,
-        "src": "336:1311:77"
+        "scope": 37572,
+        "src": "344:1453:82"
       }
     ],
-    "src": "122:1525:77"
+    "src": "122:1675:82"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SettlementChallengeTypesLib.sol",
     "exportedSymbols": {
       "SettlementChallengeTypesLib": [
-        32037
+        37571
       ]
     },
-    "id": 32038,
+    "id": 37572,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 31988,
+        "id": 37518,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:77"
+        "src": "122:32:82"
       },
       {
-        "id": 31989,
+        "id": 37519,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:77"
+        "src": "155:33:82"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "./MonetaryTypesLib.sol",
-        "id": 31991,
+        "id": 37521,
         "nodeType": "ImportDirective",
-        "scope": 32038,
-        "sourceUnit": 19413,
-        "src": "182:56:77",
+        "scope": 37572,
+        "sourceUnit": 23057,
+        "src": "190:56:82",
         "symbolAliases": [
           {
-            "foreign": 31990,
+            "foreign": 37520,
             "local": null
           }
         ],
@@ -696,45 +756,45 @@
         "contractKind": "library",
         "documentation": "@title     SettlementChallengeTypesLib\n@dev       Types for settlement challenges",
         "fullyImplemented": true,
-        "id": 32037,
+        "id": 37571,
         "linearizedBaseContracts": [
-          32037
+          37571
         ],
         "name": "SettlementChallengeTypesLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "SettlementChallengeTypesLib.Status",
-            "id": 31994,
+            "id": 37524,
             "members": [
               {
-                "id": 31992,
+                "id": 37522,
                 "name": "Qualified",
                 "nodeType": "EnumValue",
-                "src": "537:9:77"
+                "src": "545:9:82"
               },
               {
-                "id": 31993,
+                "id": 37523,
                 "name": "Disqualified",
                 "nodeType": "EnumValue",
-                "src": "548:12:77"
+                "src": "556:12:82"
               }
             ],
             "name": "Status",
             "nodeType": "EnumDefinition",
-            "src": "524:37:77"
+            "src": "532:37:82"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Proposal",
-            "id": 32015,
+            "id": 37549,
             "members": [
               {
                 "constant": false,
-                "id": 31996,
+                "id": 37526,
                 "name": "wallet",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "593:14:77",
+                "scope": 37549,
+                "src": "601:14:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -742,10 +802,11 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 31995,
+                  "id": 37525,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "593:7:77",
+                  "src": "601:7:82",
+                  "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -756,11 +817,11 @@
               },
               {
                 "constant": false,
-                "id": 31998,
+                "id": 37528,
                 "name": "nonce",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "617:13:77",
+                "scope": 37549,
+                "src": "625:13:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -768,10 +829,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 31997,
+                  "id": 37527,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "617:7:77",
+                  "src": "625:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -782,11 +843,11 @@
               },
               {
                 "constant": false,
-                "id": 32000,
-                "name": "blockNumber",
+                "id": 37530,
+                "name": "referenceBlockNumber",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "640:19:77",
+                "scope": 37549,
+                "src": "648:28:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -794,10 +855,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 31999,
+                  "id": 37529,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "640:7:77",
+                  "src": "648:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -808,11 +869,37 @@
               },
               {
                 "constant": false,
-                "id": 32002,
+                "id": 37532,
+                "name": "definitionBlockNumber",
+                "nodeType": "VariableDeclaration",
+                "scope": 37549,
+                "src": "686:29:82",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 37531,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "686:7:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 37534,
                 "name": "expirationTime",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "670:22:77",
+                "scope": 37549,
+                "src": "726:22:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -820,10 +907,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 32001,
+                  "id": 37533,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "670:7:77",
+                  "src": "726:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -834,26 +921,26 @@
               },
               {
                 "constant": false,
-                "id": 32004,
+                "id": 37536,
                 "name": "status",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "721:13:77",
+                "scope": 37549,
+                "src": "777:13:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_Status_$31994",
+                  "typeIdentifier": "t_enum$_Status_$37524",
                   "typeString": "enum SettlementChallengeTypesLib.Status"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32003,
+                  "id": 37535,
                   "name": "Status",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 31994,
-                  "src": "721:6:77",
+                  "referencedDeclaration": 37524,
+                  "src": "777:6:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Status_$31994",
+                    "typeIdentifier": "t_enum$_Status_$37524",
                     "typeString": "enum SettlementChallengeTypesLib.Status"
                   }
                 },
@@ -862,26 +949,26 @@
               },
               {
                 "constant": false,
-                "id": 32006,
+                "id": 37538,
                 "name": "amounts",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "764:15:77",
+                "scope": 37549,
+                "src": "820:15:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Amounts_$32022_storage_ptr",
+                  "typeIdentifier": "t_struct$_Amounts_$37556_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Amounts"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32005,
+                  "id": 37537,
                   "name": "Amounts",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32022,
-                  "src": "764:7:77",
+                  "referencedDeclaration": 37556,
+                  "src": "820:7:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Amounts_$32022_storage_ptr",
+                    "typeIdentifier": "t_struct$_Amounts_$37556_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Amounts"
                   }
                 },
@@ -890,26 +977,26 @@
               },
               {
                 "constant": false,
-                "id": 32008,
+                "id": 37540,
                 "name": "currency",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "810:34:77",
+                "scope": 37549,
+                "src": "866:34:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32007,
+                  "id": 37539,
                   "name": "MonetaryTypesLib.Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19401,
-                  "src": "810:25:77",
+                  "referencedDeclaration": 23045,
+                  "src": "866:25:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -918,26 +1005,26 @@
               },
               {
                 "constant": false,
-                "id": 32010,
+                "id": 37542,
                 "name": "challenged",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "891:16:77",
+                "scope": 37549,
+                "src": "947:16:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                  "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Driip"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32009,
+                  "id": 37541,
                   "name": "Driip",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32027,
-                  "src": "891:5:77",
+                  "referencedDeclaration": 37561,
+                  "src": "947:5:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                    "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Driip"
                   }
                 },
@@ -946,11 +1033,11 @@
               },
               {
                 "constant": false,
-                "id": 32012,
+                "id": 37544,
                 "name": "walletInitiated",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "967:20:77",
+                "scope": 37549,
+                "src": "1043:20:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -958,10 +1045,10 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 32011,
+                  "id": 37543,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "967:4:77",
+                  "src": "1043:4:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -972,26 +1059,52 @@
               },
               {
                 "constant": false,
-                "id": 32014,
-                "name": "disqualification",
+                "id": 37546,
+                "name": "terminated",
                 "nodeType": "VariableDeclaration",
-                "scope": 32015,
-                "src": "1026:33:77",
+                "scope": 37549,
+                "src": "1122:15:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Disqualification_$32036_storage_ptr",
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 37545,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1122:4:82",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 37548,
+                "name": "disqualification",
+                "nodeType": "VariableDeclaration",
+                "scope": 37549,
+                "src": "1176:33:82",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Disqualification_$37570_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Disqualification"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32013,
+                  "id": 37547,
                   "name": "Disqualification",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32036,
-                  "src": "1026:16:77",
+                  "referencedDeclaration": 37570,
+                  "src": "1176:16:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Disqualification_$32036_storage_ptr",
+                    "typeIdentifier": "t_struct$_Disqualification_$37570_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Disqualification"
                   }
                 },
@@ -1001,21 +1114,21 @@
             ],
             "name": "Proposal",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "567:499:77",
+            "scope": 37571,
+            "src": "575:641:82",
             "visibility": "public"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Amounts",
-            "id": 32022,
+            "id": 37556,
             "members": [
               {
                 "constant": false,
-                "id": 32017,
+                "id": 37551,
                 "name": "cumulativeTransfer",
                 "nodeType": "VariableDeclaration",
-                "scope": 32022,
-                "src": "1144:25:77",
+                "scope": 37556,
+                "src": "1294:25:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1023,10 +1136,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 32016,
+                  "id": 37550,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1144:6:77",
+                  "src": "1294:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -1037,11 +1150,11 @@
               },
               {
                 "constant": false,
-                "id": 32019,
+                "id": 37553,
                 "name": "stage",
                 "nodeType": "VariableDeclaration",
-                "scope": 32022,
-                "src": "1202:12:77",
+                "scope": 37556,
+                "src": "1352:12:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1049,10 +1162,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 32018,
+                  "id": 37552,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1202:6:77",
+                  "src": "1352:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -1063,11 +1176,11 @@
               },
               {
                 "constant": false,
-                "id": 32021,
+                "id": 37555,
                 "name": "targetBalance",
                 "nodeType": "VariableDeclaration",
-                "scope": 32022,
-                "src": "1276:20:77",
+                "scope": 37556,
+                "src": "1426:20:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1075,10 +1188,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 32020,
+                  "id": 37554,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1276:6:77",
+                  "src": "1426:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -1090,21 +1203,21 @@
             ],
             "name": "Amounts",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "1072:231:77",
+            "scope": 37571,
+            "src": "1222:231:82",
             "visibility": "public"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Driip",
-            "id": 32027,
+            "id": 37561,
             "members": [
               {
                 "constant": false,
-                "id": 32024,
+                "id": 37558,
                 "name": "kind",
                 "nodeType": "VariableDeclaration",
-                "scope": 32027,
-                "src": "1374:11:77",
+                "scope": 37561,
+                "src": "1524:11:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1112,10 +1225,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 32023,
+                  "id": 37557,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1374:6:77",
+                  "src": "1524:6:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1126,11 +1239,11 @@
               },
               {
                 "constant": false,
-                "id": 32026,
+                "id": 37560,
                 "name": "hash",
                 "nodeType": "VariableDeclaration",
-                "scope": 32027,
-                "src": "1426:12:77",
+                "scope": 37561,
+                "src": "1576:12:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1138,10 +1251,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 32025,
+                  "id": 37559,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1426:7:77",
+                  "src": "1576:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1153,21 +1266,21 @@
             ],
             "name": "Driip",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "1309:136:77",
+            "scope": 37571,
+            "src": "1459:136:82",
             "visibility": "public"
           },
           {
             "canonicalName": "SettlementChallengeTypesLib.Disqualification",
-            "id": 32036,
+            "id": 37570,
             "members": [
               {
                 "constant": false,
-                "id": 32029,
+                "id": 37563,
                 "name": "challenger",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1507:18:77",
+                "scope": 37570,
+                "src": "1657:18:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1175,10 +1288,11 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 32028,
+                  "id": 37562,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1507:7:77",
+                  "src": "1657:7:82",
+                  "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -1189,11 +1303,11 @@
               },
               {
                 "constant": false,
-                "id": 32031,
+                "id": 37565,
                 "name": "nonce",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1535:13:77",
+                "scope": 37570,
+                "src": "1685:13:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1201,10 +1315,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 32030,
+                  "id": 37564,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1535:7:77",
+                  "src": "1685:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1215,11 +1329,11 @@
               },
               {
                 "constant": false,
-                "id": 32033,
+                "id": 37567,
                 "name": "blockNumber",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1558:19:77",
+                "scope": 37570,
+                "src": "1708:19:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1227,10 +1341,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 32032,
+                  "id": 37566,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1558:7:77",
+                  "src": "1708:7:82",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1241,26 +1355,26 @@
               },
               {
                 "constant": false,
-                "id": 32035,
+                "id": 37569,
                 "name": "candidate",
                 "nodeType": "VariableDeclaration",
-                "scope": 32036,
-                "src": "1623:15:77",
+                "scope": 37570,
+                "src": "1773:15:82",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                  "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                   "typeString": "struct SettlementChallengeTypesLib.Driip"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 32034,
+                  "id": 37568,
                   "name": "Driip",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 32027,
-                  "src": "1623:5:77",
+                  "referencedDeclaration": 37561,
+                  "src": "1773:5:82",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Driip_$32027_storage_ptr",
+                    "typeIdentifier": "t_struct$_Driip_$37561_storage_ptr",
                     "typeString": "struct SettlementChallengeTypesLib.Driip"
                   }
                 },
@@ -1270,29 +1384,29 @@
             ],
             "name": "Disqualification",
             "nodeType": "StructDefinition",
-            "scope": 32037,
-            "src": "1451:194:77",
+            "scope": 37571,
+            "src": "1601:194:82",
             "visibility": "public"
           }
         ],
-        "scope": 32038,
-        "src": "336:1311:77"
+        "scope": 37572,
+        "src": "344:1453:82"
       }
     ],
-    "src": "122:1525:77"
+    "src": "122:1675:82"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {
     "3": {
       "events": {},
       "links": {},
-      "address": "0xae586f68220f3f6062ba4457e27808066e28853c",
-      "transactionHash": "0xaff55e589dd1a74b65f15c7dc32be60b4bef56eeb58c7da532a57ac1a8f3969b"
+      "address": "0x4ef8a1de09cb3c190b6d47f20372d3282e4b4748",
+      "transactionHash": "0x6dd068f2a5987bf281f96373f984063cc0f41d5eb3fdee895c741c844a721c68"
     }
   },
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T08:24:32.236Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-23T00:21:41.221Z"
 }

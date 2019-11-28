@@ -1,0 +1,2085 @@
+{
+  "contractName": "Upgradable",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "FreezeUpgradesEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "upgradeAgent",
+          "type": "address"
+        }
+      ],
+      "name": "SetUpgradeAgentEvent",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "upgradeAgent",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "upgradesFrozen",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_upgradeAgent",
+          "type": "address"
+        }
+      ],
+      "name": "setUpgradeAgent",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "freezeUpgrades",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5061038d806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c8063152d0731146100515780635de4ccb01461005b5780636d4393721461007f578063d7e7088a1461009b575b600080fd5b6100596100c1565b005b61006361018f565b604080516001600160a01b039092168252519081900360200190f35b61008761019e565b604080519115158252519081900360200190f35b610059600480360360208110156100b157600080fd5b50356001600160a01b03166101ae565b6000546001600160a01b0316331461010a5760405162461bcd60e51b815260040180806020018281038252602f8152602001806102f4602f913960400191505060405180910390fd5b600054600160a01b900460ff16156101535760405162461bcd60e51b815260040180806020018281038252602d8152602001806102c7602d913960400191505060405180910390fd5b6000805460ff60a01b1916600160a01b1781556040517f256d81afb4cac3b3b3d32a91f6efd3463a78d7a9453a93cb0132f36a23972d429190a1565b6000546001600160a01b031681565b600054600160a01b900460ff1681565b600054600160a01b900460ff16156101f75760405162461bcd60e51b815260040180806020018281038252602d81526020018061029a602d913960400191505060405180910390fd5b6000546001600160a01b03161561023f5760405162461bcd60e51b81526004018080602001828103825260368152602001806103236036913960400191505060405180910390fd5b600080546001600160a01b0319166001600160a01b03838116919091179182905560408051929091168252517f17c27d402d17bcdbb9529dd01c9816f15dd0c961a9f86427efafa8910bbd1e84916020908290030190a15056fe55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36395d55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36345d43616c6c6572206973206e6f742075706772616465206167656e74205b55706772616461626c652e736f6c3a36335d55706772616465206167656e742068617320616c7265616479206265656e20736574205b55706772616461626c652e736f6c3a33375da265627a7a72315820a289adc060cfa09f64bd87e0ea9a9141af6402ae1cfd5335fab5733f058d5b7864736f6c634300050c0032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c8063152d0731146100515780635de4ccb01461005b5780636d4393721461007f578063d7e7088a1461009b575b600080fd5b6100596100c1565b005b61006361018f565b604080516001600160a01b039092168252519081900360200190f35b61008761019e565b604080519115158252519081900360200190f35b610059600480360360208110156100b157600080fd5b50356001600160a01b03166101ae565b6000546001600160a01b0316331461010a5760405162461bcd60e51b815260040180806020018281038252602f8152602001806102f4602f913960400191505060405180910390fd5b600054600160a01b900460ff16156101535760405162461bcd60e51b815260040180806020018281038252602d8152602001806102c7602d913960400191505060405180910390fd5b6000805460ff60a01b1916600160a01b1781556040517f256d81afb4cac3b3b3d32a91f6efd3463a78d7a9453a93cb0132f36a23972d429190a1565b6000546001600160a01b031681565b600054600160a01b900460ff1681565b600054600160a01b900460ff16156101f75760405162461bcd60e51b815260040180806020018281038252602d81526020018061029a602d913960400191505060405180910390fd5b6000546001600160a01b03161561023f5760405162461bcd60e51b81526004018080602001828103825260368152602001806103236036913960400191505060405180910390fd5b600080546001600160a01b0319166001600160a01b03838116919091179182905560408051929091168252517f17c27d402d17bcdbb9529dd01c9816f15dd0c961a9f86427efafa8910bbd1e84916020908290030190a15056fe55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36395d55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36345d43616c6c6572206973206e6f742075706772616465206167656e74205b55706772616461626c652e736f6c3a36335d55706772616465206167656e742068617320616c7265616479206265656e20736574205b55706772616461626c652e736f6c3a33375da265627a7a72315820a289adc060cfa09f64bd87e0ea9a9141af6402ae1cfd5335fab5733f058d5b7864736f6c634300050c0032",
+  "sourceMap": "241:1870:96:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;241:1870:96;;;;;;;",
+  "deployedSourceMap": "241:1870:96:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;241:1870:96;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1409:186;;;:::i;:::-;;412:27;;;:::i;:::-;;;;-1:-1:-1;;;;;412:27:96;;;;;;;;;;;;;;445:26;;;:::i;:::-;;;;;;;;;;;;;;;;;;974:340;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;974:340:96;-1:-1:-1;;;;;974:340:96;;:::i;1409:186::-;1807:12;;-1:-1:-1;;;;;1807:12:96;1793:10;:26;1785:86;;;;-1:-1:-1;;;1785:86:96;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1890:14;;-1:-1:-1;;;1890:14:96;;;;1889:15;1881:73;;;;-1:-1:-1;;;1881:73:96;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1508:14;:21;;-1:-1:-1;;;;1508:21:96;-1:-1:-1;;;1508:21:96;;;1567;;;;1508:14;1567:21;1409:186::o;412:27::-;;;-1:-1:-1;;;;;412:27:96;;:::o;445:26::-;;;-1:-1:-1;;;445:26:96;;;;;:::o;974:340::-;2027:14;;-1:-1:-1;;;2027:14:96;;;;2026:15;2018:73;;;;-1:-1:-1;;;2018:73:96;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1092:12;;-1:-1:-1;;;;;1092:12:96;1078:26;1070:93;;;;-1:-1:-1;;;1070:93:96;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1207:12;:28;;-1:-1:-1;;;;;;1207:28:96;-1:-1:-1;;;;;1207:28:96;;;;;;;;;;;1273:34;;;1294:12;;;;1273:34;;;;;;;;;;;;;974:340;:::o",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\n/**\n * @title Upgradable\n * @notice A contract with basic upgradability features\n */\ncontract Upgradable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    address public upgradeAgent;\n    bool public upgradesFrozen;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetUpgradeAgentEvent(address upgradeAgent);\n    event FreezeUpgradesEvent();\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the upgrade agent of this contract\n    /// @param _upgradeAgent The address of the new upgrade agent\n    function setUpgradeAgent(address _upgradeAgent)\n    public\n    onlyWhenUpgradable\n    {\n        require(address(0) == upgradeAgent, \"Upgrade agent has already been set [Upgradable.sol:37]\");\n\n        // Set the upgrade agent\n        upgradeAgent = _upgradeAgent;\n\n        // Emit event\n        emit SetUpgradeAgentEvent(upgradeAgent);\n    }\n\n    /// @notice Freeze all future upgrades\n    /// @dev This operation can not be undone\n    function freezeUpgrades()\n    public\n    onlyWhenUpgrading\n    {\n        // Freeze upgrade\n        upgradesFrozen = true;\n\n        // Emit event\n        emit FreezeUpgradesEvent();\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier onlyWhenUpgrading() {\n        require(msg.sender == upgradeAgent, \"Caller is not upgrade agent [Upgradable.sol:63]\");\n        require(!upgradesFrozen, \"Upgrades have been frozen [Upgradable.sol:64]\");\n        _;\n    }\n\n    modifier onlyWhenUpgradable() {\n        require(!upgradesFrozen, \"Upgrades have been frozen [Upgradable.sol:69]\");\n        _;\n    }\n}",
+  "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/Upgradable.sol",
+  "ast": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Upgradable.sol",
+    "exportedSymbols": {
+      "Upgradable": [
+        42095
+      ]
+    },
+    "id": 42096,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 42018,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".25",
+          "<",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:32:96"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Upgradable\n@notice A contract with basic upgradability features",
+        "fullyImplemented": true,
+        "id": 42095,
+        "linearizedBaseContracts": [
+          42095
+        ],
+        "name": "Upgradable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 42020,
+            "name": "upgradeAgent",
+            "nodeType": "VariableDeclaration",
+            "scope": 42095,
+            "src": "412:27:96",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 42019,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "412:7:96",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 42022,
+            "name": "upgradesFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 42095,
+            "src": "445:26:96",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 42021,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "445:4:96",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 42026,
+            "name": "SetUpgradeAgentEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 42025,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 42024,
+                  "indexed": false,
+                  "name": "upgradeAgent",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42026,
+                  "src": "647:20:96",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 42023,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "647:7:96",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "646:22:96"
+            },
+            "src": "620:49:96"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 42028,
+            "name": "FreezeUpgradesEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 42027,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "699:2:96"
+            },
+            "src": "674:28:96"
+          },
+          {
+            "body": {
+              "id": 42052,
+              "nodeType": "Block",
+              "src": "1060:254:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 42040,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 42037,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1086:1:96",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 42036,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1078:7:96",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 42038,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1078:10:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "id": 42039,
+                          "name": "upgradeAgent",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42020,
+                          "src": "1092:12:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1078:26:96",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "55706772616465206167656e742068617320616c7265616479206265656e20736574205b55706772616461626c652e736f6c3a33375d",
+                        "id": 42041,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1106:56:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_c46e686ffdc54bff1d5a1d4d9ec1b3b46130f82195098fc28b4b6fba628e0692",
+                          "typeString": "literal_string \"Upgrade agent has already been set [Upgradable.sol:37]\""
+                        },
+                        "value": "Upgrade agent has already been set [Upgradable.sol:37]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_c46e686ffdc54bff1d5a1d4d9ec1b3b46130f82195098fc28b4b6fba628e0692",
+                          "typeString": "literal_string \"Upgrade agent has already been set [Upgradable.sol:37]\""
+                        }
+                      ],
+                      "id": 42035,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1070:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42042,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1070:93:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42043,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1070:93:96"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 42046,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 42044,
+                      "name": "upgradeAgent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42020,
+                      "src": "1207:12:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 42045,
+                      "name": "_upgradeAgent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42030,
+                      "src": "1222:13:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "1207:28:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 42047,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1207:28:96"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 42049,
+                        "name": "upgradeAgent",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 42020,
+                        "src": "1294:12:96",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 42048,
+                      "name": "SetUpgradeAgentEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42026,
+                      "src": "1273:20:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 42050,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1273:34:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42051,
+                  "nodeType": "EmitStatement",
+                  "src": "1268:39:96"
+                }
+              ]
+            },
+            "documentation": "@notice Set the upgrade agent of this contract\n @param _upgradeAgent The address of the new upgrade agent",
+            "id": 42053,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 42033,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 42032,
+                  "name": "onlyWhenUpgradable",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 42094,
+                  "src": "1037:18:96",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1037:18:96"
+              }
+            ],
+            "name": "setUpgradeAgent",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 42031,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 42030,
+                  "name": "_upgradeAgent",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42053,
+                  "src": "999:21:96",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 42029,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "999:7:96",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "998:23:96"
+            },
+            "returnParameters": {
+              "id": 42034,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1060:0:96"
+            },
+            "scope": 42095,
+            "src": "974:340:96",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 42065,
+              "nodeType": "Block",
+              "src": "1472:123:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 42060,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 42058,
+                      "name": "upgradesFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42022,
+                      "src": "1508:14:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 42059,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1525:4:96",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1508:21:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 42061,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1508:21:96"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 42062,
+                      "name": "FreezeUpgradesEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42028,
+                      "src": "1567:19:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 42063,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1567:21:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42064,
+                  "nodeType": "EmitStatement",
+                  "src": "1562:26:96"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze all future upgrades\n @dev This operation can not be undone",
+            "id": 42066,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 42056,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 42055,
+                  "name": "onlyWhenUpgrading",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 42084,
+                  "src": "1450:17:96",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1450:17:96"
+              }
+            ],
+            "name": "freezeUpgrades",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 42054,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1432:2:96"
+            },
+            "returnParameters": {
+              "id": 42057,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1472:0:96"
+            },
+            "scope": 42095,
+            "src": "1409:186:96",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 42083,
+              "nodeType": "Block",
+              "src": "1775:197:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 42072,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 42069,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 57369,
+                            "src": "1793:3:96",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 42070,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "1793:10:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "id": 42071,
+                          "name": "upgradeAgent",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42020,
+                          "src": "1807:12:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1793:26:96",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "43616c6c6572206973206e6f742075706772616465206167656e74205b55706772616461626c652e736f6c3a36335d",
+                        "id": 42073,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1821:49:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_b9bbd029f2ef670e02126ed1685cabaa1393e49777f13bcba7741fa9d7c6dc5c",
+                          "typeString": "literal_string \"Caller is not upgrade agent [Upgradable.sol:63]\""
+                        },
+                        "value": "Caller is not upgrade agent [Upgradable.sol:63]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_b9bbd029f2ef670e02126ed1685cabaa1393e49777f13bcba7741fa9d7c6dc5c",
+                          "typeString": "literal_string \"Caller is not upgrade agent [Upgradable.sol:63]\""
+                        }
+                      ],
+                      "id": 42068,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1785:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42074,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1785:86:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42075,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1785:86:96"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 42078,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1889:15:96",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 42077,
+                          "name": "upgradesFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42022,
+                          "src": "1890:14:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36345d",
+                        "id": 42079,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1906:47:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_5aa5d7cd26139151f50fee11a47e15d70102f11639ba0726173d38ca5dd2597d",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:64]\""
+                        },
+                        "value": "Upgrades have been frozen [Upgradable.sol:64]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_5aa5d7cd26139151f50fee11a47e15d70102f11639ba0726173d38ca5dd2597d",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:64]\""
+                        }
+                      ],
+                      "id": 42076,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1881:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42080,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1881:73:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42081,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1881:73:96"
+                },
+                {
+                  "id": 42082,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1964:1:96"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 42084,
+            "name": "onlyWhenUpgrading",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 42067,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1772:2:96"
+            },
+            "src": "1746:226:96",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 42093,
+              "nodeType": "Block",
+              "src": "2008:101:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 42088,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "2026:15:96",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 42087,
+                          "name": "upgradesFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42022,
+                          "src": "2027:14:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36395d",
+                        "id": 42089,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2043:47:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_3b681854a791f081a179b6badbcccbefea4d8815cee8fc267a0796b2d9b1ed1e",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:69]\""
+                        },
+                        "value": "Upgrades have been frozen [Upgradable.sol:69]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_3b681854a791f081a179b6badbcccbefea4d8815cee8fc267a0796b2d9b1ed1e",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:69]\""
+                        }
+                      ],
+                      "id": 42086,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "2018:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42090,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2018:73:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42091,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2018:73:96"
+                },
+                {
+                  "id": 42092,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2101:1:96"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 42094,
+            "name": "onlyWhenUpgradable",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 42085,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2005:2:96"
+            },
+            "src": "1978:131:96",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 42096,
+        "src": "241:1870:96"
+      }
+    ],
+    "src": "122:1989:96"
+  },
+  "legacyAST": {
+    "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Upgradable.sol",
+    "exportedSymbols": {
+      "Upgradable": [
+        42095
+      ]
+    },
+    "id": 42096,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 42018,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".25",
+          "<",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "122:32:96"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Upgradable\n@notice A contract with basic upgradability features",
+        "fullyImplemented": true,
+        "id": 42095,
+        "linearizedBaseContracts": [
+          42095
+        ],
+        "name": "Upgradable",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 42020,
+            "name": "upgradeAgent",
+            "nodeType": "VariableDeclaration",
+            "scope": 42095,
+            "src": "412:27:96",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 42019,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "412:7:96",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 42022,
+            "name": "upgradesFrozen",
+            "nodeType": "VariableDeclaration",
+            "scope": 42095,
+            "src": "445:26:96",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 42021,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "445:4:96",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 42026,
+            "name": "SetUpgradeAgentEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 42025,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 42024,
+                  "indexed": false,
+                  "name": "upgradeAgent",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42026,
+                  "src": "647:20:96",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 42023,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "647:7:96",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "646:22:96"
+            },
+            "src": "620:49:96"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 42028,
+            "name": "FreezeUpgradesEvent",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 42027,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "699:2:96"
+            },
+            "src": "674:28:96"
+          },
+          {
+            "body": {
+              "id": 42052,
+              "nodeType": "Block",
+              "src": "1060:254:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 42040,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 42037,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1086:1:96",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 42036,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1078:7:96",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 42038,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1078:10:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "id": 42039,
+                          "name": "upgradeAgent",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42020,
+                          "src": "1092:12:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1078:26:96",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "55706772616465206167656e742068617320616c7265616479206265656e20736574205b55706772616461626c652e736f6c3a33375d",
+                        "id": 42041,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1106:56:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_c46e686ffdc54bff1d5a1d4d9ec1b3b46130f82195098fc28b4b6fba628e0692",
+                          "typeString": "literal_string \"Upgrade agent has already been set [Upgradable.sol:37]\""
+                        },
+                        "value": "Upgrade agent has already been set [Upgradable.sol:37]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_c46e686ffdc54bff1d5a1d4d9ec1b3b46130f82195098fc28b4b6fba628e0692",
+                          "typeString": "literal_string \"Upgrade agent has already been set [Upgradable.sol:37]\""
+                        }
+                      ],
+                      "id": 42035,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1070:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42042,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1070:93:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42043,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1070:93:96"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 42046,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 42044,
+                      "name": "upgradeAgent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42020,
+                      "src": "1207:12:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 42045,
+                      "name": "_upgradeAgent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42030,
+                      "src": "1222:13:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "1207:28:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 42047,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1207:28:96"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 42049,
+                        "name": "upgradeAgent",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 42020,
+                        "src": "1294:12:96",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 42048,
+                      "name": "SetUpgradeAgentEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42026,
+                      "src": "1273:20:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 42050,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1273:34:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42051,
+                  "nodeType": "EmitStatement",
+                  "src": "1268:39:96"
+                }
+              ]
+            },
+            "documentation": "@notice Set the upgrade agent of this contract\n @param _upgradeAgent The address of the new upgrade agent",
+            "id": 42053,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 42033,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 42032,
+                  "name": "onlyWhenUpgradable",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 42094,
+                  "src": "1037:18:96",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1037:18:96"
+              }
+            ],
+            "name": "setUpgradeAgent",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 42031,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 42030,
+                  "name": "_upgradeAgent",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42053,
+                  "src": "999:21:96",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 42029,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "999:7:96",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "998:23:96"
+            },
+            "returnParameters": {
+              "id": 42034,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1060:0:96"
+            },
+            "scope": 42095,
+            "src": "974:340:96",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 42065,
+              "nodeType": "Block",
+              "src": "1472:123:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 42060,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 42058,
+                      "name": "upgradesFrozen",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42022,
+                      "src": "1508:14:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 42059,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1525:4:96",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1508:21:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 42061,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1508:21:96"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 42062,
+                      "name": "FreezeUpgradesEvent",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42028,
+                      "src": "1567:19:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 42063,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1567:21:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42064,
+                  "nodeType": "EmitStatement",
+                  "src": "1562:26:96"
+                }
+              ]
+            },
+            "documentation": "@notice Freeze all future upgrades\n @dev This operation can not be undone",
+            "id": 42066,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 42056,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 42055,
+                  "name": "onlyWhenUpgrading",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 42084,
+                  "src": "1450:17:96",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1450:17:96"
+              }
+            ],
+            "name": "freezeUpgrades",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 42054,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1432:2:96"
+            },
+            "returnParameters": {
+              "id": 42057,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1472:0:96"
+            },
+            "scope": 42095,
+            "src": "1409:186:96",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 42083,
+              "nodeType": "Block",
+              "src": "1775:197:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 42072,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 42069,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 57369,
+                            "src": "1793:3:96",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 42070,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "1793:10:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "id": 42071,
+                          "name": "upgradeAgent",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42020,
+                          "src": "1807:12:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1793:26:96",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "43616c6c6572206973206e6f742075706772616465206167656e74205b55706772616461626c652e736f6c3a36335d",
+                        "id": 42073,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1821:49:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_b9bbd029f2ef670e02126ed1685cabaa1393e49777f13bcba7741fa9d7c6dc5c",
+                          "typeString": "literal_string \"Caller is not upgrade agent [Upgradable.sol:63]\""
+                        },
+                        "value": "Caller is not upgrade agent [Upgradable.sol:63]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_b9bbd029f2ef670e02126ed1685cabaa1393e49777f13bcba7741fa9d7c6dc5c",
+                          "typeString": "literal_string \"Caller is not upgrade agent [Upgradable.sol:63]\""
+                        }
+                      ],
+                      "id": 42068,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1785:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42074,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1785:86:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42075,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1785:86:96"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 42078,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1889:15:96",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 42077,
+                          "name": "upgradesFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42022,
+                          "src": "1890:14:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36345d",
+                        "id": 42079,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1906:47:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_5aa5d7cd26139151f50fee11a47e15d70102f11639ba0726173d38ca5dd2597d",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:64]\""
+                        },
+                        "value": "Upgrades have been frozen [Upgradable.sol:64]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_5aa5d7cd26139151f50fee11a47e15d70102f11639ba0726173d38ca5dd2597d",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:64]\""
+                        }
+                      ],
+                      "id": 42076,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "1881:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42080,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1881:73:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42081,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1881:73:96"
+                },
+                {
+                  "id": 42082,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1964:1:96"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 42084,
+            "name": "onlyWhenUpgrading",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 42067,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1772:2:96"
+            },
+            "src": "1746:226:96",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 42093,
+              "nodeType": "Block",
+              "src": "2008:101:96",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 42088,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "2026:15:96",
+                        "subExpression": {
+                          "argumentTypes": null,
+                          "id": 42087,
+                          "name": "upgradesFrozen",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 42022,
+                          "src": "2027:14:96",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "55706772616465732068617665206265656e2066726f7a656e205b55706772616461626c652e736f6c3a36395d",
+                        "id": 42089,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2043:47:96",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_3b681854a791f081a179b6badbcccbefea4d8815cee8fc267a0796b2d9b1ed1e",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:69]\""
+                        },
+                        "value": "Upgrades have been frozen [Upgradable.sol:69]"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_3b681854a791f081a179b6badbcccbefea4d8815cee8fc267a0796b2d9b1ed1e",
+                          "typeString": "literal_string \"Upgrades have been frozen [Upgradable.sol:69]\""
+                        }
+                      ],
+                      "id": 42086,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        57372,
+                        57373
+                      ],
+                      "referencedDeclaration": 57373,
+                      "src": "2018:7:96",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 42090,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2018:73:96",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42091,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2018:73:96"
+                },
+                {
+                  "id": 42092,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "2101:1:96"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 42094,
+            "name": "onlyWhenUpgradable",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 42085,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2005:2:96"
+            },
+            "src": "1978:131:96",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 42096,
+        "src": "241:1870:96"
+      }
+    ],
+    "src": "122:1989:96"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.518Z"
+}

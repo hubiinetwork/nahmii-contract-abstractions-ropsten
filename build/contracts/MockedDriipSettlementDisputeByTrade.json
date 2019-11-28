@@ -7,6 +7,7 @@
       "name": "_challengeByTradeCount",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -21,20 +22,7 @@
       "name": "_unchallengeOrderCandidateByTradeCount",
       "outputs": [
         {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "_challengeByOrderCount",
-      "outputs": [
-        {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -58,20 +46,24 @@
         {
           "components": [
             {
+              "internalType": "uint256",
               "name": "nonce",
               "type": "uint256"
             },
             {
+              "internalType": "address",
               "name": "wallet",
               "type": "address"
             },
             {
               "components": [
                 {
+                  "internalType": "enum TradeTypesLib.Intention",
                   "name": "intention",
                   "type": "uint8"
                 },
                 {
+                  "internalType": "int256",
                   "name": "amount",
                   "type": "int256"
                 },
@@ -80,54 +72,66 @@
                     {
                       "components": [
                         {
+                          "internalType": "address",
                           "name": "ct",
                           "type": "address"
                         },
                         {
+                          "internalType": "uint256",
                           "name": "id",
                           "type": "uint256"
                         }
                       ],
+                      "internalType": "struct MonetaryTypesLib.Currency",
                       "name": "intended",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "address",
                           "name": "ct",
                           "type": "address"
                         },
                         {
+                          "internalType": "uint256",
                           "name": "id",
                           "type": "uint256"
                         }
                       ],
+                      "internalType": "struct MonetaryTypesLib.Currency",
                       "name": "conjugate",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.IntendedConjugateCurrency",
                   "name": "currencies",
                   "type": "tuple"
                 },
                 {
+                  "internalType": "int256",
                   "name": "rate",
                   "type": "int256"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "current",
                       "type": "int256"
                     },
                     {
+                      "internalType": "int256",
                       "name": "previous",
                       "type": "int256"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                   "name": "residuals",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct TradeTypesLib.OrderPlacement",
               "name": "placement",
               "type": "tuple"
             },
@@ -136,246 +140,100 @@
                 {
                   "components": [
                     {
+                      "internalType": "bytes32",
                       "name": "hash",
                       "type": "bytes32"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "bytes32",
                           "name": "r",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "bytes32",
                           "name": "s",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "uint8",
                           "name": "v",
                           "type": "uint8"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.Signature",
                       "name": "signature",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.Seal",
                   "name": "wallet",
                   "type": "tuple"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "bytes32",
                       "name": "hash",
                       "type": "bytes32"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "bytes32",
                           "name": "r",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "bytes32",
                           "name": "s",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "uint8",
                           "name": "v",
                           "type": "uint8"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.Signature",
                       "name": "signature",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.Seal",
                   "name": "operator",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct NahmiiTypesLib.WalletOperatorSeal",
               "name": "seals",
               "type": "tuple"
             },
             {
+              "internalType": "uint256",
               "name": "blockNumber",
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
               "name": "operatorId",
               "type": "uint256"
             }
           ],
-          "name": "",
-          "type": "tuple"
-        },
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "challengeByOrder",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "components": [
-            {
-              "name": "nonce",
-              "type": "uint256"
-            },
-            {
-              "name": "wallet",
-              "type": "address"
-            },
-            {
-              "components": [
-                {
-                  "name": "intention",
-                  "type": "uint8"
-                },
-                {
-                  "name": "amount",
-                  "type": "int256"
-                },
-                {
-                  "components": [
-                    {
-                      "components": [
-                        {
-                          "name": "ct",
-                          "type": "address"
-                        },
-                        {
-                          "name": "id",
-                          "type": "uint256"
-                        }
-                      ],
-                      "name": "intended",
-                      "type": "tuple"
-                    },
-                    {
-                      "components": [
-                        {
-                          "name": "ct",
-                          "type": "address"
-                        },
-                        {
-                          "name": "id",
-                          "type": "uint256"
-                        }
-                      ],
-                      "name": "conjugate",
-                      "type": "tuple"
-                    }
-                  ],
-                  "name": "currencies",
-                  "type": "tuple"
-                },
-                {
-                  "name": "rate",
-                  "type": "int256"
-                },
-                {
-                  "components": [
-                    {
-                      "name": "current",
-                      "type": "int256"
-                    },
-                    {
-                      "name": "previous",
-                      "type": "int256"
-                    }
-                  ],
-                  "name": "residuals",
-                  "type": "tuple"
-                }
-              ],
-              "name": "placement",
-              "type": "tuple"
-            },
-            {
-              "components": [
-                {
-                  "components": [
-                    {
-                      "name": "hash",
-                      "type": "bytes32"
-                    },
-                    {
-                      "components": [
-                        {
-                          "name": "r",
-                          "type": "bytes32"
-                        },
-                        {
-                          "name": "s",
-                          "type": "bytes32"
-                        },
-                        {
-                          "name": "v",
-                          "type": "uint8"
-                        }
-                      ],
-                      "name": "signature",
-                      "type": "tuple"
-                    }
-                  ],
-                  "name": "wallet",
-                  "type": "tuple"
-                },
-                {
-                  "components": [
-                    {
-                      "name": "hash",
-                      "type": "bytes32"
-                    },
-                    {
-                      "components": [
-                        {
-                          "name": "r",
-                          "type": "bytes32"
-                        },
-                        {
-                          "name": "s",
-                          "type": "bytes32"
-                        },
-                        {
-                          "name": "v",
-                          "type": "uint8"
-                        }
-                      ],
-                      "name": "signature",
-                      "type": "tuple"
-                    }
-                  ],
-                  "name": "operator",
-                  "type": "tuple"
-                }
-              ],
-              "name": "seals",
-              "type": "tuple"
-            },
-            {
-              "name": "blockNumber",
-              "type": "uint256"
-            },
-            {
-              "name": "operatorId",
-              "type": "uint256"
-            }
-          ],
+          "internalType": "struct TradeTypesLib.Order",
           "name": "",
           "type": "tuple"
         },
         {
           "components": [
             {
+              "internalType": "uint256",
               "name": "nonce",
               "type": "uint256"
             },
             {
+              "internalType": "int256",
               "name": "amount",
               "type": "int256"
             },
@@ -384,92 +242,112 @@
                 {
                   "components": [
                     {
+                      "internalType": "address",
                       "name": "ct",
                       "type": "address"
                     },
                     {
+                      "internalType": "uint256",
                       "name": "id",
                       "type": "uint256"
                     }
                   ],
+                  "internalType": "struct MonetaryTypesLib.Currency",
                   "name": "intended",
                   "type": "tuple"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "address",
                       "name": "ct",
                       "type": "address"
                     },
                     {
+                      "internalType": "uint256",
                       "name": "id",
                       "type": "uint256"
                     }
                   ],
+                  "internalType": "struct MonetaryTypesLib.Currency",
                   "name": "conjugate",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct NahmiiTypesLib.IntendedConjugateCurrency",
               "name": "currencies",
               "type": "tuple"
             },
             {
+              "internalType": "int256",
               "name": "rate",
               "type": "int256"
             },
             {
               "components": [
                 {
+                  "internalType": "uint256",
                   "name": "nonce",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "address",
                   "name": "wallet",
                   "type": "address"
                 },
                 {
+                  "internalType": "uint256",
                   "name": "rollingVolume",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "enum TradeTypesLib.LiquidityRole",
                   "name": "liquidityRole",
                   "type": "uint8"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "amount",
                       "type": "int256"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "bytes32",
                           "name": "wallet",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "bytes32",
                           "name": "operator",
                           "type": "bytes32"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.WalletOperatorHashes",
                       "name": "hashes",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "residuals",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct TradeTypesLib.TradeOrder",
                   "name": "order",
                   "type": "tuple"
                 },
@@ -478,32 +356,39 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "intended",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "conjugate",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
                   "name": "balances",
                   "type": "tuple"
                 },
@@ -512,122 +397,148 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "amount",
                           "type": "int256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "address",
                               "name": "ct",
                               "type": "address"
                             },
                             {
+                              "internalType": "uint256",
                               "name": "id",
                               "type": "uint256"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Currency",
                           "name": "currency",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct MonetaryTypesLib.Figure",
                       "name": "single",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "uint256",
                           "name": "originId",
                           "type": "uint256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "int256",
                               "name": "amount",
                               "type": "int256"
                             },
                             {
                               "components": [
                                 {
+                                  "internalType": "address",
                                   "name": "ct",
                                   "type": "address"
                                 },
                                 {
+                                  "internalType": "uint256",
                                   "name": "id",
                                   "type": "uint256"
                                 }
                               ],
+                              "internalType": "struct MonetaryTypesLib.Currency",
                               "name": "currency",
                               "type": "tuple"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Figure",
                           "name": "figure",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.OriginFigure[]",
                       "name": "total",
                       "type": "tuple[]"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures",
                   "name": "fees",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct TradeTypesLib.TradeParty",
               "name": "buyer",
               "type": "tuple"
             },
             {
               "components": [
                 {
+                  "internalType": "uint256",
                   "name": "nonce",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "address",
                   "name": "wallet",
                   "type": "address"
                 },
                 {
+                  "internalType": "uint256",
                   "name": "rollingVolume",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "enum TradeTypesLib.LiquidityRole",
                   "name": "liquidityRole",
                   "type": "uint8"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "amount",
                       "type": "int256"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "bytes32",
                           "name": "wallet",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "bytes32",
                           "name": "operator",
                           "type": "bytes32"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.WalletOperatorHashes",
                       "name": "hashes",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "residuals",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct TradeTypesLib.TradeOrder",
                   "name": "order",
                   "type": "tuple"
                 },
@@ -636,32 +547,39 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "intended",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "conjugate",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
                   "name": "balances",
                   "type": "tuple"
                 },
@@ -670,66 +588,80 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "amount",
                           "type": "int256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "address",
                               "name": "ct",
                               "type": "address"
                             },
                             {
+                              "internalType": "uint256",
                               "name": "id",
                               "type": "uint256"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Currency",
                           "name": "currency",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct MonetaryTypesLib.Figure",
                       "name": "single",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "uint256",
                           "name": "originId",
                           "type": "uint256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "int256",
                               "name": "amount",
                               "type": "int256"
                             },
                             {
                               "components": [
                                 {
+                                  "internalType": "address",
                                   "name": "ct",
                                   "type": "address"
                                 },
                                 {
+                                  "internalType": "uint256",
                                   "name": "id",
                                   "type": "uint256"
                                 }
                               ],
+                              "internalType": "struct MonetaryTypesLib.Currency",
                               "name": "currency",
                               "type": "tuple"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Figure",
                           "name": "figure",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.OriginFigure[]",
                       "name": "total",
                       "type": "tuple[]"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures",
                   "name": "fees",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct TradeTypesLib.TradeParty",
               "name": "seller",
               "type": "tuple"
             },
@@ -738,76 +670,93 @@
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "single",
                       "type": "int256"
                     },
                     {
+                      "internalType": "int256",
                       "name": "total",
                       "type": "int256"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleTotalInt256",
                   "name": "intended",
                   "type": "tuple"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "single",
                       "type": "int256"
                     },
                     {
+                      "internalType": "int256",
                       "name": "total",
                       "type": "int256"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleTotalInt256",
                   "name": "conjugate",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct NahmiiTypesLib.IntendedConjugateSingleTotalInt256",
               "name": "transfers",
               "type": "tuple"
             },
             {
               "components": [
                 {
+                  "internalType": "bytes32",
                   "name": "hash",
                   "type": "bytes32"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "bytes32",
                       "name": "r",
                       "type": "bytes32"
                     },
                     {
+                      "internalType": "bytes32",
                       "name": "s",
                       "type": "bytes32"
                     },
                     {
+                      "internalType": "uint8",
                       "name": "v",
                       "type": "uint8"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.Signature",
                   "name": "signature",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct NahmiiTypesLib.Seal",
               "name": "seal",
               "type": "tuple"
             },
             {
+              "internalType": "uint256",
               "name": "blockNumber",
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
               "name": "operatorId",
               "type": "uint256"
             }
           ],
+          "internalType": "struct TradeTypesLib.Trade",
           "name": "",
           "type": "tuple"
         },
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -822,16 +771,19 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         },
         {
           "components": [
             {
+              "internalType": "uint256",
               "name": "nonce",
               "type": "uint256"
             },
             {
+              "internalType": "int256",
               "name": "amount",
               "type": "int256"
             },
@@ -840,92 +792,112 @@
                 {
                   "components": [
                     {
+                      "internalType": "address",
                       "name": "ct",
                       "type": "address"
                     },
                     {
+                      "internalType": "uint256",
                       "name": "id",
                       "type": "uint256"
                     }
                   ],
+                  "internalType": "struct MonetaryTypesLib.Currency",
                   "name": "intended",
                   "type": "tuple"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "address",
                       "name": "ct",
                       "type": "address"
                     },
                     {
+                      "internalType": "uint256",
                       "name": "id",
                       "type": "uint256"
                     }
                   ],
+                  "internalType": "struct MonetaryTypesLib.Currency",
                   "name": "conjugate",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct NahmiiTypesLib.IntendedConjugateCurrency",
               "name": "currencies",
               "type": "tuple"
             },
             {
+              "internalType": "int256",
               "name": "rate",
               "type": "int256"
             },
             {
               "components": [
                 {
+                  "internalType": "uint256",
                   "name": "nonce",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "address",
                   "name": "wallet",
                   "type": "address"
                 },
                 {
+                  "internalType": "uint256",
                   "name": "rollingVolume",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "enum TradeTypesLib.LiquidityRole",
                   "name": "liquidityRole",
                   "type": "uint8"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "amount",
                       "type": "int256"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "bytes32",
                           "name": "wallet",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "bytes32",
                           "name": "operator",
                           "type": "bytes32"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.WalletOperatorHashes",
                       "name": "hashes",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "residuals",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct TradeTypesLib.TradeOrder",
                   "name": "order",
                   "type": "tuple"
                 },
@@ -934,32 +906,39 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "intended",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "conjugate",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
                   "name": "balances",
                   "type": "tuple"
                 },
@@ -968,122 +947,148 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "amount",
                           "type": "int256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "address",
                               "name": "ct",
                               "type": "address"
                             },
                             {
+                              "internalType": "uint256",
                               "name": "id",
                               "type": "uint256"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Currency",
                           "name": "currency",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct MonetaryTypesLib.Figure",
                       "name": "single",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "uint256",
                           "name": "originId",
                           "type": "uint256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "int256",
                               "name": "amount",
                               "type": "int256"
                             },
                             {
                               "components": [
                                 {
+                                  "internalType": "address",
                                   "name": "ct",
                                   "type": "address"
                                 },
                                 {
+                                  "internalType": "uint256",
                                   "name": "id",
                                   "type": "uint256"
                                 }
                               ],
+                              "internalType": "struct MonetaryTypesLib.Currency",
                               "name": "currency",
                               "type": "tuple"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Figure",
                           "name": "figure",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.OriginFigure[]",
                       "name": "total",
                       "type": "tuple[]"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures",
                   "name": "fees",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct TradeTypesLib.TradeParty",
               "name": "buyer",
               "type": "tuple"
             },
             {
               "components": [
                 {
+                  "internalType": "uint256",
                   "name": "nonce",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "address",
                   "name": "wallet",
                   "type": "address"
                 },
                 {
+                  "internalType": "uint256",
                   "name": "rollingVolume",
                   "type": "uint256"
                 },
                 {
+                  "internalType": "enum TradeTypesLib.LiquidityRole",
                   "name": "liquidityRole",
                   "type": "uint8"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "amount",
                       "type": "int256"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "bytes32",
                           "name": "wallet",
                           "type": "bytes32"
                         },
                         {
+                          "internalType": "bytes32",
                           "name": "operator",
                           "type": "bytes32"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.WalletOperatorHashes",
                       "name": "hashes",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "residuals",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct TradeTypesLib.TradeOrder",
                   "name": "order",
                   "type": "tuple"
                 },
@@ -1092,32 +1097,39 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "intended",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "current",
                           "type": "int256"
                         },
                         {
+                          "internalType": "int256",
                           "name": "previous",
                           "type": "int256"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.CurrentPreviousInt256",
                       "name": "conjugate",
                       "type": "tuple"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
                   "name": "balances",
                   "type": "tuple"
                 },
@@ -1126,66 +1138,80 @@
                     {
                       "components": [
                         {
+                          "internalType": "int256",
                           "name": "amount",
                           "type": "int256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "address",
                               "name": "ct",
                               "type": "address"
                             },
                             {
+                              "internalType": "uint256",
                               "name": "id",
                               "type": "uint256"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Currency",
                           "name": "currency",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct MonetaryTypesLib.Figure",
                       "name": "single",
                       "type": "tuple"
                     },
                     {
                       "components": [
                         {
+                          "internalType": "uint256",
                           "name": "originId",
                           "type": "uint256"
                         },
                         {
                           "components": [
                             {
+                              "internalType": "int256",
                               "name": "amount",
                               "type": "int256"
                             },
                             {
                               "components": [
                                 {
+                                  "internalType": "address",
                                   "name": "ct",
                                   "type": "address"
                                 },
                                 {
+                                  "internalType": "uint256",
                                   "name": "id",
                                   "type": "uint256"
                                 }
                               ],
+                              "internalType": "struct MonetaryTypesLib.Currency",
                               "name": "currency",
                               "type": "tuple"
                             }
                           ],
+                          "internalType": "struct MonetaryTypesLib.Figure",
                           "name": "figure",
                           "type": "tuple"
                         }
                       ],
+                      "internalType": "struct NahmiiTypesLib.OriginFigure[]",
                       "name": "total",
                       "type": "tuple[]"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleFigureTotalOriginFigures",
                   "name": "fees",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct TradeTypesLib.TradeParty",
               "name": "seller",
               "type": "tuple"
             },
@@ -1194,76 +1220,93 @@
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "single",
                       "type": "int256"
                     },
                     {
+                      "internalType": "int256",
                       "name": "total",
                       "type": "int256"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleTotalInt256",
                   "name": "intended",
                   "type": "tuple"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "int256",
                       "name": "single",
                       "type": "int256"
                     },
                     {
+                      "internalType": "int256",
                       "name": "total",
                       "type": "int256"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.SingleTotalInt256",
                   "name": "conjugate",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct NahmiiTypesLib.IntendedConjugateSingleTotalInt256",
               "name": "transfers",
               "type": "tuple"
             },
             {
               "components": [
                 {
+                  "internalType": "bytes32",
                   "name": "hash",
                   "type": "bytes32"
                 },
                 {
                   "components": [
                     {
+                      "internalType": "bytes32",
                       "name": "r",
                       "type": "bytes32"
                     },
                     {
+                      "internalType": "bytes32",
                       "name": "s",
                       "type": "bytes32"
                     },
                     {
+                      "internalType": "uint8",
                       "name": "v",
                       "type": "uint8"
                     }
                   ],
+                  "internalType": "struct NahmiiTypesLib.Signature",
                   "name": "signature",
                   "type": "tuple"
                 }
               ],
+              "internalType": "struct NahmiiTypesLib.Seal",
               "name": "seal",
               "type": "tuple"
             },
             {
+              "internalType": "uint256",
               "name": "blockNumber",
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
               "name": "operatorId",
               "type": "uint256"
             }
           ],
+          "internalType": "struct TradeTypesLib.Trade",
           "name": "",
           "type": "tuple"
         },
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -1275,53 +1318,56 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b506109d0806100206000396000f3006080604052600436106100695763ffffffff60e060020a6000350416630608a938811461006e5780631592f0ab1461009057806332f40589146100a55780638eed8359146100d057806392272607146100f0578063a01b7fa714610110578063c925843814610125575b600080fd5b34801561007a57600080fd5b5061008e6100893660046108a8565b61013a565b005b34801561009c57600080fd5b5061008e610147565b3480156100b157600080fd5b506100ba610156565b6040516100c79190610914565b60405180910390f35b3480156100dc57600080fd5b5061008e6100eb36600461086c565b61015c565b3480156100fc57600080fd5b5061008e61010b366004610808565b610169565b34801561011c57600080fd5b506100ba610177565b34801561013157600080fd5b506100ba61017d565b5050600180548101905550565b60008080556001819055600255565b60025481565b5050600080546001019055565b505060028054600101905550565b60015481565b60005481565b600061018f8235610971565b9392505050565b6000601f820183136101a757600080fd5b81356101ba6101b58261094e565b610928565b915081818352602084019350602081019050838560808402820111156101df57600080fd5b60005b8381101561020d57816101f58882610470565b845250602090920191608091909101906001016101e2565b5050505092915050565b600061018f823561096e565b600061018f823561097d565b60006040828403121561024157600080fd5b61024b6040610928565b905060006102598484610183565b825250602061026a84848301610217565b60208301525092915050565b60006040828403121561028857600080fd5b6102926040610928565b905060006102598484610217565b6000606082840312156102b257600080fd5b6102bc6040610928565b905060006102ca8484610217565b825250602061026a8484830161022f565b6000608082840312156102ed57600080fd5b6102f76040610928565b90506000610305848461022f565b825250604061026a8484830161022f565b60006080828403121561032857600080fd5b6103326040610928565b905060006103408484610276565b825250604061026a84848301610276565b6000610120828403121561036457600080fd5b61036e60a0610928565b9050600061037c8484610223565b825250602061038d84848301610217565b60208301525060406103a1848285016102db565b60408301525060c06103b584828501610217565b60608301525060e06103c984828501610276565b60808301525092915050565b60006102a082840312156103e857600080fd5b6103f260c0610928565b905060006104008484610217565b825250602061041184848301610183565b602083015250604061042584828501610351565b60408301525061016061043a848285016107c0565b60608301525061026061044f84828501610217565b60808301525061028061046484828501610217565b60a08301525092915050565b60006080828403121561048257600080fd5b61048c6040610928565b9050600061049a8484610217565b825250602061026a848483016102a0565b6000608082840312156104bd57600080fd5b6104c76040610928565b905060006104d58484610217565b825250602061026a848483016000606082840312156104f357600080fd5b6104fd6060610928565b9050600061050b8484610217565b825250602061051c84848301610217565b6020830152506040610530848285016107fc565b60408301525092915050565b60006080828403121561054e57600080fd5b6105586040610928565b9050600061056684846102a0565b82525060608201356001604060020a0381111561058257600080fd5b61026a84828501610196565b600060a082840312156105a057600080fd5b6105aa6060610928565b905060006105b88484610217565b82525060206105c984848301610276565b602083015250606061053084828501610276565b60006101c082840312156105f057600080fd5b6105fa60e0610928565b905060006106088484610217565b825250602061061984848301610183565b602083015250604061062d84828501610217565b604083015250606061064184828501610223565b60608301525060806106558482850161058e565b60808301525061012061066a84828501610316565b60a0830152506101a08201356001604060020a0381111561068a57600080fd5b6106968482850161053c565b60c08301525092915050565b600061026082840312156106b557600080fd5b6106c0610140610928565b905060006106ce8484610217565b82525060206106df84848301610217565b60208301525060406106f3848285016102db565b60408301525060c061070784828501610217565b60608301525060e08201356001604060020a0381111561072657600080fd5b610732848285016105dd565b6080830152506101008201356001604060020a0381111561075257600080fd5b61075e848285016105dd565b60a08301525061012061077384828501610316565b60c0830152506101a0610788848285016104ab565b60e08301525061022061079d84828501610217565b610100830152506102406107b384828501610217565b6101208301525092915050565b600061010082840312156107d357600080fd5b6107dd6040610928565b905060006107eb84846104ab565b825250608061026a848483016104ab565b600061018f8235610990565b60008060006060848603121561081d57600080fd5b60006108298686610183565b93505060208401356001604060020a0381111561084557600080fd5b610851868287016106a2565b925050604061086286828701610183565b9150509250925092565b6000806102c0838503121561088057600080fd5b600061088c85856103d5565b9250506102a061089e85828601610183565b9150509250929050565b60008060006102e084860312156108be57600080fd5b60006108ca86866103d5565b9350506102a08401356001604060020a038111156108e757600080fd5b6108f3868287016106a2565b9250506102c061086286828701610183565b61090e8161096e565b82525050565b602081016109228284610905565b92915050565b6040518181016001604060020a038111828210171561094657600080fd5b604052919050565b60006001604060020a0382111561096457600080fd5b5060209081020190565b90565b600160a060020a031690565b60006002821061098c57600080fd5b5090565b60ff16905600a265627a7a723058207d1f9847d0f2edc97b1830a634133d843e7197c261613ed70a71e29fd1f7212d6c6578706572696d656e74616cf50037",
-  "deployedBytecode": "0x6080604052600436106100695763ffffffff60e060020a6000350416630608a938811461006e5780631592f0ab1461009057806332f40589146100a55780638eed8359146100d057806392272607146100f0578063a01b7fa714610110578063c925843814610125575b600080fd5b34801561007a57600080fd5b5061008e6100893660046108a8565b61013a565b005b34801561009c57600080fd5b5061008e610147565b3480156100b157600080fd5b506100ba610156565b6040516100c79190610914565b60405180910390f35b3480156100dc57600080fd5b5061008e6100eb36600461086c565b61015c565b3480156100fc57600080fd5b5061008e61010b366004610808565b610169565b34801561011c57600080fd5b506100ba610177565b34801561013157600080fd5b506100ba61017d565b5050600180548101905550565b60008080556001819055600255565b60025481565b5050600080546001019055565b505060028054600101905550565b60015481565b60005481565b600061018f8235610971565b9392505050565b6000601f820183136101a757600080fd5b81356101ba6101b58261094e565b610928565b915081818352602084019350602081019050838560808402820111156101df57600080fd5b60005b8381101561020d57816101f58882610470565b845250602090920191608091909101906001016101e2565b5050505092915050565b600061018f823561096e565b600061018f823561097d565b60006040828403121561024157600080fd5b61024b6040610928565b905060006102598484610183565b825250602061026a84848301610217565b60208301525092915050565b60006040828403121561028857600080fd5b6102926040610928565b905060006102598484610217565b6000606082840312156102b257600080fd5b6102bc6040610928565b905060006102ca8484610217565b825250602061026a8484830161022f565b6000608082840312156102ed57600080fd5b6102f76040610928565b90506000610305848461022f565b825250604061026a8484830161022f565b60006080828403121561032857600080fd5b6103326040610928565b905060006103408484610276565b825250604061026a84848301610276565b6000610120828403121561036457600080fd5b61036e60a0610928565b9050600061037c8484610223565b825250602061038d84848301610217565b60208301525060406103a1848285016102db565b60408301525060c06103b584828501610217565b60608301525060e06103c984828501610276565b60808301525092915050565b60006102a082840312156103e857600080fd5b6103f260c0610928565b905060006104008484610217565b825250602061041184848301610183565b602083015250604061042584828501610351565b60408301525061016061043a848285016107c0565b60608301525061026061044f84828501610217565b60808301525061028061046484828501610217565b60a08301525092915050565b60006080828403121561048257600080fd5b61048c6040610928565b9050600061049a8484610217565b825250602061026a848483016102a0565b6000608082840312156104bd57600080fd5b6104c76040610928565b905060006104d58484610217565b825250602061026a848483016000606082840312156104f357600080fd5b6104fd6060610928565b9050600061050b8484610217565b825250602061051c84848301610217565b6020830152506040610530848285016107fc565b60408301525092915050565b60006080828403121561054e57600080fd5b6105586040610928565b9050600061056684846102a0565b82525060608201356001604060020a0381111561058257600080fd5b61026a84828501610196565b600060a082840312156105a057600080fd5b6105aa6060610928565b905060006105b88484610217565b82525060206105c984848301610276565b602083015250606061053084828501610276565b60006101c082840312156105f057600080fd5b6105fa60e0610928565b905060006106088484610217565b825250602061061984848301610183565b602083015250604061062d84828501610217565b604083015250606061064184828501610223565b60608301525060806106558482850161058e565b60808301525061012061066a84828501610316565b60a0830152506101a08201356001604060020a0381111561068a57600080fd5b6106968482850161053c565b60c08301525092915050565b600061026082840312156106b557600080fd5b6106c0610140610928565b905060006106ce8484610217565b82525060206106df84848301610217565b60208301525060406106f3848285016102db565b60408301525060c061070784828501610217565b60608301525060e08201356001604060020a0381111561072657600080fd5b610732848285016105dd565b6080830152506101008201356001604060020a0381111561075257600080fd5b61075e848285016105dd565b60a08301525061012061077384828501610316565b60c0830152506101a0610788848285016104ab565b60e08301525061022061079d84828501610217565b610100830152506102406107b384828501610217565b6101208301525092915050565b600061010082840312156107d357600080fd5b6107dd6040610928565b905060006107eb84846104ab565b825250608061026a848483016104ab565b600061018f8235610990565b60008060006060848603121561081d57600080fd5b60006108298686610183565b93505060208401356001604060020a0381111561084557600080fd5b610851868287016106a2565b925050604061086286828701610183565b9150509250925092565b6000806102c0838503121561088057600080fd5b600061088c85856103d5565b9250506102a061089e85828601610183565b9150509250929050565b60008060006102e084860312156108be57600080fd5b60006108ca86866103d5565b9350506102a08401356001604060020a038111156108e757600080fd5b6108f3868287016106a2565b9250506102c061086286828701610183565b61090e8161096e565b82525050565b602081016109228284610905565b92915050565b6040518181016001604060020a038111828210171561094657600080fd5b604052919050565b60006001604060020a0382111561096457600080fd5b5060209081020190565b90565b600160a060020a031690565b60006002821061098c57600080fd5b5090565b60ff16905600a265627a7a723058207d1f9847d0f2edc97b1830a634133d843e7197c261613ed70a71e29fd1f7212d6c6578706572696d656e74616cf50037",
-  "sourceMap": "368:787:107:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;368:787:107;;;;;;;",
-  "deployedSourceMap": "368:787:107:-;;;;;;;;;-1:-1:-1;;;368:787:107;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;853:173;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;853:173:107;;;;;;;;;;;565:164;;8:9:-1;5:2;;;30:1;27;20:12;5:2;565:164:107;;;;521:37;;8:9:-1;5:2;;;30:1;27;20:12;5:2;521:37:107;;;;;;;;;;;;;;;;;;;;735:112;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;735:112:107;;;;;;;;;1032:121;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1032:121:107;;;;;;;;;462:53;;8:9:-1;5:2;;;30:1;27;20:12;5:2;462:53:107;;;;419:37;;8:9:-1;5:2;;;30:1;27;20:12;5:2;419:37:107;;;;853:173;-1:-1:-1;;979:38:107;:40;;;;;;-1:-1:-1;853:173:107:o;565:164::-;633:1;608:26;;;644:38;:42;;;696:22;:26;565:164::o;521:37::-;;;;:::o;735:112::-;-1:-1:-1;;816:22:107;:24;;;;;;735:112::o;1032:121::-;-1:-1:-1;;1122:22:107;:24;;;;;;-1:-1:-1;1032:121:107:o;462:53::-;;;;:::o;419:37::-;;;;:::o;5:118:-1:-;;72:46;110:6;97:20;72:46;;;63:55;57:66;-1:-1;;;57:66;175:780;;308:4;296:17;;292:27;-1:-1;282:2;;333:1;330;323:12;282:2;370:6;357:20;392:103;407:87;487:6;407:87;;;392:103;;;383:112;;512:5;537:6;530:5;523:21;567:4;559:6;555:17;545:27;;589:4;584:3;580:14;573:21;;642:6;689:3;681:4;673:6;669:17;664:3;660:27;657:36;654:2;;;706:1;703;696:12;654:2;731:1;716:233;741:6;738:1;735:13;716:233;;;799:3;821:64;881:3;869:10;821:64;;;809:77;;-1:-1;909:4;900:14;;;;937:4;928:14;;;;;763:1;756:9;716:233;;;720:14;275:680;;;;;;;;963:118;;1030:46;1068:6;1055:20;1030:46;;1088:148;;1170:61;1223:6;1210:20;1170:61;;1568:460;;1680:4;1668:9;1663:3;1659:19;1655:30;1652:2;;;1698:1;1695;1688:12;1652:2;1716:20;1731:4;1716:20;;;1707:29;-1:-1;1784:1;1815:49;1860:3;1840:9;1815:49;;;1791:74;;-1:-1;1924:2;1957:49;2002:3;1978:22;;;1957:49;;;1950:4;1943:5;1939:16;1932:75;1886:132;1646:382;;;;;2085:482;;2210:4;2198:9;2193:3;2189:19;2185:30;2182:2;;;2228:1;2225;2218:12;2182:2;2246:20;2261:4;2246:20;;;2237:29;-1:-1;2319:1;2350:48;2394:3;2374:9;2350:48;;2611:490;;2721:4;2709:9;2704:3;2700:19;2696:30;2693:2;;;2739:1;2736;2729:12;2693:2;2757:20;2772:4;2757:20;;;2748:29;-1:-1;2829:1;2860:48;2904:3;2884:9;2860:48;;;2836:73;;-1:-1;2974:2;3007:72;3075:3;3051:22;;;3007:72;;3162:536;;3291:4;3279:9;3274:3;3270:19;3266:30;3263:2;;;3309:1;3306;3299:12;3263:2;3327:20;3342:4;3327:20;;;3318:29;-1:-1;3401:1;3432:72;3500:3;3480:9;3432:72;;;3408:97;;-1:-1;3571:2;3604:72;3672:3;3648:22;;;3604:72;;3772:575;;3914:4;3902:9;3897:3;3893:19;3889:30;3886:2;;;3932:1;3929;3922:12;3886:2;3950:20;3965:4;3950:20;;;3941:29;-1:-1;4024:1;4055:85;4136:3;4116:9;4055:85;;;4031:110;;-1:-1;4207:2;4240:85;4321:3;4297:22;;;4240:85;;5029:1012;;5147:5;5135:9;5130:3;5126:19;5122:31;5119:2;;;5166:1;5163;5156:12;5119:2;5184:20;5199:4;5184:20;;;5175:29;-1:-1;5259:1;5290:64;5350:3;5330:9;5290:64;;;5266:89;;-1:-1;5418:2;5451:48;5495:3;5471:22;;;5451:48;;;5444:4;5437:5;5433:16;5426:74;5376:135;5567:2;5600:89;5685:3;5676:6;5665:9;5661:22;5600:89;;;5593:4;5586:5;5582:16;5575:115;5521:180;5751:3;5785:48;5829:3;5820:6;5809:9;5805:22;5785:48;;;5778:4;5771:5;5767:16;5760:74;5711:134;5900:3;5934:85;6015:3;6006:6;5995:9;5991:22;5934:85;;;5927:4;5920:5;5916:16;5909:111;5855:176;5113:928;;;;;6081:1129;;6194:5;6182:9;6177:3;6173:19;6169:31;6166:2;;;6213:1;6210;6203:12;6166:2;6231:20;6246:4;6231:20;;;6222:29;-1:-1;6302:1;6333:49;6378:3;6358:9;6333:49;;;6309:74;;-1:-1;6446:2;6479:49;6524:3;6500:22;;;6479:49;;;6472:4;6465:5;6461:16;6454:75;6404:136;6595:2;6628:78;6702:3;6693:6;6682:9;6678:22;6628:78;;;6621:4;6614:5;6610:16;6603:104;6550:168;6769:3;6803:82;6881:3;6872:6;6861:9;6857:22;6803:82;;;6796:4;6789:5;6785:16;6778:108;6728:169;6954:3;6988:49;7033:3;7024:6;7013:9;7009:22;6988:49;;;6981:4;6974:5;6970:16;6963:75;6907:142;7105:3;7139:49;7184:3;7175:6;7164:9;7160:22;7139:49;;;7132:4;7125:5;7121:16;7114:75;7059:141;6160:1050;;;;;7258:495;;7374:4;7362:9;7357:3;7353:19;7349:30;7346:2;;;7392:1;7389;7382:12;7346:2;7410:20;7425:4;7410:20;;;7401:29;-1:-1;7484:1;7515:49;7560:3;7540:9;7515:49;;;7491:74;;-1:-1;7628:2;7661:70;7727:3;7703:22;;;7661:70;;7793:489;;7901:4;7889:9;7884:3;7880:19;7876:30;7873:2;;;7919:1;7916;7909:12;7873:2;7937:20;7952:4;7937:20;;;7928:29;-1:-1;8007:1;8038:49;8083:3;8063:9;8038:49;;;8014:74;;-1:-1;8154:2;8187:73;8256:3;8232:22;;;8327:598;8440:4;8428:9;8423:3;8419:19;8415:30;8412:2;;;8458:1;8455;8448:12;8412:2;8476:20;8491:4;8476:20;;;8467:29;-1:-1;8543:1;8574:49;8619:3;8599:9;8574:49;;;8550:74;;-1:-1;8682:2;8715:49;8760:3;8736:22;;;8715:49;;;8708:4;8701:5;8697:16;8690:75;8645:131;8823:2;8856:47;8899:3;8890:6;8879:9;8875:22;8856:47;;;8849:4;8842:5;8838:16;8831:73;8786:129;8406:519;;;;;8991:644;;9125:4;9113:9;9108:3;9104:19;9100:30;9097:2;;;9143:1;9140;9133:12;9097:2;9161:20;9176:4;9161:20;;;9152:29;-1:-1;9233:1;9264:70;9330:3;9310:9;9264:70;;;9240:95;;-1:-1;9425:2;9410:18;;9397:32;-1:-1;;;;;9438:30;;9435:2;;;9481:1;9478;9471:12;9435:2;9516:97;9609:3;9600:6;9589:9;9585:22;9516:97;;10207:689;;10321:4;10309:9;10304:3;10300:19;10296:30;10293:2;;;10339:1;10336;10329:12;10293:2;10357:20;10372:4;10357:20;;;10348:29;-1:-1;10429:1;10460:48;10504:3;10484:9;10460:48;;;10436:73;;-1:-1;10572:2;10605:84;10685:3;10661:22;;;10605:84;;;10598:4;10591:5;10587:16;10580:110;10530:171;10756:2;10789:85;10870:3;10861:6;10850:9;10846:22;10789:85;;10941:1444;;11055:5;11043:9;11038:3;11034:19;11030:31;11027:2;;;11074:1;11071;11064:12;11027:2;11092:20;11107:4;11092:20;;;11083:29;-1:-1;11163:1;11194:49;11239:3;11219:9;11194:49;;;11170:74;;-1:-1;11307:2;11340:49;11385:3;11361:22;;;11340:49;;;11333:4;11326:5;11322:16;11315:75;11265:136;11460:2;11493:49;11538:3;11529:6;11518:9;11514:22;11493:49;;;11486:4;11479:5;11475:16;11468:75;11411:143;11613:2;11646:68;11710:3;11701:6;11690:9;11686:22;11646:68;;;11639:4;11632:5;11628:16;11621:94;11564:162;11777:3;11811:74;11881:3;11872:6;11861:9;11857:22;11811:74;;;11804:4;11797:5;11793:16;11786:100;11736:161;11951:3;11985:102;12083:3;12074:6;12063:9;12059:22;11985:102;;;11978:4;11971:5;11967:16;11960:128;11907:192;12177:3;12166:9;12162:19;12149:33;-1:-1;;;;;12194:6;12191:30;12188:2;;;12234:1;12231;12224:12;12188:2;12269:94;12359:3;12350:6;12339:9;12335:22;12269:94;;;12262:4;12255:5;12251:16;12244:120;12109:266;11021:1364;;;;;12425:1986;;12538:5;12526:9;12521:3;12517:19;12513:31;12510:2;;;12557:1;12554;12547:12;12510:2;12575:21;12590:5;12575:21;;;12566:30;-1:-1;12647:1;12678:49;12723:3;12703:9;12678:49;;;12654:74;;-1:-1;12791:2;12824:48;12868:3;12844:22;;;12824:48;;;12817:4;12810:5;12806:16;12799:74;12749:135;12940:2;12973:89;13058:3;13049:6;13038:9;13034:22;12973:89;;;12966:4;12959:5;12955:16;12948:115;12894:180;13124:3;13158:48;13202:3;13193:6;13182:9;13178:22;13158:48;;;13151:4;13144:5;13140:16;13133:74;13084:134;13297:3;13286:9;13282:19;13269:33;-1:-1;;;;;13314:6;13311:30;13308:2;;;13354:1;13351;13344:12;13308:2;13389:74;13459:3;13450:6;13439:9;13435:22;13389:74;;;13382:4;13375:5;13371:16;13364:100;13228:247;13555:3;13544:9;13540:19;13527:33;-1:-1;;;;;13572:6;13569:30;13566:2;;;13612:1;13609;13602:12;13566:2;13647:74;13717:3;13708:6;13697:9;13693:22;13647:74;;;13640:4;13633:5;13629:16;13622:100;13485:248;13788:3;13822:98;13916:3;13907:6;13896:9;13892:22;13822:98;;;13815:4;13808:5;13804:16;13797:124;13743:189;13982:3;14016:68;14080:3;14071:6;14060:9;14056:22;14016:68;;;14009:4;14002:5;13998:16;13991:94;13942:154;14153:3;14188:49;14233:3;14224:6;14213:9;14209:22;14188:49;;;14180:5;14173;14169:17;14162:76;14106:143;14305:3;14340:49;14385:3;14376:6;14365:9;14361:22;14340:49;;;14332:5;14325;14321:17;14314:76;14259:142;12504:1907;;;;;15003:520;;15125:5;15113:9;15108:3;15104:19;15100:31;15097:2;;;15144:1;15141;15134:12;15097:2;15162:20;15177:4;15162:20;;;15153:29;-1:-1;15234:1;15265:68;15329:3;15309:9;15265:68;;;15241:93;;-1:-1;15399:3;15433:68;15497:3;15473:22;;;15433:68;;15655:114;;15720:44;15756:6;15743:20;15720:44;;15776:625;;;;15938:2;15926:9;15917:7;15913:23;15909:32;15906:2;;;15954:1;15951;15944:12;15906:2;15989:1;16006:53;16051:7;16031:9;16006:53;;;15996:63;;15968:97;16124:2;16113:9;16109:18;16096:32;-1:-1;;;;;16140:6;16137:30;16134:2;;;16180:1;16177;16170:12;16134:2;16200:77;16269:7;16260:6;16249:9;16245:22;16200:77;;;16190:87;;16075:208;16314:2;16332:53;16377:7;16368:6;16357:9;16353:22;16332:53;;;16322:63;;16293:98;15900:501;;;;;;16408:416;;;16553:3;16541:9;16532:7;16528:23;16524:33;16521:2;;;16570:1;16567;16560:12;16521:2;16605:1;16622:77;16691:7;16671:9;16622:77;;;16612:87;;16584:121;16736:3;16755:53;16800:7;16791:6;16780:9;16776:22;16755:53;;;16745:63;;16715:99;16515:309;;;;;;16831:676;;;;17017:3;17005:9;16996:7;16992:23;16988:33;16985:2;;;17034:1;17031;17024:12;16985:2;17069:1;17086:77;17155:7;17135:9;17086:77;;;17076:87;;17048:121;17228:3;17217:9;17213:19;17200:33;-1:-1;;;;;17245:6;17242:30;17239:2;;;17285:1;17282;17275:12;17239:2;17305:77;17374:7;17365:6;17354:9;17350:22;17305:77;;;17295:87;;17179:209;17419:3;17438:53;17483:7;17474:6;17463:9;17459:22;17438:53;;17514:110;17587:31;17612:5;17587:31;;;17582:3;17575:44;17569:55;;;17631:193;17739:2;17724:18;;17753:61;17728:9;17787:6;17753:61;;;17710:114;;;;;17831:256;17893:2;17887:9;17919:17;;;-1:-1;;;;;17979:34;;18015:22;;;17976:62;17973:2;;;18051:1;18048;18041:12;17973:2;18067;18060:22;17871:216;;-1:-1;17871:216;18094:281;;-1:-1;;;;;18268:6;18265:30;18262:2;;;18308:1;18305;18298:12;18262:2;-1:-1;18337:4;18325:17;;;18355:15;;18199:176;18382:79;18451:5;18434:27;18468:128;-1:-1;;;;;18537:54;;18520:76;18689:135;;18782:1;18772:12;;18762:2;;18798:1;18795;18788:12;18762:2;-1:-1;18814:5;18756:68;19148:88;19226:4;19215:16;;19198:38",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\npragma experimental ABIEncoderV2;\n\nimport {TradeTypesLib} from \"../TradeTypesLib.sol\";\n\n/**\n * @title MockedDriipSettlementDisputeByTrade\n * @notice Mocked implementation of driip settlement dispute by trade contract\n */\ncontract MockedDriipSettlementDisputeByTrade {\n    uint256 public _challengeByOrderCount;\n    uint256 public _unchallengeOrderCandidateByTradeCount;\n    uint256 public _challengeByTradeCount;\n\n    function _reset()\n    public\n    {\n        _challengeByOrderCount = 0;\n        _unchallengeOrderCandidateByTradeCount = 0;\n        _challengeByTradeCount = 0;\n    }\n\n    function challengeByOrder(TradeTypesLib.Order, address)\n    public\n    {\n        _challengeByOrderCount++;\n    }\n\n    function unchallengeOrderCandidateByTrade(TradeTypesLib.Order, TradeTypesLib.Trade,\n        address)\n    public\n    {\n        _unchallengeOrderCandidateByTradeCount++;\n    }\n\n    function challengeByTrade(address, TradeTypesLib.Trade, address)\n    public\n    {\n        _challengeByTradeCount++;\n    }\n}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610920806100206000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630608a9381461005c5780631592f0ab1461007157806332f40589146100795780639227260714610097578063a01b7fa7146100aa575b600080fd5b61006f61006a3660046107c7565b6100b2565b005b61006f6100c0565b6100816100ca565b60405161008e9190610833565b60405180910390f35b61006f6100a5366004610763565b6100d0565b6100816100dd565b505060008054600101905550565b6000808055600155565b60015481565b5050600180548101905550565b60005481565b80356100ee816108a7565b92915050565b600082601f83011261010557600080fd5b813561011861011382610867565b610841565b9150818183526020840193506020810190508385608084028201111561013d57600080fd5b60005b8381101561016b578161015388826103cc565b84525060209092019160809190910190600101610140565b5050505092915050565b80356100ee816108be565b80356100ee816108c7565b60006040828403121561019d57600080fd5b6101a76040610841565b905060006101b584846100e3565b82525060206101c684848301610175565b60208301525092915050565b6000604082840312156101e457600080fd5b6101ee6040610841565b905060006101b58484610175565b60006060828403121561020e57600080fd5b6102186040610841565b905060006102268484610175565b82525060206101c68484830161018b565b60006080828403121561024957600080fd5b6102536040610841565b90506000610261848461018b565b82525060406101c68484830161018b565b60006080828403121561028457600080fd5b61028e6040610841565b9050600061029c84846101d2565b82525060406101c6848483016101d2565b600061012082840312156102c057600080fd5b6102ca60a0610841565b905060006102d88484610180565b82525060206102e984848301610175565b60208301525060406102fd84828501610237565b60408301525060c061031184828501610175565b60608301525060e0610325848285016101d2565b60808301525092915050565b60006102a0828403121561034457600080fd5b61034e60c0610841565b9050600061035c8484610175565b825250602061036d848483016100e3565b6020830152506040610381848285016102ad565b6040830152506101606103968482850161071c565b6060830152506102606103ab84828501610175565b6080830152506102806103c084828501610175565b60a08301525092915050565b6000608082840312156103de57600080fd5b6103e86040610841565b905060006103f68484610175565b82525060206101c6848483016101fc565b60006080828403121561041957600080fd5b6104236040610841565b905060006104318484610175565b82525060206101c68484830160006060828403121561044f57600080fd5b6104596060610841565b905060006104678484610175565b825250602061047884848301610175565b602083015250604061048c84828501610758565b60408301525092915050565b6000608082840312156104aa57600080fd5b6104b46040610841565b905060006104c284846101fc565b82525060608201356001600160401b038111156104de57600080fd5b6101c6848285016100f4565b600060a082840312156104fc57600080fd5b6105066060610841565b905060006105148484610175565b8252506020610525848483016101d2565b602083015250606061048c848285016101d2565b60006101c0828403121561054c57600080fd5b61055660e0610841565b905060006105648484610175565b8252506020610575848483016100e3565b602083015250604061058984828501610175565b604083015250606061059d84828501610180565b60608301525060806105b1848285016104ea565b6080830152506101206105c684828501610272565b60a0830152506101a08201356001600160401b038111156105e657600080fd5b6105f284828501610498565b60c08301525092915050565b6000610260828403121561061157600080fd5b61061c610140610841565b9050600061062a8484610175565b825250602061063b84848301610175565b602083015250604061064f84828501610237565b60408301525060c061066384828501610175565b60608301525060e08201356001600160401b0381111561068257600080fd5b61068e84828501610539565b6080830152506101008201356001600160401b038111156106ae57600080fd5b6106ba84828501610539565b60a0830152506101206106cf84828501610272565b60c0830152506101a06106e484828501610407565b60e0830152506102206106f984828501610175565b6101008301525061024061070f84828501610175565b6101208301525092915050565b6000610100828403121561072f57600080fd5b6107396040610841565b905060006107478484610407565b82525060806101c684848301610407565b80356100ee816108d4565b60008060006060848603121561077857600080fd5b600061078486866100e3565b93505060208401356001600160401b038111156107a057600080fd5b6107ac868287016105fe565b92505060406107bd868287016100e3565b9150509250925092565b60008060006102e084860312156107dd57600080fd5b60006107e98686610331565b9350506102a08401356001600160401b0381111561080657600080fd5b610812868287016105fe565b9250506102c06107bd868287016100e3565b61082d81610892565b82525050565b602081016100ee8284610824565b6040518181016001600160401b038111828210171561085f57600080fd5b604052919050565b60006001600160401b0382111561087d57600080fd5b5060209081020190565b60006100ee82610895565b90565b6001600160a01b031690565b60ff1690565b6108b081610887565b81146108bb57600080fd5b50565b6108b081610892565b600281106108bb57600080fd5b6108b0816108a156fea365627a7a72315820c1d92ba5003849f318b1312c5aa8183904e4dcd97ffbf811cd4154dcd2f8673f6c6578706572696d656e74616cf564736f6c634300050c0040",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80630608a9381461005c5780631592f0ab1461007157806332f40589146100795780639227260714610097578063a01b7fa7146100aa575b600080fd5b61006f61006a3660046107c7565b6100b2565b005b61006f6100c0565b6100816100ca565b60405161008e9190610833565b60405180910390f35b61006f6100a5366004610763565b6100d0565b6100816100dd565b505060008054600101905550565b6000808055600155565b60015481565b5050600180548101905550565b60005481565b80356100ee816108a7565b92915050565b600082601f83011261010557600080fd5b813561011861011382610867565b610841565b9150818183526020840193506020810190508385608084028201111561013d57600080fd5b60005b8381101561016b578161015388826103cc565b84525060209092019160809190910190600101610140565b5050505092915050565b80356100ee816108be565b80356100ee816108c7565b60006040828403121561019d57600080fd5b6101a76040610841565b905060006101b584846100e3565b82525060206101c684848301610175565b60208301525092915050565b6000604082840312156101e457600080fd5b6101ee6040610841565b905060006101b58484610175565b60006060828403121561020e57600080fd5b6102186040610841565b905060006102268484610175565b82525060206101c68484830161018b565b60006080828403121561024957600080fd5b6102536040610841565b90506000610261848461018b565b82525060406101c68484830161018b565b60006080828403121561028457600080fd5b61028e6040610841565b9050600061029c84846101d2565b82525060406101c6848483016101d2565b600061012082840312156102c057600080fd5b6102ca60a0610841565b905060006102d88484610180565b82525060206102e984848301610175565b60208301525060406102fd84828501610237565b60408301525060c061031184828501610175565b60608301525060e0610325848285016101d2565b60808301525092915050565b60006102a0828403121561034457600080fd5b61034e60c0610841565b9050600061035c8484610175565b825250602061036d848483016100e3565b6020830152506040610381848285016102ad565b6040830152506101606103968482850161071c565b6060830152506102606103ab84828501610175565b6080830152506102806103c084828501610175565b60a08301525092915050565b6000608082840312156103de57600080fd5b6103e86040610841565b905060006103f68484610175565b82525060206101c6848483016101fc565b60006080828403121561041957600080fd5b6104236040610841565b905060006104318484610175565b82525060206101c68484830160006060828403121561044f57600080fd5b6104596060610841565b905060006104678484610175565b825250602061047884848301610175565b602083015250604061048c84828501610758565b60408301525092915050565b6000608082840312156104aa57600080fd5b6104b46040610841565b905060006104c284846101fc565b82525060608201356001600160401b038111156104de57600080fd5b6101c6848285016100f4565b600060a082840312156104fc57600080fd5b6105066060610841565b905060006105148484610175565b8252506020610525848483016101d2565b602083015250606061048c848285016101d2565b60006101c0828403121561054c57600080fd5b61055660e0610841565b905060006105648484610175565b8252506020610575848483016100e3565b602083015250604061058984828501610175565b604083015250606061059d84828501610180565b60608301525060806105b1848285016104ea565b6080830152506101206105c684828501610272565b60a0830152506101a08201356001600160401b038111156105e657600080fd5b6105f284828501610498565b60c08301525092915050565b6000610260828403121561061157600080fd5b61061c610140610841565b9050600061062a8484610175565b825250602061063b84848301610175565b602083015250604061064f84828501610237565b60408301525060c061066384828501610175565b60608301525060e08201356001600160401b0381111561068257600080fd5b61068e84828501610539565b6080830152506101008201356001600160401b038111156106ae57600080fd5b6106ba84828501610539565b60a0830152506101206106cf84828501610272565b60c0830152506101a06106e484828501610407565b60e0830152506102206106f984828501610175565b6101008301525061024061070f84828501610175565b6101208301525092915050565b6000610100828403121561072f57600080fd5b6107396040610841565b905060006107478484610407565b82525060806101c684848301610407565b80356100ee816108d4565b60008060006060848603121561077857600080fd5b600061078486866100e3565b93505060208401356001600160401b038111156107a057600080fd5b6107ac868287016105fe565b92505060406107bd868287016100e3565b9150509250925092565b60008060006102e084860312156107dd57600080fd5b60006107e98686610331565b9350506102a08401356001600160401b0381111561080657600080fd5b610812868287016105fe565b9250506102c06107bd868287016100e3565b61082d81610892565b82525050565b602081016100ee8284610824565b6040518181016001600160401b038111828210171561085f57600080fd5b604052919050565b60006001600160401b0382111561087d57600080fd5b5060209081020190565b60006100ee82610895565b90565b6001600160a01b031690565b60ff1690565b6108b081610887565b81146108bb57600080fd5b50565b6108b081610892565b600281106108bb57600080fd5b6108b0816108a156fea365627a7a72315820c1d92ba5003849f318b1312c5aa8183904e4dcd97ffbf811cd4154dcd2f8673f6c6578706572696d656e74616cf564736f6c634300050c0040",
+  "sourceMap": "376:611:115:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;376:611:115;;;;;;;",
+  "deployedSourceMap": "376:611:115:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;376:611:115;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;664:187;;;;;;;;;:::i;:::-;;530:128;;;:::i;486:37::-;;;:::i;:::-;;;;;;;;;;;;;;;;857:128;;;;;;;;;:::i;427:53::-;;;:::i;664:187::-;-1:-1:-1;;804:38:115;:40;;;;;;-1:-1:-1;664:187:115:o;530:128::-;614:1;573:42;;;625:22;:26;530:128::o;486:37::-;;;;:::o;857:128::-;-1:-1:-1;;954:22:115;:24;;;;;;-1:-1:-1;857:128:115:o;427:53::-;;;;:::o;5:130:-1:-;72:20;;97:33;72:20;97:33;;;57:78;;;;;187:780;;327:3;320:4;312:6;308:17;304:27;294:2;;345:1;342;335:12;294:2;382:6;369:20;404:103;419:87;499:6;419:87;;;404:103;;;395:112;;524:5;549:6;542:5;535:21;579:4;571:6;567:17;557:27;;601:4;596:3;592:14;585:21;;654:6;701:3;693:4;685:6;681:17;676:3;672:27;669:36;666:2;;;718:1;715;708:12;666:2;743:1;728:233;753:6;750:1;747:13;728:233;;;811:3;833:64;893:3;881:10;833:64;;;821:77;;-1:-1;921:4;912:14;;;;949:4;940:14;;;;;775:1;768:9;728:233;;;732:14;287:680;;;;;;;;975:130;1042:20;;1067:33;1042:20;1067:33;;1112:160;1194:20;;1219:48;1194:20;1219:48;;1628:460;;1740:4;1728:9;1723:3;1719:19;1715:30;1712:2;;;1758:1;1755;1748:12;1712:2;1776:20;1791:4;1776:20;;;1767:29;-1:-1;1844:1;1875:49;1920:3;1900:9;1875:49;;;1851:74;;-1:-1;1984:2;2017:49;2062:3;2038:22;;;2017:49;;;2010:4;2003:5;1999:16;1992:75;1946:132;1706:382;;;;;2145:482;;2270:4;2258:9;2253:3;2249:19;2245:30;2242:2;;;2288:1;2285;2278:12;2242:2;2306:20;2321:4;2306:20;;;2297:29;-1:-1;2379:1;2410:48;2454:3;2434:9;2410:48;;2671:490;;2781:4;2769:9;2764:3;2760:19;2756:30;2753:2;;;2799:1;2796;2789:12;2753:2;2817:20;2832:4;2817:20;;;2808:29;-1:-1;2889:1;2920:48;2964:3;2944:9;2920:48;;;2896:73;;-1:-1;3034:2;3067:72;3135:3;3111:22;;;3067:72;;3222:536;;3351:4;3339:9;3334:3;3330:19;3326:30;3323:2;;;3369:1;3366;3359:12;3323:2;3387:20;3402:4;3387:20;;;3378:29;-1:-1;3461:1;3492:72;3560:3;3540:9;3492:72;;;3468:97;;-1:-1;3631:2;3664:72;3732:3;3708:22;;;3664:72;;3832:575;;3974:4;3962:9;3957:3;3953:19;3949:30;3946:2;;;3992:1;3989;3982:12;3946:2;4010:20;4025:4;4010:20;;;4001:29;-1:-1;4084:1;4115:85;4196:3;4176:9;4115:85;;;4091:110;;-1:-1;4267:2;4300:85;4381:3;4357:22;;;4300:85;;5089:1012;;5207:5;5195:9;5190:3;5186:19;5182:31;5179:2;;;5226:1;5223;5216:12;5179:2;5244:20;5259:4;5244:20;;;5235:29;-1:-1;5319:1;5350:64;5410:3;5390:9;5350:64;;;5326:89;;-1:-1;5478:2;5511:48;5555:3;5531:22;;;5511:48;;;5504:4;5497:5;5493:16;5486:74;5436:135;5627:2;5660:89;5745:3;5736:6;5725:9;5721:22;5660:89;;;5653:4;5646:5;5642:16;5635:115;5581:180;5811:3;5845:48;5889:3;5880:6;5869:9;5865:22;5845:48;;;5838:4;5831:5;5827:16;5820:74;5771:134;5960:3;5994:85;6075:3;6066:6;6055:9;6051:22;5994:85;;;5987:4;5980:5;5976:16;5969:111;5915:176;5173:928;;;;;6141:1129;;6254:5;6242:9;6237:3;6233:19;6229:31;6226:2;;;6273:1;6270;6263:12;6226:2;6291:20;6306:4;6291:20;;;6282:29;-1:-1;6362:1;6393:49;6438:3;6418:9;6393:49;;;6369:74;;-1:-1;6506:2;6539:49;6584:3;6560:22;;;6539:49;;;6532:4;6525:5;6521:16;6514:75;6464:136;6655:2;6688:78;6762:3;6753:6;6742:9;6738:22;6688:78;;;6681:4;6674:5;6670:16;6663:104;6610:168;6829:3;6863:82;6941:3;6932:6;6921:9;6917:22;6863:82;;;6856:4;6849:5;6845:16;6838:108;6788:169;7014:3;7048:49;7093:3;7084:6;7073:9;7069:22;7048:49;;;7041:4;7034:5;7030:16;7023:75;6967:142;7165:3;7199:49;7244:3;7235:6;7224:9;7220:22;7199:49;;;7192:4;7185:5;7181:16;7174:75;7119:141;6220:1050;;;;;7318:495;;7434:4;7422:9;7417:3;7413:19;7409:30;7406:2;;;7452:1;7449;7442:12;7406:2;7470:20;7485:4;7470:20;;;7461:29;-1:-1;7544:1;7575:49;7620:3;7600:9;7575:49;;;7551:74;;-1:-1;7688:2;7721:70;7787:3;7763:22;;;7721:70;;7853:489;;7961:4;7949:9;7944:3;7940:19;7936:30;7933:2;;;7979:1;7976;7969:12;7933:2;7997:20;8012:4;7997:20;;;7988:29;-1:-1;8067:1;8098:49;8143:3;8123:9;8098:49;;;8074:74;;-1:-1;8214:2;8247:73;8316:3;8292:22;;;8387:598;8500:4;8488:9;8483:3;8479:19;8475:30;8472:2;;;8518:1;8515;8508:12;8472:2;8536:20;8551:4;8536:20;;;8527:29;-1:-1;8603:1;8634:49;8679:3;8659:9;8634:49;;;8610:74;;-1:-1;8742:2;8775:49;8820:3;8796:22;;;8775:49;;;8768:4;8761:5;8757:16;8750:75;8705:131;8883:2;8916:47;8959:3;8950:6;8939:9;8935:22;8916:47;;;8909:4;8902:5;8898:16;8891:73;8846:129;8466:519;;;;;9051:644;;9185:4;9173:9;9168:3;9164:19;9160:30;9157:2;;;9203:1;9200;9193:12;9157:2;9221:20;9236:4;9221:20;;;9212:29;-1:-1;9293:1;9324:70;9390:3;9370:9;9324:70;;;9300:95;;-1:-1;9485:2;9470:18;;9457:32;-1:-1;;;;;9498:30;;9495:2;;;9541:1;9538;9531:12;9495:2;9576:97;9669:3;9660:6;9649:9;9645:22;9576:97;;10267:689;;10381:4;10369:9;10364:3;10360:19;10356:30;10353:2;;;10399:1;10396;10389:12;10353:2;10417:20;10432:4;10417:20;;;10408:29;-1:-1;10489:1;10520:48;10564:3;10544:9;10520:48;;;10496:73;;-1:-1;10632:2;10665:84;10745:3;10721:22;;;10665:84;;;10658:4;10651:5;10647:16;10640:110;10590:171;10816:2;10849:85;10930:3;10921:6;10910:9;10906:22;10849:85;;11001:1444;;11115:5;11103:9;11098:3;11094:19;11090:31;11087:2;;;11134:1;11131;11124:12;11087:2;11152:20;11167:4;11152:20;;;11143:29;-1:-1;11223:1;11254:49;11299:3;11279:9;11254:49;;;11230:74;;-1:-1;11367:2;11400:49;11445:3;11421:22;;;11400:49;;;11393:4;11386:5;11382:16;11375:75;11325:136;11520:2;11553:49;11598:3;11589:6;11578:9;11574:22;11553:49;;;11546:4;11539:5;11535:16;11528:75;11471:143;11673:2;11706:68;11770:3;11761:6;11750:9;11746:22;11706:68;;;11699:4;11692:5;11688:16;11681:94;11624:162;11837:3;11871:74;11941:3;11932:6;11921:9;11917:22;11871:74;;;11864:4;11857:5;11853:16;11846:100;11796:161;12011:3;12045:102;12143:3;12134:6;12123:9;12119:22;12045:102;;;12038:4;12031:5;12027:16;12020:128;11967:192;12237:3;12226:9;12222:19;12209:33;-1:-1;;;;;12254:6;12251:30;12248:2;;;12294:1;12291;12284:12;12248:2;12329:94;12419:3;12410:6;12399:9;12395:22;12329:94;;;12322:4;12315:5;12311:16;12304:120;12169:266;11081:1364;;;;;12485:1986;;12598:5;12586:9;12581:3;12577:19;12573:31;12570:2;;;12617:1;12614;12607:12;12570:2;12635:21;12650:5;12635:21;;;12626:30;-1:-1;12707:1;12738:49;12783:3;12763:9;12738:49;;;12714:74;;-1:-1;12851:2;12884:48;12928:3;12904:22;;;12884:48;;;12877:4;12870:5;12866:16;12859:74;12809:135;13000:2;13033:89;13118:3;13109:6;13098:9;13094:22;13033:89;;;13026:4;13019:5;13015:16;13008:115;12954:180;13184:3;13218:48;13262:3;13253:6;13242:9;13238:22;13218:48;;;13211:4;13204:5;13200:16;13193:74;13144:134;13357:3;13346:9;13342:19;13329:33;-1:-1;;;;;13374:6;13371:30;13368:2;;;13414:1;13411;13404:12;13368:2;13449:74;13519:3;13510:6;13499:9;13495:22;13449:74;;;13442:4;13435:5;13431:16;13424:100;13288:247;13615:3;13604:9;13600:19;13587:33;-1:-1;;;;;13632:6;13629:30;13626:2;;;13672:1;13669;13662:12;13626:2;13707:74;13777:3;13768:6;13757:9;13753:22;13707:74;;;13700:4;13693:5;13689:16;13682:100;13545:248;13848:3;13882:98;13976:3;13967:6;13956:9;13952:22;13882:98;;;13875:4;13868:5;13864:16;13857:124;13803:189;14042:3;14076:68;14140:3;14131:6;14120:9;14116:22;14076:68;;;14069:4;14062:5;14058:16;14051:94;14002:154;14213:3;14248:49;14293:3;14284:6;14273:9;14269:22;14248:49;;;14240:5;14233;14229:17;14222:76;14166:143;14365:3;14400:49;14445:3;14436:6;14425:9;14421:22;14400:49;;;14392:5;14385;14381:17;14374:76;14319:142;12564:1907;;;;;15063:520;;15185:5;15173:9;15168:3;15164:19;15160:31;15157:2;;;15204:1;15201;15194:12;15157:2;15222:20;15237:4;15222:20;;;15213:29;-1:-1;15294:1;15325:68;15389:3;15369:9;15325:68;;;15301:93;;-1:-1;15459:3;15493:68;15557:3;15533:22;;;15493:68;;15727:126;15792:20;;15817:31;15792:20;15817:31;;15860:625;;;;16022:2;16010:9;16001:7;15997:23;15993:32;15990:2;;;16038:1;16035;16028:12;15990:2;16073:1;16090:53;16135:7;16115:9;16090:53;;;16080:63;;16052:97;16208:2;16197:9;16193:18;16180:32;-1:-1;;;;;16224:6;16221:30;16218:2;;;16264:1;16261;16254:12;16218:2;16284:77;16353:7;16344:6;16333:9;16329:22;16284:77;;;16274:87;;16159:208;16398:2;16416:53;16461:7;16452:6;16441:9;16437:22;16416:53;;;16406:63;;16377:98;15984:501;;;;;;16492:676;;;;16678:3;16666:9;16657:7;16653:23;16649:33;16646:2;;;16695:1;16692;16685:12;16646:2;16730:1;16747:77;16816:7;16796:9;16747:77;;;16737:87;;16709:121;16889:3;16878:9;16874:19;16861:33;-1:-1;;;;;16906:6;16903:30;16900:2;;;16946:1;16943;16936:12;16900:2;16966:77;17035:7;17026:6;17015:9;17011:22;16966:77;;;16956:87;;16840:209;17080:3;17099:53;17144:7;17135:6;17124:9;17120:22;17099:53;;17175:113;17258:24;17276:5;17258:24;;;17253:3;17246:37;17240:48;;;17295:213;17413:2;17398:18;;17427:71;17402:9;17471:6;17427:71;;17515:256;17577:2;17571:9;17603:17;;;-1:-1;;;;;17663:34;;17699:22;;;17660:62;17657:2;;;17735:1;17732;17725:12;17657:2;17751;17744:22;17555:216;;-1:-1;17555:216;17778:327;;-1:-1;;;;;17952:6;17949:30;17946:2;;;17992:1;17989;17982:12;17946:2;-1:-1;18027:4;18015:17;;;18080:15;;17883:222;18112:91;;18174:24;18192:5;18174:24;;18210:72;18272:5;18255:27;18367:121;-1:-1;;;;;18429:54;;18412:76;18574:81;18645:4;18634:16;;18617:38;18662:117;18731:24;18749:5;18731:24;;;18724:5;18721:35;18711:2;;18770:1;18767;18760:12;18711:2;18705:74;;18786:117;18855:24;18873:5;18855:24;;18910:109;18994:1;18987:5;18984:12;18974:2;;19010:1;19007;19000:12;19392:113;19459:22;19475:5;19459:22;",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\npragma experimental ABIEncoderV2;\n\nimport {TradeTypesLib} from \"../TradeTypesLib.sol\";\n\n/**\n * @title MockedDriipSettlementDisputeByTrade\n * @notice Mocked implementation of driip settlement dispute by trade contract\n */\ncontract MockedDriipSettlementDisputeByTrade {\n    uint256 public _unchallengeOrderCandidateByTradeCount;\n    uint256 public _challengeByTradeCount;\n\n    function _reset()\n    public\n    {\n        _unchallengeOrderCandidateByTradeCount = 0;\n        _challengeByTradeCount = 0;\n    }\n\n    function unchallengeOrderCandidateByTrade(TradeTypesLib.Order memory, TradeTypesLib.Trade memory,\n        address)\n    public\n    {\n        _unchallengeOrderCandidateByTradeCount++;\n    }\n\n    function challengeByTrade(address, TradeTypesLib.Trade memory, address)\n    public\n    {\n        _challengeByTradeCount++;\n    }\n}",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedDriipSettlementDisputeByTrade.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedDriipSettlementDisputeByTrade.sol",
     "exportedSymbols": {
       "MockedDriipSettlementDisputeByTrade": [
-        43589
+        50042
       ]
     },
-    "id": 43590,
+    "id": 50043,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 43526,
+        "id": 49996,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:107"
+        "src": "122:32:115"
       },
       {
-        "id": 43527,
+        "id": 49997,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:107"
+        "src": "155:33:115"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeTypesLib.sol",
         "file": "../TradeTypesLib.sol",
-        "id": 43529,
+        "id": 49999,
         "nodeType": "ImportDirective",
-        "scope": 43590,
-        "sourceUnit": 34565,
-        "src": "182:51:107",
+        "scope": 50043,
+        "sourceUnit": 40380,
+        "src": "190:51:115",
         "symbolAliases": [
           {
-            "foreign": 43528,
+            "foreign": 49998,
             "local": null
           }
         ],
@@ -1333,46 +1379,20 @@
         "contractKind": "contract",
         "documentation": "@title MockedDriipSettlementDisputeByTrade\n@notice Mocked implementation of driip settlement dispute by trade contract",
         "fullyImplemented": true,
-        "id": 43589,
+        "id": 50042,
         "linearizedBaseContracts": [
-          43589
+          50042
         ],
         "name": "MockedDriipSettlementDisputeByTrade",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 43531,
-            "name": "_challengeByOrderCount",
-            "nodeType": "VariableDeclaration",
-            "scope": 43589,
-            "src": "419:37:107",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
-            },
-            "typeName": {
-              "id": 43530,
-              "name": "uint256",
-              "nodeType": "ElementaryTypeName",
-              "src": "419:7:107",
-              "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
-              }
-            },
-            "value": null,
-            "visibility": "public"
-          },
-          {
-            "constant": false,
-            "id": 43533,
+            "id": 50001,
             "name": "_unchallengeOrderCandidateByTradeCount",
             "nodeType": "VariableDeclaration",
-            "scope": 43589,
-            "src": "462:53:107",
+            "scope": 50042,
+            "src": "427:53:115",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1380,10 +1400,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 43532,
+              "id": 50000,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "462:7:107",
+              "src": "427:7:115",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -1394,11 +1414,11 @@
           },
           {
             "constant": false,
-            "id": 43535,
+            "id": 50003,
             "name": "_challengeByTradeCount",
             "nodeType": "VariableDeclaration",
-            "scope": 43589,
-            "src": "521:37:107",
+            "scope": 50042,
+            "src": "486:37:115",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1406,10 +1426,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 43534,
+              "id": 50002,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "521:7:107",
+              "src": "486:7:115",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -1420,77 +1440,26 @@
           },
           {
             "body": {
-              "id": 43550,
+              "id": 50014,
               "nodeType": "Block",
-              "src": "598:131:107",
+              "src": "563:95:115",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43540,
+                    "id": 50008,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 43538,
-                      "name": "_challengeByOrderCount",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 43531,
-                      "src": "608:22:107",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "hexValue": "30",
-                      "id": 43539,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": true,
-                      "kind": "number",
-                      "lValueRequested": false,
-                      "nodeType": "Literal",
-                      "src": "633:1:107",
-                      "subdenomination": null,
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_rational_0_by_1",
-                        "typeString": "int_const 0"
-                      },
-                      "value": "0"
-                    },
-                    "src": "608:26:107",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 43541,
-                  "nodeType": "ExpressionStatement",
-                  "src": "608:26:107"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 43544,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 43542,
+                      "id": 50006,
                       "name": "_unchallengeOrderCandidateByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43533,
-                      "src": "644:38:107",
+                      "referencedDeclaration": 50001,
+                      "src": "573:38:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1501,14 +1470,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 43543,
+                      "id": 50007,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "685:1:107",
+                      "src": "614:1:115",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_0_by_1",
@@ -1516,32 +1485,32 @@
                       },
                       "value": "0"
                     },
-                    "src": "644:42:107",
+                    "src": "573:42:115",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43545,
+                  "id": 50009,
                   "nodeType": "ExpressionStatement",
-                  "src": "644:42:107"
+                  "src": "573:42:115"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43548,
+                    "id": 50012,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 43546,
+                      "id": 50010,
                       "name": "_challengeByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43535,
-                      "src": "696:22:107",
+                      "referencedDeclaration": 50003,
+                      "src": "625:22:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1552,14 +1521,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 43547,
+                      "id": 50011,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "721:1:107",
+                      "src": "650:1:115",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_0_by_1",
@@ -1567,55 +1536,53 @@
                       },
                       "value": "0"
                     },
-                    "src": "696:26:107",
+                    "src": "625:26:115",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43549,
+                  "id": 50013,
                   "nodeType": "ExpressionStatement",
-                  "src": "696:26:107"
+                  "src": "625:26:115"
                 }
               ]
             },
             "documentation": null,
-            "id": 43551,
+            "id": 50015,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_reset",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43536,
+              "id": 50004,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "580:2:107"
+              "src": "545:2:115"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 43537,
+              "id": 50005,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "598:0:107"
+              "src": "563:0:115"
             },
-            "scope": 43589,
-            "src": "565:164:107",
+            "scope": 50042,
+            "src": "530:128:115",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 43561,
+              "id": 50027,
               "nodeType": "Block",
-              "src": "806:41:107",
+              "src": "794:57:115",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43559,
+                    "id": 50025,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1623,139 +1590,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "++",
                     "prefix": false,
-                    "src": "816:24:107",
+                    "src": "804:40:115",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 43558,
-                      "name": "_challengeByOrderCount",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 43531,
-                      "src": "816:22:107",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 43560,
-                  "nodeType": "ExpressionStatement",
-                  "src": "816:24:107"
-                }
-              ]
-            },
-            "documentation": null,
-            "id": 43562,
-            "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
-            "modifiers": [],
-            "name": "challengeByOrder",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 43556,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 43553,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 43562,
-                  "src": "761:19:107",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
-                    "typeString": "struct TradeTypesLib.Order"
-                  },
-                  "typeName": {
-                    "contractScope": null,
-                    "id": 43552,
-                    "name": "TradeTypesLib.Order",
-                    "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34504,
-                    "src": "761:19:107",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
-                      "typeString": "struct TradeTypesLib.Order"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 43555,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 43562,
-                  "src": "782:7:107",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 43554,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "782:7:107",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "760:30:107"
-            },
-            "payable": false,
-            "returnParameters": {
-              "id": 43557,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "806:0:107"
-            },
-            "scope": 43589,
-            "src": "735:112:107",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 43574,
-              "nodeType": "Block",
-              "src": "969:57:107",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 43572,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "UnaryOperation",
-                    "operator": "++",
-                    "prefix": false,
-                    "src": "979:40:107",
-                    "subExpression": {
-                      "argumentTypes": null,
-                      "id": 43571,
+                      "id": 50024,
                       "name": "_unchallengeOrderCandidateByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43533,
-                      "src": "979:38:107",
+                      "referencedDeclaration": 50001,
+                      "src": "804:38:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1766,46 +1609,45 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43573,
+                  "id": 50026,
                   "nodeType": "ExpressionStatement",
-                  "src": "979:40:107"
+                  "src": "804:40:115"
                 }
               ]
             },
             "documentation": null,
-            "id": 43575,
+            "id": 50028,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "unchallengeOrderCandidateByTrade",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43569,
+              "id": 50022,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43564,
+                  "id": 50017,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43575,
-                  "src": "895:19:107",
+                  "scope": 50028,
+                  "src": "706:26:115",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                    "typeIdentifier": "t_struct$_Order_$40319_memory_ptr",
                     "typeString": "struct TradeTypesLib.Order"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 43563,
+                    "id": 50016,
                     "name": "TradeTypesLib.Order",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34504,
-                    "src": "895:19:107",
+                    "referencedDeclaration": 40319,
+                    "src": "706:19:115",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
+                      "typeIdentifier": "t_struct$_Order_$40319_storage_ptr",
                       "typeString": "struct TradeTypesLib.Order"
                     }
                   },
@@ -1814,26 +1656,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 43566,
+                  "id": 50019,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43575,
-                  "src": "916:19:107",
+                  "scope": 50028,
+                  "src": "734:26:115",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeIdentifier": "t_struct$_Trade_$40362_memory_ptr",
                     "typeString": "struct TradeTypesLib.Trade"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 43565,
+                    "id": 50018,
                     "name": "TradeTypesLib.Trade",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34547,
-                    "src": "916:19:107",
+                    "referencedDeclaration": 40362,
+                    "src": "734:19:115",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeIdentifier": "t_struct$_Trade_$40362_storage_ptr",
                       "typeString": "struct TradeTypesLib.Trade"
                     }
                   },
@@ -1842,11 +1684,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 43568,
+                  "id": 50021,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43575,
-                  "src": "945:7:107",
+                  "scope": 50028,
+                  "src": "770:7:115",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1854,10 +1696,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43567,
+                    "id": 50020,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "945:7:107",
+                    "src": "770:7:115",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1867,31 +1710,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "894:59:107"
+              "src": "705:73:115"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 43570,
+              "id": 50023,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "969:0:107"
+              "src": "794:0:115"
             },
-            "scope": 43589,
-            "src": "853:173:107",
+            "scope": 50042,
+            "src": "664:187:115",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 43587,
+              "id": 50040,
               "nodeType": "Block",
-              "src": "1112:41:107",
+              "src": "944:41:115",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43585,
+                    "id": 50038,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1899,15 +1741,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "++",
                     "prefix": false,
-                    "src": "1122:24:107",
+                    "src": "954:24:115",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 43584,
+                      "id": 50037,
                       "name": "_challengeByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43535,
-                      "src": "1122:22:107",
+                      "referencedDeclaration": 50003,
+                      "src": "954:22:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1918,31 +1760,30 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43586,
+                  "id": 50039,
                   "nodeType": "ExpressionStatement",
-                  "src": "1122:24:107"
+                  "src": "954:24:115"
                 }
               ]
             },
             "documentation": null,
-            "id": 43588,
+            "id": 50041,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "challengeByTrade",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43582,
+              "id": 50035,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43577,
+                  "id": 50030,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43588,
-                  "src": "1058:7:107",
+                  "scope": 50041,
+                  "src": "883:7:115",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1950,10 +1791,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43576,
+                    "id": 50029,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1058:7:107",
+                    "src": "883:7:115",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1964,26 +1806,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 43579,
+                  "id": 50032,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43588,
-                  "src": "1067:19:107",
+                  "scope": 50041,
+                  "src": "892:26:115",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeIdentifier": "t_struct$_Trade_$40362_memory_ptr",
                     "typeString": "struct TradeTypesLib.Trade"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 43578,
+                    "id": 50031,
                     "name": "TradeTypesLib.Trade",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34547,
-                    "src": "1067:19:107",
+                    "referencedDeclaration": 40362,
+                    "src": "892:19:115",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeIdentifier": "t_struct$_Trade_$40362_storage_ptr",
                       "typeString": "struct TradeTypesLib.Trade"
                     }
                   },
@@ -1992,11 +1834,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 43581,
+                  "id": 50034,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43588,
-                  "src": "1088:7:107",
+                  "scope": 50041,
+                  "src": "920:7:115",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2004,10 +1846,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43580,
+                    "id": 50033,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1088:7:107",
+                    "src": "920:7:115",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2017,69 +1860,71 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1057:39:107"
+              "src": "882:46:115"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 43583,
+              "id": 50036,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1112:0:107"
+              "src": "944:0:115"
             },
-            "scope": 43589,
-            "src": "1032:121:107",
+            "scope": 50042,
+            "src": "857:128:115",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 43590,
-        "src": "368:787:107"
+        "scope": 50043,
+        "src": "376:611:115"
       }
     ],
-    "src": "122:1033:107"
+    "src": "122:865:115"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedDriipSettlementDisputeByTrade.sol",
     "exportedSymbols": {
       "MockedDriipSettlementDisputeByTrade": [
-        43589
+        50042
       ]
     },
-    "id": 43590,
+    "id": 50043,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 43526,
+        "id": 49996,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:107"
+        "src": "122:32:115"
       },
       {
-        "id": 43527,
+        "id": 49997,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:107"
+        "src": "155:33:115"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TradeTypesLib.sol",
         "file": "../TradeTypesLib.sol",
-        "id": 43529,
+        "id": 49999,
         "nodeType": "ImportDirective",
-        "scope": 43590,
-        "sourceUnit": 34565,
-        "src": "182:51:107",
+        "scope": 50043,
+        "sourceUnit": 40380,
+        "src": "190:51:115",
         "symbolAliases": [
           {
-            "foreign": 43528,
+            "foreign": 49998,
             "local": null
           }
         ],
@@ -2091,46 +1936,20 @@
         "contractKind": "contract",
         "documentation": "@title MockedDriipSettlementDisputeByTrade\n@notice Mocked implementation of driip settlement dispute by trade contract",
         "fullyImplemented": true,
-        "id": 43589,
+        "id": 50042,
         "linearizedBaseContracts": [
-          43589
+          50042
         ],
         "name": "MockedDriipSettlementDisputeByTrade",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 43531,
-            "name": "_challengeByOrderCount",
-            "nodeType": "VariableDeclaration",
-            "scope": 43589,
-            "src": "419:37:107",
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_uint256",
-              "typeString": "uint256"
-            },
-            "typeName": {
-              "id": 43530,
-              "name": "uint256",
-              "nodeType": "ElementaryTypeName",
-              "src": "419:7:107",
-              "typeDescriptions": {
-                "typeIdentifier": "t_uint256",
-                "typeString": "uint256"
-              }
-            },
-            "value": null,
-            "visibility": "public"
-          },
-          {
-            "constant": false,
-            "id": 43533,
+            "id": 50001,
             "name": "_unchallengeOrderCandidateByTradeCount",
             "nodeType": "VariableDeclaration",
-            "scope": 43589,
-            "src": "462:53:107",
+            "scope": 50042,
+            "src": "427:53:115",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2138,10 +1957,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 43532,
+              "id": 50000,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "462:7:107",
+              "src": "427:7:115",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -2152,11 +1971,11 @@
           },
           {
             "constant": false,
-            "id": 43535,
+            "id": 50003,
             "name": "_challengeByTradeCount",
             "nodeType": "VariableDeclaration",
-            "scope": 43589,
-            "src": "521:37:107",
+            "scope": 50042,
+            "src": "486:37:115",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2164,10 +1983,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 43534,
+              "id": 50002,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "521:7:107",
+              "src": "486:7:115",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -2178,77 +1997,26 @@
           },
           {
             "body": {
-              "id": 43550,
+              "id": 50014,
               "nodeType": "Block",
-              "src": "598:131:107",
+              "src": "563:95:115",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43540,
+                    "id": 50008,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 43538,
-                      "name": "_challengeByOrderCount",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 43531,
-                      "src": "608:22:107",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "hexValue": "30",
-                      "id": 43539,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": true,
-                      "kind": "number",
-                      "lValueRequested": false,
-                      "nodeType": "Literal",
-                      "src": "633:1:107",
-                      "subdenomination": null,
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_rational_0_by_1",
-                        "typeString": "int_const 0"
-                      },
-                      "value": "0"
-                    },
-                    "src": "608:26:107",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 43541,
-                  "nodeType": "ExpressionStatement",
-                  "src": "608:26:107"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 43544,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "id": 43542,
+                      "id": 50006,
                       "name": "_unchallengeOrderCandidateByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43533,
-                      "src": "644:38:107",
+                      "referencedDeclaration": 50001,
+                      "src": "573:38:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2259,14 +2027,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 43543,
+                      "id": 50007,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "685:1:107",
+                      "src": "614:1:115",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_0_by_1",
@@ -2274,32 +2042,32 @@
                       },
                       "value": "0"
                     },
-                    "src": "644:42:107",
+                    "src": "573:42:115",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43545,
+                  "id": 50009,
                   "nodeType": "ExpressionStatement",
-                  "src": "644:42:107"
+                  "src": "573:42:115"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43548,
+                    "id": 50012,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 43546,
+                      "id": 50010,
                       "name": "_challengeByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43535,
-                      "src": "696:22:107",
+                      "referencedDeclaration": 50003,
+                      "src": "625:22:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2310,14 +2078,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 43547,
+                      "id": 50011,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "721:1:107",
+                      "src": "650:1:115",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_0_by_1",
@@ -2325,55 +2093,53 @@
                       },
                       "value": "0"
                     },
-                    "src": "696:26:107",
+                    "src": "625:26:115",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43549,
+                  "id": 50013,
                   "nodeType": "ExpressionStatement",
-                  "src": "696:26:107"
+                  "src": "625:26:115"
                 }
               ]
             },
             "documentation": null,
-            "id": 43551,
+            "id": 50015,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_reset",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43536,
+              "id": 50004,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "580:2:107"
+              "src": "545:2:115"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 43537,
+              "id": 50005,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "598:0:107"
+              "src": "563:0:115"
             },
-            "scope": 43589,
-            "src": "565:164:107",
+            "scope": 50042,
+            "src": "530:128:115",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 43561,
+              "id": 50027,
               "nodeType": "Block",
-              "src": "806:41:107",
+              "src": "794:57:115",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43559,
+                    "id": 50025,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2381,139 +2147,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "++",
                     "prefix": false,
-                    "src": "816:24:107",
+                    "src": "804:40:115",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 43558,
-                      "name": "_challengeByOrderCount",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 43531,
-                      "src": "816:22:107",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_uint256",
-                        "typeString": "uint256"
-                      }
-                    },
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 43560,
-                  "nodeType": "ExpressionStatement",
-                  "src": "816:24:107"
-                }
-              ]
-            },
-            "documentation": null,
-            "id": 43562,
-            "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
-            "modifiers": [],
-            "name": "challengeByOrder",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 43556,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 43553,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 43562,
-                  "src": "761:19:107",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
-                    "typeString": "struct TradeTypesLib.Order"
-                  },
-                  "typeName": {
-                    "contractScope": null,
-                    "id": 43552,
-                    "name": "TradeTypesLib.Order",
-                    "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34504,
-                    "src": "761:19:107",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
-                      "typeString": "struct TradeTypesLib.Order"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 43555,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 43562,
-                  "src": "782:7:107",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 43554,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "782:7:107",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "760:30:107"
-            },
-            "payable": false,
-            "returnParameters": {
-              "id": 43557,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "806:0:107"
-            },
-            "scope": 43589,
-            "src": "735:112:107",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": {
-              "id": 43574,
-              "nodeType": "Block",
-              "src": "969:57:107",
-              "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 43572,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "nodeType": "UnaryOperation",
-                    "operator": "++",
-                    "prefix": false,
-                    "src": "979:40:107",
-                    "subExpression": {
-                      "argumentTypes": null,
-                      "id": 43571,
+                      "id": 50024,
                       "name": "_unchallengeOrderCandidateByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43533,
-                      "src": "979:38:107",
+                      "referencedDeclaration": 50001,
+                      "src": "804:38:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2524,46 +2166,45 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43573,
+                  "id": 50026,
                   "nodeType": "ExpressionStatement",
-                  "src": "979:40:107"
+                  "src": "804:40:115"
                 }
               ]
             },
             "documentation": null,
-            "id": 43575,
+            "id": 50028,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "unchallengeOrderCandidateByTrade",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43569,
+              "id": 50022,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43564,
+                  "id": 50017,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43575,
-                  "src": "895:19:107",
+                  "scope": 50028,
+                  "src": "706:26:115",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Order_$34504_memory_ptr",
+                    "typeIdentifier": "t_struct$_Order_$40319_memory_ptr",
                     "typeString": "struct TradeTypesLib.Order"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 43563,
+                    "id": 50016,
                     "name": "TradeTypesLib.Order",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34504,
-                    "src": "895:19:107",
+                    "referencedDeclaration": 40319,
+                    "src": "706:19:115",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Order_$34504_storage_ptr",
+                      "typeIdentifier": "t_struct$_Order_$40319_storage_ptr",
                       "typeString": "struct TradeTypesLib.Order"
                     }
                   },
@@ -2572,26 +2213,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 43566,
+                  "id": 50019,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43575,
-                  "src": "916:19:107",
+                  "scope": 50028,
+                  "src": "734:26:115",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeIdentifier": "t_struct$_Trade_$40362_memory_ptr",
                     "typeString": "struct TradeTypesLib.Trade"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 43565,
+                    "id": 50018,
                     "name": "TradeTypesLib.Trade",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34547,
-                    "src": "916:19:107",
+                    "referencedDeclaration": 40362,
+                    "src": "734:19:115",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeIdentifier": "t_struct$_Trade_$40362_storage_ptr",
                       "typeString": "struct TradeTypesLib.Trade"
                     }
                   },
@@ -2600,11 +2241,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 43568,
+                  "id": 50021,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43575,
-                  "src": "945:7:107",
+                  "scope": 50028,
+                  "src": "770:7:115",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2612,10 +2253,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43567,
+                    "id": 50020,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "945:7:107",
+                    "src": "770:7:115",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2625,31 +2267,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "894:59:107"
+              "src": "705:73:115"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 43570,
+              "id": 50023,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "969:0:107"
+              "src": "794:0:115"
             },
-            "scope": 43589,
-            "src": "853:173:107",
+            "scope": 50042,
+            "src": "664:187:115",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 43587,
+              "id": 50040,
               "nodeType": "Block",
-              "src": "1112:41:107",
+              "src": "944:41:115",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 43585,
+                    "id": 50038,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2657,15 +2298,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "++",
                     "prefix": false,
-                    "src": "1122:24:107",
+                    "src": "954:24:115",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 43584,
+                      "id": 50037,
                       "name": "_challengeByTradeCount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43535,
-                      "src": "1122:22:107",
+                      "referencedDeclaration": 50003,
+                      "src": "954:22:115",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2676,31 +2317,30 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 43586,
+                  "id": 50039,
                   "nodeType": "ExpressionStatement",
-                  "src": "1122:24:107"
+                  "src": "954:24:115"
                 }
               ]
             },
             "documentation": null,
-            "id": 43588,
+            "id": 50041,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "challengeByTrade",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43582,
+              "id": 50035,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43577,
+                  "id": 50030,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43588,
-                  "src": "1058:7:107",
+                  "scope": 50041,
+                  "src": "883:7:115",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2708,10 +2348,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43576,
+                    "id": 50029,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1058:7:107",
+                    "src": "883:7:115",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2722,26 +2363,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 43579,
+                  "id": 50032,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43588,
-                  "src": "1067:19:107",
+                  "scope": 50041,
+                  "src": "892:26:115",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Trade_$34547_memory_ptr",
+                    "typeIdentifier": "t_struct$_Trade_$40362_memory_ptr",
                     "typeString": "struct TradeTypesLib.Trade"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 43578,
+                    "id": 50031,
                     "name": "TradeTypesLib.Trade",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 34547,
-                    "src": "1067:19:107",
+                    "referencedDeclaration": 40362,
+                    "src": "892:19:115",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Trade_$34547_storage_ptr",
+                      "typeIdentifier": "t_struct$_Trade_$40362_storage_ptr",
                       "typeString": "struct TradeTypesLib.Trade"
                     }
                   },
@@ -2750,11 +2391,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 43581,
+                  "id": 50034,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43588,
-                  "src": "1088:7:107",
+                  "scope": 50041,
+                  "src": "920:7:115",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2762,10 +2403,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43580,
+                    "id": 50033,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1088:7:107",
+                    "src": "920:7:115",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2775,33 +2417,32 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1057:39:107"
+              "src": "882:46:115"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 43583,
+              "id": 50036,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1112:0:107"
+              "src": "944:0:115"
             },
-            "scope": 43589,
-            "src": "1032:121:107",
+            "scope": 50042,
+            "src": "857:128:115",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 43590,
-        "src": "368:787:107"
+        "scope": 50043,
+        "src": "376:611:115"
       }
     ],
-    "src": "122:1033:107"
+    "src": "122:865:115"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T08:24:32.072Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-23T00:21:40.846Z"
 }
