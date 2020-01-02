@@ -4,9 +4,10 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "maxNullNonce",
+      "name": "_maxNonceByWalletAndCurrency",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -18,9 +19,10 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "_maxNonceByWalletAndCurrency",
+      "name": "maxNullNonce",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -42,20 +44,24 @@
       "constant": true,
       "inputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         },
         {
           "components": [
             {
+              "internalType": "address",
               "name": "ct",
               "type": "address"
             },
             {
+              "internalType": "uint256",
               "name": "id",
               "type": "uint256"
             }
           ],
+          "internalType": "struct MonetaryTypesLib.Currency",
           "name": "",
           "type": "tuple"
         }
@@ -63,6 +69,7 @@
       "name": "maxNonceByWalletAndCurrency",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -75,24 +82,29 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         },
         {
           "components": [
             {
+              "internalType": "address",
               "name": "ct",
               "type": "address"
             },
             {
+              "internalType": "uint256",
               "name": "id",
               "type": "uint256"
             }
           ],
+          "internalType": "struct MonetaryTypesLib.Currency",
           "name": "",
           "type": "tuple"
         },
         {
+          "internalType": "uint256",
           "name": "maxNonce",
           "type": "uint256"
         }
@@ -107,6 +119,7 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "uint256",
           "name": "_maxNullNonce",
           "type": "uint256"
         }
@@ -118,57 +131,60 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b506102e5806100206000396000f30060806040526004361061005e5763ffffffff60e060020a6000350416631423ba3881146100635780631592f0ab146100855780633858654b1461009a57806362662367146100d0578063741ee9a0146100e5578063f0684680146100fa575b600080fd5b34801561006f57600080fd5b5061008361007e3660046101e6565b61011a565b005b34801561009157600080fd5b50610083610121565b3480156100a657600080fd5b506100ba6100b53660046101ac565b61012b565b6040516100c79190610268565b60405180910390f35b3480156100dc57600080fd5b506100ba610135565b3480156100f157600080fd5b506100ba61013b565b34801561010657600080fd5b50610083610115366004610233565b610141565b6000555050565b6000808055600155565b6000545b92915050565b60015481565b60005481565b600155565b6000610152823561029f565b9392505050565b60006040828403121561016b57600080fd5b6101756040610276565b905060006101838484610146565b8252506020610194848483016101a0565b60208301525092915050565b6000610152823561029c565b600080606083850312156101bf57600080fd5b60006101cb8585610146565b92505060206101dc85828601610159565b9150509250929050565b6000806000608084860312156101fb57600080fd5b60006102078686610146565b935050602061021886828701610159565b9250506060610229868287016101a0565b9150509250925092565b60006020828403121561024557600080fd5b600061025184846101a0565b949350505050565b6102628161029c565b82525050565b6020810161012f8284610259565b6040518181016001604060020a038111828210171561029457600080fd5b604052919050565b90565b600160a060020a0316905600a265627a7a72305820864746884c9478ad283f4ee95dfcf8b1b027ba19d0f288acf96efe1cb903799b6c6578706572696d656e74616cf50037",
-  "deployedBytecode": "0x60806040526004361061005e5763ffffffff60e060020a6000350416631423ba3881146100635780631592f0ab146100855780633858654b1461009a57806362662367146100d0578063741ee9a0146100e5578063f0684680146100fa575b600080fd5b34801561006f57600080fd5b5061008361007e3660046101e6565b61011a565b005b34801561009157600080fd5b50610083610121565b3480156100a657600080fd5b506100ba6100b53660046101ac565b61012b565b6040516100c79190610268565b60405180910390f35b3480156100dc57600080fd5b506100ba610135565b3480156100f157600080fd5b506100ba61013b565b34801561010657600080fd5b50610083610115366004610233565b610141565b6000555050565b6000808055600155565b6000545b92915050565b60015481565b60005481565b600155565b6000610152823561029f565b9392505050565b60006040828403121561016b57600080fd5b6101756040610276565b905060006101838484610146565b8252506020610194848483016101a0565b60208301525092915050565b6000610152823561029c565b600080606083850312156101bf57600080fd5b60006101cb8585610146565b92505060206101dc85828601610159565b9150509250929050565b6000806000608084860312156101fb57600080fd5b60006102078686610146565b935050602061021886828701610159565b9250506060610229868287016101a0565b9150509250925092565b60006020828403121561024557600080fd5b600061025184846101a0565b949350505050565b6102628161029c565b82525050565b6020810161012f8284610259565b6040518181016001604060020a038111828210171561029457600080fd5b604052919050565b90565b600160a060020a0316905600a265627a7a72305820864746884c9478ad283f4ee95dfcf8b1b027ba19d0f288acf96efe1cb903799b6c6578706572696d656e74616cf50037",
-  "sourceMap": "352:711:113:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;352:711:113;;;;;;;",
-  "deployedSourceMap": "352:711:113:-;;;;;;;;;-1:-1:-1;;;352:711:113;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;774:173;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;774:173:113;;;;;;;;;;;477:114;;8:9:-1;5:2;;;30:1;27;20:12;5:2;477:114:113;;;;597:171;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;597:171:113;;;;;;;;;;;;;;;;;;;;;;;;;443:27;;8:9:-1;5:2;;;30:1;27;20:12;5:2;443:27:113;;;;394:43;;8:9:-1;5:2;;;30:1;27;20:12;5:2;394:43:113;;;;953:108;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;953:108:113;;;;;;;;;774:173;901:28;:39;-1:-1:-1;;774:173:113:o;477:114::-;527:28;520:35;;;572:12;565:19;477:114::o;597:171::-;703:7;733:28;597:171;;;;;:::o;443:27::-;;;;:::o;394:43::-;;;;:::o;953:108::-;1026:12;:28;953:108::o;5:118:-1:-;;72:46;110:6;97:20;72:46;;;63:55;57:66;-1:-1;;;57:66;169:464;;285:4;273:9;268:3;264:19;260:30;257:2;;;303:1;300;293:12;257:2;321:20;336:4;321:20;;;312:29;-1:-1;389:1;420:49;465:3;445:9;420:49;;;396:74;;-1:-1;529:2;562:49;607:3;583:22;;;562:49;;;555:4;548:5;544:16;537:75;491:132;251:382;;;;;640:118;;707:46;745:6;732:20;707:46;;765:420;;;913:2;901:9;892:7;888:23;884:32;881:2;;;929:1;926;919:12;881:2;964:1;981:53;1026:7;1006:9;981:53;;;971:63;;943:97;1071:2;1089:80;1161:7;1152:6;1141:9;1137:22;1089:80;;;1079:90;;1050:125;875:310;;;;;;1192:546;;;;1357:3;1345:9;1336:7;1332:23;1328:33;1325:2;;;1374:1;1371;1364:12;1325:2;1409:1;1426:53;1471:7;1451:9;1426:53;;;1416:63;;1388:97;1516:2;1534:80;1606:7;1597:6;1586:9;1582:22;1534:80;;;1524:90;;1495:125;1651:2;1669:53;1714:7;1705:6;1694:9;1690:22;1669:53;;;1659:63;;1630:98;1319:419;;;;;;1745:241;;1849:2;1837:9;1828:7;1824:23;1820:32;1817:2;;;1865:1;1862;1855:12;1817:2;1900:1;1917:53;1962:7;1942:9;1917:53;;;1907:63;1811:175;-1:-1;;;;1811:175;1993:110;2066:31;2091:5;2066:31;;;2061:3;2054:44;2048:55;;;2110:193;2218:2;2203:18;;2232:61;2207:9;2266:6;2232:61;;2310:256;2372:2;2366:9;2398:17;;;-1:-1;;;;;2458:34;;2494:22;;;2455:62;2452:2;;;2530:1;2527;2520:12;2452:2;2546;2539:22;2350:216;;-1:-1;2350:216;2573:79;2642:5;2625:27;2659:128;-1:-1;;;;;2728:54;;2711:76",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {MonetaryTypesLib} from \"../MonetaryTypesLib.sol\";\npragma experimental ABIEncoderV2;\n\n/**\n * @title MockedNullSettlementState\n * @notice Mocked implementation of null settlement state contract\n */\ncontract MockedNullSettlementState {\n\n    uint256 public _maxNonceByWalletAndCurrency;\n    uint256 public maxNullNonce;\n\n    function _reset()\n    public\n    {\n        delete _maxNonceByWalletAndCurrency;\n        delete maxNullNonce;\n    }\n\n    function maxNonceByWalletAndCurrency(address, MonetaryTypesLib.Currency)\n    public\n    view\n    returns (uint256)\n    {\n        return _maxNonceByWalletAndCurrency;\n    }\n\n    function setMaxNonceByWalletAndCurrency(address, MonetaryTypesLib.Currency,\n        uint256 maxNonce)\n    public\n    {\n        _maxNonceByWalletAndCurrency = maxNonce;\n    }\n\n    function setMaxNullNonce(uint256 _maxNullNonce)\n    public\n    {\n        maxNullNonce = _maxNullNonce;\n    }\n}",
+  "bytecode": "0x608060405234801561001057600080fd5b506102c0806100206000396000f3fe608060405234801561001057600080fd5b50600436106100625760003560e01c80631423ba38146100675780631592f0ab1461007c5780633858654b1461008457806362662367146100ad578063741ee9a0146100b5578063f0684680146100bd575b600080fd5b61007a610075366004610193565b6100d0565b005b61007a6100d7565b610097610092366004610159565b6100e1565b6040516100a49190610215565b60405180910390f35b6100976100eb565b6100976100f1565b61007a6100cb3660046101e0565b6100f7565b6000555050565b6000808055600155565b6000545b92915050565b60015481565b60005481565b600155565b80356100e58161025d565b60006040828403121561011957600080fd5b6101236040610223565b9050600061013184846100fc565b82525060206101428484830161014e565b60208301525092915050565b80356100e581610274565b6000806060838503121561016c57600080fd5b600061017885856100fc565b925050602061018985828601610107565b9150509250929050565b6000806000608084860312156101a857600080fd5b60006101b486866100fc565b93505060206101c586828701610107565b92505060606101d68682870161014e565b9150509250925092565b6000602082840312156101f257600080fd5b60006101fe848461014e565b949350505050565b61020f8161025a565b82525050565b602081016100e58284610206565b6040518181016001600160401b038111828210171561024157600080fd5b604052919050565b60006001600160a01b0382166100e5565b90565b61026681610249565b811461027157600080fd5b50565b6102668161025a56fea365627a7a723158201464f6db827e558c609f0a9e6071d7a6c39f82f872d01553e668baf00f1512fe6c6578706572696d656e74616cf564736f6c634300050c0040",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100625760003560e01c80631423ba38146100675780631592f0ab1461007c5780633858654b1461008457806362662367146100ad578063741ee9a0146100b5578063f0684680146100bd575b600080fd5b61007a610075366004610193565b6100d0565b005b61007a6100d7565b610097610092366004610159565b6100e1565b6040516100a49190610215565b60405180910390f35b6100976100eb565b6100976100f1565b61007a6100cb3660046101e0565b6100f7565b6000555050565b6000808055600155565b6000545b92915050565b60015481565b60005481565b600155565b80356100e58161025d565b60006040828403121561011957600080fd5b6101236040610223565b9050600061013184846100fc565b82525060206101428484830161014e565b60208301525092915050565b80356100e581610274565b6000806060838503121561016c57600080fd5b600061017885856100fc565b925050602061018985828601610107565b9150509250929050565b6000806000608084860312156101a857600080fd5b60006101b486866100fc565b93505060206101c586828701610107565b92505060606101d68682870161014e565b9150509250925092565b6000602082840312156101f257600080fd5b60006101fe848461014e565b949350505050565b61020f8161025a565b82525050565b602081016100e58284610206565b6040518181016001600160401b038111828210171561024157600080fd5b604052919050565b60006001600160a01b0382166100e5565b90565b61026681610249565b811461027157600080fd5b50565b6102668161025a56fea365627a7a723158201464f6db827e558c609f0a9e6071d7a6c39f82f872d01553e668baf00f1512fe6c6578706572696d656e74616cf564736f6c634300050c0040",
+  "sourceMap": "360:725:122:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;360:725:122;;;;;;;",
+  "deployedSourceMap": "360:725:122:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;360:725:122;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;789:180;;;;;;;;;:::i;:::-;;485:114;;;:::i;605:178::-;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;451:27;;;:::i;402:43::-;;;:::i;975:108::-;;;;;;;;;:::i;789:180::-;923:28;:39;-1:-1:-1;;789:180:122:o;485:114::-;535:28;528:35;;;580:12;573:19;485:114::o;605:178::-;718:7;748:28;605:178;;;;;:::o;451:27::-;;;;:::o;402:43::-;;;;:::o;975:108::-;1048:12;:28;975:108::o;5:130:-1:-;72:20;;97:33;72:20;97:33;;181:464;;297:4;285:9;280:3;276:19;272:30;269:2;;;315:1;312;305:12;269:2;333:20;348:4;333:20;;;324:29;-1:-1;401:1;432:49;477:3;457:9;432:49;;;408:74;;-1:-1;541:2;574:49;619:3;595:22;;;574:49;;;567:4;560:5;556:16;549:75;503:132;263:382;;;;;652:130;719:20;;744:33;719:20;744:33;;789:420;;;937:2;925:9;916:7;912:23;908:32;905:2;;;953:1;950;943:12;905:2;988:1;1005:53;1050:7;1030:9;1005:53;;;995:63;;967:97;1095:2;1113:80;1185:7;1176:6;1165:9;1161:22;1113:80;;;1103:90;;1074:125;899:310;;;;;;1216:546;;;;1381:3;1369:9;1360:7;1356:23;1352:33;1349:2;;;1398:1;1395;1388:12;1349:2;1433:1;1450:53;1495:7;1475:9;1450:53;;;1440:63;;1412:97;1540:2;1558:80;1630:7;1621:6;1610:9;1606:22;1558:80;;;1548:90;;1519:125;1675:2;1693:53;1738:7;1729:6;1718:9;1714:22;1693:53;;;1683:63;;1654:98;1343:419;;;;;;1769:241;;1873:2;1861:9;1852:7;1848:23;1844:32;1841:2;;;1889:1;1886;1879:12;1841:2;1924:1;1941:53;1986:7;1966:9;1941:53;;;1931:63;1835:175;-1:-1;;;;1835:175;2017:113;2100:24;2118:5;2100:24;;;2095:3;2088:37;2082:48;;;2137:213;2255:2;2240:18;;2269:71;2244:9;2313:6;2269:71;;2357:256;2419:2;2413:9;2445:17;;;-1:-1;;;;;2505:34;;2541:22;;;2502:62;2499:2;;;2577:1;2574;2567:12;2499:2;2593;2586:22;2397:216;;-1:-1;2397:216;2620:91;;-1:-1;;;;;2780:54;;2682:24;2763:76;2846:72;2908:5;2891:27;2925:117;2994:24;3012:5;2994:24;;;2987:5;2984:35;2974:2;;3033:1;3030;3023:12;2974:2;2968:74;;3049:117;3118:24;3136:5;3118:24;",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\nimport {MonetaryTypesLib} from \"../MonetaryTypesLib.sol\";\npragma experimental ABIEncoderV2;\n\n/**\n * @title MockedNullSettlementState\n * @notice Mocked implementation of null settlement state contract\n */\ncontract MockedNullSettlementState {\n\n    uint256 public _maxNonceByWalletAndCurrency;\n    uint256 public maxNullNonce;\n\n    function _reset()\n    public\n    {\n        delete _maxNonceByWalletAndCurrency;\n        delete maxNullNonce;\n    }\n\n    function maxNonceByWalletAndCurrency(address, MonetaryTypesLib.Currency memory)\n    public\n    view\n    returns (uint256)\n    {\n        return _maxNonceByWalletAndCurrency;\n    }\n\n    function setMaxNonceByWalletAndCurrency(address, MonetaryTypesLib.Currency memory,\n        uint256 maxNonce)\n    public\n    {\n        _maxNonceByWalletAndCurrency = maxNonce;\n    }\n\n    function setMaxNullNonce(uint256 _maxNullNonce)\n    public\n    {\n        maxNullNonce = _maxNullNonce;\n    }\n}",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedNullSettlementState.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedNullSettlementState.sol",
     "exportedSymbols": {
       "MockedNullSettlementState": [
-        44977
+        51909
       ]
     },
-    "id": 44978,
+    "id": 51910,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 44923,
+        "id": 51855,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:113"
+        "src": "122:32:122"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "../MonetaryTypesLib.sol",
-        "id": 44925,
+        "id": 51857,
         "nodeType": "ImportDirective",
-        "scope": 44978,
-        "sourceUnit": 19413,
-        "src": "148:57:113",
+        "scope": 51910,
+        "sourceUnit": 23057,
+        "src": "156:57:122",
         "symbolAliases": [
           {
-            "foreign": 44924,
+            "foreign": 51856,
             "local": null
           }
         ],
         "unitAlias": ""
       },
       {
-        "id": 44926,
+        "id": 51858,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "206:33:113"
+        "src": "214:33:122"
       },
       {
         "baseContracts": [],
@@ -176,20 +192,20 @@
         "contractKind": "contract",
         "documentation": "@title MockedNullSettlementState\n@notice Mocked implementation of null settlement state contract",
         "fullyImplemented": true,
-        "id": 44977,
+        "id": 51909,
         "linearizedBaseContracts": [
-          44977
+          51909
         ],
         "name": "MockedNullSettlementState",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 44928,
+            "id": 51860,
             "name": "_maxNonceByWalletAndCurrency",
             "nodeType": "VariableDeclaration",
-            "scope": 44977,
-            "src": "394:43:113",
+            "scope": 51909,
+            "src": "402:43:122",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -197,10 +213,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 44927,
+              "id": 51859,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "394:7:113",
+              "src": "402:7:122",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -211,11 +227,11 @@
           },
           {
             "constant": false,
-            "id": 44930,
+            "id": 51862,
             "name": "maxNullNonce",
             "nodeType": "VariableDeclaration",
-            "scope": 44977,
-            "src": "443:27:113",
+            "scope": 51909,
+            "src": "451:27:122",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -223,10 +239,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 44929,
+              "id": 51861,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "443:7:113",
+              "src": "451:7:122",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -237,14 +253,14 @@
           },
           {
             "body": {
-              "id": 44939,
+              "id": 51871,
               "nodeType": "Block",
-              "src": "510:81:113",
+              "src": "518:81:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44934,
+                    "id": 51866,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -252,15 +268,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "delete",
                     "prefix": true,
-                    "src": "520:35:113",
+                    "src": "528:35:122",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 44933,
+                      "id": 51865,
                       "name": "_maxNonceByWalletAndCurrency",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44928,
-                      "src": "527:28:113",
+                      "referencedDeclaration": 51860,
+                      "src": "535:28:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -271,14 +287,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44935,
+                  "id": 51867,
                   "nodeType": "ExpressionStatement",
-                  "src": "520:35:113"
+                  "src": "528:35:122"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44937,
+                    "id": 51869,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -286,15 +302,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "delete",
                     "prefix": true,
-                    "src": "565:19:113",
+                    "src": "573:19:122",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 44936,
+                      "id": 51868,
                       "name": "maxNullNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44930,
-                      "src": "572:12:113",
+                      "referencedDeclaration": 51862,
+                      "src": "580:12:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -305,85 +321,82 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44938,
+                  "id": 51870,
                   "nodeType": "ExpressionStatement",
-                  "src": "565:19:113"
+                  "src": "573:19:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44940,
+            "id": 51872,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_reset",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44931,
+              "id": 51863,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "492:2:113"
+              "src": "500:2:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44932,
+              "id": 51864,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "510:0:113"
+              "src": "518:0:122"
             },
-            "scope": 44977,
-            "src": "477:114:113",
+            "scope": 51909,
+            "src": "485:114:122",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 44951,
+              "id": 51883,
               "nodeType": "Block",
-              "src": "716:52:113",
+              "src": "731:52:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44949,
+                    "id": 51881,
                     "name": "_maxNonceByWalletAndCurrency",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 44928,
-                    "src": "733:28:113",
+                    "referencedDeclaration": 51860,
+                    "src": "748:28:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 44948,
-                  "id": 44950,
+                  "functionReturnParameters": 51880,
+                  "id": 51882,
                   "nodeType": "Return",
-                  "src": "726:35:113"
+                  "src": "741:35:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44952,
+            "id": 51884,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "maxNonceByWalletAndCurrency",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44945,
+              "id": 51877,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44942,
+                  "id": 51874,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44952,
-                  "src": "634:7:113",
+                  "scope": 51884,
+                  "src": "642:7:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -391,10 +404,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44941,
+                    "id": 51873,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "634:7:113",
+                    "src": "642:7:122",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -405,26 +419,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 44944,
+                  "id": 51876,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44952,
-                  "src": "643:25:113",
+                  "scope": 51884,
+                  "src": "651:32:122",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_memory_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_memory_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 44943,
+                    "id": 51875,
                     "name": "MonetaryTypesLib.Currency",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19401,
-                    "src": "643:25:113",
+                    "referencedDeclaration": 23045,
+                    "src": "651:25:122",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                      "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                       "typeString": "struct MonetaryTypesLib.Currency"
                     }
                   },
@@ -432,20 +446,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "633:36:113"
+              "src": "641:43:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44948,
+              "id": 51880,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44947,
+                  "id": 51879,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44952,
-                  "src": "703:7:113",
+                  "scope": 51884,
+                  "src": "718:7:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -453,10 +466,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44946,
+                    "id": 51878,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "703:7:113",
+                    "src": "718:7:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -466,36 +479,36 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "702:9:113"
+              "src": "717:9:122"
             },
-            "scope": 44977,
-            "src": "597:171:113",
+            "scope": 51909,
+            "src": "605:178:122",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 44965,
+              "id": 51897,
               "nodeType": "Block",
-              "src": "891:56:113",
+              "src": "913:56:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44963,
+                    "id": 51895,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 44961,
+                      "id": 51893,
                       "name": "_maxNonceByWalletAndCurrency",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44928,
-                      "src": "901:28:113",
+                      "referencedDeclaration": 51860,
+                      "src": "923:28:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -505,48 +518,47 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 44962,
+                      "id": 51894,
                       "name": "maxNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44958,
-                      "src": "932:8:113",
+                      "referencedDeclaration": 51890,
+                      "src": "954:8:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "901:39:113",
+                    "src": "923:39:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 44964,
+                  "id": 51896,
                   "nodeType": "ExpressionStatement",
-                  "src": "901:39:113"
+                  "src": "923:39:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44966,
+            "id": 51898,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "setMaxNonceByWalletAndCurrency",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44959,
+              "id": 51891,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44954,
+                  "id": 51886,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44966,
-                  "src": "814:7:113",
+                  "scope": 51898,
+                  "src": "829:7:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -554,10 +566,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44953,
+                    "id": 51885,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "814:7:113",
+                    "src": "829:7:122",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -568,26 +581,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 44956,
+                  "id": 51888,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44966,
-                  "src": "823:25:113",
+                  "scope": 51898,
+                  "src": "838:32:122",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_memory_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_memory_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 44955,
+                    "id": 51887,
                     "name": "MonetaryTypesLib.Currency",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19401,
-                    "src": "823:25:113",
+                    "referencedDeclaration": 23045,
+                    "src": "838:25:122",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                      "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                       "typeString": "struct MonetaryTypesLib.Currency"
                     }
                   },
@@ -596,11 +609,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 44958,
+                  "id": 51890,
                   "name": "maxNonce",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44966,
-                  "src": "858:16:113",
+                  "scope": 51898,
+                  "src": "880:16:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -608,10 +621,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44957,
+                    "id": 51889,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "858:7:113",
+                    "src": "880:7:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -621,43 +634,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "813:62:113"
+              "src": "828:69:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44960,
+              "id": 51892,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "891:0:113"
+              "src": "913:0:122"
             },
-            "scope": 44977,
-            "src": "774:173:113",
+            "scope": 51909,
+            "src": "789:180:122",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 44975,
+              "id": 51907,
               "nodeType": "Block",
-              "src": "1016:45:113",
+              "src": "1038:45:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44973,
+                    "id": 51905,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 44971,
+                      "id": 51903,
                       "name": "maxNullNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44930,
-                      "src": "1026:12:113",
+                      "referencedDeclaration": 51862,
+                      "src": "1048:12:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -667,48 +679,47 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 44972,
+                      "id": 51904,
                       "name": "_maxNullNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44968,
-                      "src": "1041:13:113",
+                      "referencedDeclaration": 51900,
+                      "src": "1063:13:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "1026:28:113",
+                    "src": "1048:28:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 44974,
+                  "id": 51906,
                   "nodeType": "ExpressionStatement",
-                  "src": "1026:28:113"
+                  "src": "1048:28:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44976,
+            "id": 51908,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "setMaxNullNonce",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44969,
+              "id": 51901,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44968,
+                  "id": 51900,
                   "name": "_maxNullNonce",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44976,
-                  "src": "978:21:113",
+                  "scope": 51908,
+                  "src": "1000:21:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -716,10 +727,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44967,
+                    "id": 51899,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "978:7:113",
+                    "src": "1000:7:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -729,73 +740,75 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "977:23:113"
+              "src": "999:23:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44970,
+              "id": 51902,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1016:0:113"
+              "src": "1038:0:122"
             },
-            "scope": 44977,
-            "src": "953:108:113",
+            "scope": 51909,
+            "src": "975:108:122",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 44978,
-        "src": "352:711:113"
+        "scope": 51910,
+        "src": "360:725:122"
       }
     ],
-    "src": "122:941:113"
+    "src": "122:963:122"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/test/MockedNullSettlementState.sol",
     "exportedSymbols": {
       "MockedNullSettlementState": [
-        44977
+        51909
       ]
     },
-    "id": 44978,
+    "id": 51910,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 44923,
+        "id": 51855,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:113"
+        "src": "122:32:122"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "../MonetaryTypesLib.sol",
-        "id": 44925,
+        "id": 51857,
         "nodeType": "ImportDirective",
-        "scope": 44978,
-        "sourceUnit": 19413,
-        "src": "148:57:113",
+        "scope": 51910,
+        "sourceUnit": 23057,
+        "src": "156:57:122",
         "symbolAliases": [
           {
-            "foreign": 44924,
+            "foreign": 51856,
             "local": null
           }
         ],
         "unitAlias": ""
       },
       {
-        "id": 44926,
+        "id": 51858,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "206:33:113"
+        "src": "214:33:122"
       },
       {
         "baseContracts": [],
@@ -803,20 +816,20 @@
         "contractKind": "contract",
         "documentation": "@title MockedNullSettlementState\n@notice Mocked implementation of null settlement state contract",
         "fullyImplemented": true,
-        "id": 44977,
+        "id": 51909,
         "linearizedBaseContracts": [
-          44977
+          51909
         ],
         "name": "MockedNullSettlementState",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 44928,
+            "id": 51860,
             "name": "_maxNonceByWalletAndCurrency",
             "nodeType": "VariableDeclaration",
-            "scope": 44977,
-            "src": "394:43:113",
+            "scope": 51909,
+            "src": "402:43:122",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -824,10 +837,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 44927,
+              "id": 51859,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "394:7:113",
+              "src": "402:7:122",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -838,11 +851,11 @@
           },
           {
             "constant": false,
-            "id": 44930,
+            "id": 51862,
             "name": "maxNullNonce",
             "nodeType": "VariableDeclaration",
-            "scope": 44977,
-            "src": "443:27:113",
+            "scope": 51909,
+            "src": "451:27:122",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -850,10 +863,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 44929,
+              "id": 51861,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "443:7:113",
+              "src": "451:7:122",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -864,14 +877,14 @@
           },
           {
             "body": {
-              "id": 44939,
+              "id": 51871,
               "nodeType": "Block",
-              "src": "510:81:113",
+              "src": "518:81:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44934,
+                    "id": 51866,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -879,15 +892,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "delete",
                     "prefix": true,
-                    "src": "520:35:113",
+                    "src": "528:35:122",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 44933,
+                      "id": 51865,
                       "name": "_maxNonceByWalletAndCurrency",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44928,
-                      "src": "527:28:113",
+                      "referencedDeclaration": 51860,
+                      "src": "535:28:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -898,14 +911,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44935,
+                  "id": 51867,
                   "nodeType": "ExpressionStatement",
-                  "src": "520:35:113"
+                  "src": "528:35:122"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44937,
+                    "id": 51869,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -913,15 +926,15 @@
                     "nodeType": "UnaryOperation",
                     "operator": "delete",
                     "prefix": true,
-                    "src": "565:19:113",
+                    "src": "573:19:122",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 44936,
+                      "id": 51868,
                       "name": "maxNullNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44930,
-                      "src": "572:12:113",
+                      "referencedDeclaration": 51862,
+                      "src": "580:12:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -932,85 +945,82 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 44938,
+                  "id": 51870,
                   "nodeType": "ExpressionStatement",
-                  "src": "565:19:113"
+                  "src": "573:19:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44940,
+            "id": 51872,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "_reset",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44931,
+              "id": 51863,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "492:2:113"
+              "src": "500:2:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44932,
+              "id": 51864,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "510:0:113"
+              "src": "518:0:122"
             },
-            "scope": 44977,
-            "src": "477:114:113",
+            "scope": 51909,
+            "src": "485:114:122",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 44951,
+              "id": 51883,
               "nodeType": "Block",
-              "src": "716:52:113",
+              "src": "731:52:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44949,
+                    "id": 51881,
                     "name": "_maxNonceByWalletAndCurrency",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 44928,
-                    "src": "733:28:113",
+                    "referencedDeclaration": 51860,
+                    "src": "748:28:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 44948,
-                  "id": 44950,
+                  "functionReturnParameters": 51880,
+                  "id": 51882,
                   "nodeType": "Return",
-                  "src": "726:35:113"
+                  "src": "741:35:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44952,
+            "id": 51884,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "maxNonceByWalletAndCurrency",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44945,
+              "id": 51877,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44942,
+                  "id": 51874,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44952,
-                  "src": "634:7:113",
+                  "scope": 51884,
+                  "src": "642:7:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1018,10 +1028,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44941,
+                    "id": 51873,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "634:7:113",
+                    "src": "642:7:122",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1032,26 +1043,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 44944,
+                  "id": 51876,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44952,
-                  "src": "643:25:113",
+                  "scope": 51884,
+                  "src": "651:32:122",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_memory_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_memory_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 44943,
+                    "id": 51875,
                     "name": "MonetaryTypesLib.Currency",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19401,
-                    "src": "643:25:113",
+                    "referencedDeclaration": 23045,
+                    "src": "651:25:122",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                      "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                       "typeString": "struct MonetaryTypesLib.Currency"
                     }
                   },
@@ -1059,20 +1070,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "633:36:113"
+              "src": "641:43:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44948,
+              "id": 51880,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44947,
+                  "id": 51879,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44952,
-                  "src": "703:7:113",
+                  "scope": 51884,
+                  "src": "718:7:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1080,10 +1090,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44946,
+                    "id": 51878,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "703:7:113",
+                    "src": "718:7:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1093,36 +1103,36 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "702:9:113"
+              "src": "717:9:122"
             },
-            "scope": 44977,
-            "src": "597:171:113",
+            "scope": 51909,
+            "src": "605:178:122",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 44965,
+              "id": 51897,
               "nodeType": "Block",
-              "src": "891:56:113",
+              "src": "913:56:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44963,
+                    "id": 51895,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 44961,
+                      "id": 51893,
                       "name": "_maxNonceByWalletAndCurrency",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44928,
-                      "src": "901:28:113",
+                      "referencedDeclaration": 51860,
+                      "src": "923:28:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1132,48 +1142,47 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 44962,
+                      "id": 51894,
                       "name": "maxNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44958,
-                      "src": "932:8:113",
+                      "referencedDeclaration": 51890,
+                      "src": "954:8:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "901:39:113",
+                    "src": "923:39:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 44964,
+                  "id": 51896,
                   "nodeType": "ExpressionStatement",
-                  "src": "901:39:113"
+                  "src": "923:39:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44966,
+            "id": 51898,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "setMaxNonceByWalletAndCurrency",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44959,
+              "id": 51891,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44954,
+                  "id": 51886,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44966,
-                  "src": "814:7:113",
+                  "scope": 51898,
+                  "src": "829:7:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1181,10 +1190,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 44953,
+                    "id": 51885,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "814:7:113",
+                    "src": "829:7:122",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1195,26 +1205,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 44956,
+                  "id": 51888,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44966,
-                  "src": "823:25:113",
+                  "scope": 51898,
+                  "src": "838:32:122",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_memory_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_memory_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 44955,
+                    "id": 51887,
                     "name": "MonetaryTypesLib.Currency",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19401,
-                    "src": "823:25:113",
+                    "referencedDeclaration": 23045,
+                    "src": "838:25:122",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                      "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                       "typeString": "struct MonetaryTypesLib.Currency"
                     }
                   },
@@ -1223,11 +1233,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 44958,
+                  "id": 51890,
                   "name": "maxNonce",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44966,
-                  "src": "858:16:113",
+                  "scope": 51898,
+                  "src": "880:16:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1235,10 +1245,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44957,
+                    "id": 51889,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "858:7:113",
+                    "src": "880:7:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1248,43 +1258,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "813:62:113"
+              "src": "828:69:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44960,
+              "id": 51892,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "891:0:113"
+              "src": "913:0:122"
             },
-            "scope": 44977,
-            "src": "774:173:113",
+            "scope": 51909,
+            "src": "789:180:122",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 44975,
+              "id": 51907,
               "nodeType": "Block",
-              "src": "1016:45:113",
+              "src": "1038:45:122",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 44973,
+                    "id": 51905,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 44971,
+                      "id": 51903,
                       "name": "maxNullNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44930,
-                      "src": "1026:12:113",
+                      "referencedDeclaration": 51862,
+                      "src": "1048:12:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1294,48 +1303,47 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 44972,
+                      "id": 51904,
                       "name": "_maxNullNonce",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 44968,
-                      "src": "1041:13:113",
+                      "referencedDeclaration": 51900,
+                      "src": "1063:13:122",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "1026:28:113",
+                    "src": "1048:28:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 44974,
+                  "id": 51906,
                   "nodeType": "ExpressionStatement",
-                  "src": "1026:28:113"
+                  "src": "1048:28:122"
                 }
               ]
             },
             "documentation": null,
-            "id": 44976,
+            "id": 51908,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "setMaxNullNonce",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 44969,
+              "id": 51901,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 44968,
+                  "id": 51900,
                   "name": "_maxNullNonce",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44976,
-                  "src": "978:21:113",
+                  "scope": 51908,
+                  "src": "1000:21:122",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1343,10 +1351,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 44967,
+                    "id": 51899,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "978:7:113",
+                    "src": "1000:7:122",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1356,33 +1364,32 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "977:23:113"
+              "src": "999:23:122"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 44970,
+              "id": 51902,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1016:0:113"
+              "src": "1038:0:122"
             },
-            "scope": 44977,
-            "src": "953:108:113",
+            "scope": 51909,
+            "src": "975:108:122",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 44978,
-        "src": "352:711:113"
+        "scope": 51910,
+        "src": "360:725:122"
       }
     ],
-    "src": "122:941:113"
+    "src": "122:963:122"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T06:20:37.133Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.588Z"
 }

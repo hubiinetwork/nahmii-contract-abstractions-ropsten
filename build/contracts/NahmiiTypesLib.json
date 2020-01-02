@@ -1,44 +1,47 @@
 {
   "contractName": "NahmiiTypesLib",
   "abi": [],
-  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a165627a7a723058205cf8d5766cd184831e349178c683918a26214b86e046e4c67c26e01d8c0aef430029",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a165627a7a723058205cf8d5766cd184831e349178c683918a26214b86e046e4c67c26e01d8c0aef430029",
-  "sourceMap": "296:1556:54:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
-  "deployedSourceMap": "296:1556:54:-;;;;;;;;",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\n\n/**\n * @title     NahmiiTypesLib\n * @dev       Data types of general nahmii character\n */\nlibrary NahmiiTypesLib {\n    //\n    // Enums\n    // -----------------------------------------------------------------------------------------------------------------\n    enum ChallengePhase {Dispute, Closed}\n\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    struct OriginFigure {\n        uint256 originId;\n        MonetaryTypesLib.Figure figure;\n    }\n\n    struct IntendedConjugateCurrency {\n        MonetaryTypesLib.Currency intended;\n        MonetaryTypesLib.Currency conjugate;\n    }\n\n    struct SingleFigureTotalOriginFigures {\n        MonetaryTypesLib.Figure single;\n        OriginFigure[] total;\n    }\n\n    struct TotalOriginFigures {\n        OriginFigure[] total;\n    }\n\n    struct CurrentPreviousInt256 {\n        int256 current;\n        int256 previous;\n    }\n\n    struct SingleTotalInt256 {\n        int256 single;\n        int256 total;\n    }\n\n    struct IntendedConjugateCurrentPreviousInt256 {\n        CurrentPreviousInt256 intended;\n        CurrentPreviousInt256 conjugate;\n    }\n\n    struct IntendedConjugateSingleTotalInt256 {\n        SingleTotalInt256 intended;\n        SingleTotalInt256 conjugate;\n    }\n\n    struct WalletOperatorHashes {\n        bytes32 wallet;\n        bytes32 operator;\n    }\n\n    struct Signature {\n        bytes32 r;\n        bytes32 s;\n        uint8 v;\n    }\n\n    struct Seal {\n        bytes32 hash;\n        Signature signature;\n    }\n\n    struct WalletOperatorSeal {\n        Seal wallet;\n        Seal operator;\n    }\n}",
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158201fff57f55640f5ef19b5e82ce457212d96cdb8071fe611f7af6dc300cbb44e5064736f6c634300050c0032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158201fff57f55640f5ef19b5e82ce457212d96cdb8071fe611f7af6dc300cbb44e5064736f6c634300050c0032",
+  "sourceMap": "304:1556:54:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
+  "deployedSourceMap": "304:1556:54:-;;;;;;;;",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\n\n/**\n * @title     NahmiiTypesLib\n * @dev       Data types of general nahmii character\n */\nlibrary NahmiiTypesLib {\n    //\n    // Enums\n    // -----------------------------------------------------------------------------------------------------------------\n    enum ChallengePhase {Dispute, Closed}\n\n    //\n    // Structures\n    // -----------------------------------------------------------------------------------------------------------------\n    struct OriginFigure {\n        uint256 originId;\n        MonetaryTypesLib.Figure figure;\n    }\n\n    struct IntendedConjugateCurrency {\n        MonetaryTypesLib.Currency intended;\n        MonetaryTypesLib.Currency conjugate;\n    }\n\n    struct SingleFigureTotalOriginFigures {\n        MonetaryTypesLib.Figure single;\n        OriginFigure[] total;\n    }\n\n    struct TotalOriginFigures {\n        OriginFigure[] total;\n    }\n\n    struct CurrentPreviousInt256 {\n        int256 current;\n        int256 previous;\n    }\n\n    struct SingleTotalInt256 {\n        int256 single;\n        int256 total;\n    }\n\n    struct IntendedConjugateCurrentPreviousInt256 {\n        CurrentPreviousInt256 intended;\n        CurrentPreviousInt256 conjugate;\n    }\n\n    struct IntendedConjugateSingleTotalInt256 {\n        SingleTotalInt256 intended;\n        SingleTotalInt256 conjugate;\n    }\n\n    struct WalletOperatorHashes {\n        bytes32 wallet;\n        bytes32 operator;\n    }\n\n    struct Signature {\n        bytes32 r;\n        bytes32 s;\n        uint8 v;\n    }\n\n    struct Seal {\n        bytes32 hash;\n        Signature signature;\n    }\n\n    struct WalletOperatorSeal {\n        Seal wallet;\n        Seal operator;\n    }\n}",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
     "exportedSymbols": {
       "NahmiiTypesLib": [
-        19538
+        23182
       ]
     },
-    "id": 19539,
+    "id": 23183,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 19470,
+        "id": 23114,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:54"
+        "src": "122:32:54"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "./MonetaryTypesLib.sol",
-        "id": 19472,
+        "id": 23116,
         "nodeType": "ImportDirective",
-        "scope": 19539,
-        "sourceUnit": 19413,
-        "src": "148:56:54",
+        "scope": 23183,
+        "sourceUnit": 23057,
+        "src": "156:56:54",
         "symbolAliases": [
           {
-            "foreign": 19471,
+            "foreign": 23115,
             "local": null
           }
         ],
@@ -50,45 +53,45 @@
         "contractKind": "library",
         "documentation": "@title     NahmiiTypesLib\n@dev       Data types of general nahmii character",
         "fullyImplemented": true,
-        "id": 19538,
+        "id": 23182,
         "linearizedBaseContracts": [
-          19538
+          23182
         ],
         "name": "NahmiiTypesLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "NahmiiTypesLib.ChallengePhase",
-            "id": 19475,
+            "id": 23119,
             "members": [
               {
-                "id": 19473,
+                "id": 23117,
                 "name": "Dispute",
                 "nodeType": "EnumValue",
-                "src": "487:7:54"
+                "src": "495:7:54"
               },
               {
-                "id": 19474,
+                "id": 23118,
                 "name": "Closed",
                 "nodeType": "EnumValue",
-                "src": "496:6:54"
+                "src": "504:6:54"
               }
             ],
             "name": "ChallengePhase",
             "nodeType": "EnumDefinition",
-            "src": "466:37:54"
+            "src": "474:37:54"
           },
           {
             "canonicalName": "NahmiiTypesLib.OriginFigure",
-            "id": 19480,
+            "id": 23124,
             "members": [
               {
                 "constant": false,
-                "id": 19477,
+                "id": 23121,
                 "name": "originId",
                 "nodeType": "VariableDeclaration",
-                "scope": 19480,
-                "src": "685:16:54",
+                "scope": 23124,
+                "src": "693:16:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -96,10 +99,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 19476,
+                  "id": 23120,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "685:7:54",
+                  "src": "693:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -110,26 +113,26 @@
               },
               {
                 "constant": false,
-                "id": 19479,
+                "id": 23123,
                 "name": "figure",
                 "nodeType": "VariableDeclaration",
-                "scope": 19480,
-                "src": "711:30:54",
+                "scope": 23124,
+                "src": "719:30:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                  "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Figure"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19478,
+                  "id": 23122,
                   "name": "MonetaryTypesLib.Figure",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19406,
-                  "src": "711:23:54",
+                  "referencedDeclaration": 23050,
+                  "src": "719:23:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                    "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Figure"
                   }
                 },
@@ -139,36 +142,36 @@
             ],
             "name": "OriginFigure",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "655:93:54",
+            "scope": 23182,
+            "src": "663:93:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.IntendedConjugateCurrency",
-            "id": 19485,
+            "id": 23129,
             "members": [
               {
                 "constant": false,
-                "id": 19482,
+                "id": 23126,
                 "name": "intended",
                 "nodeType": "VariableDeclaration",
-                "scope": 19485,
-                "src": "797:34:54",
+                "scope": 23129,
+                "src": "805:34:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19481,
+                  "id": 23125,
                   "name": "MonetaryTypesLib.Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19401,
-                  "src": "797:25:54",
+                  "referencedDeclaration": 23045,
+                  "src": "805:25:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -177,26 +180,26 @@
               },
               {
                 "constant": false,
-                "id": 19484,
+                "id": 23128,
                 "name": "conjugate",
                 "nodeType": "VariableDeclaration",
-                "scope": 19485,
-                "src": "841:35:54",
+                "scope": 23129,
+                "src": "849:35:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19483,
+                  "id": 23127,
                   "name": "MonetaryTypesLib.Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19401,
-                  "src": "841:25:54",
+                  "referencedDeclaration": 23045,
+                  "src": "849:25:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -206,36 +209,36 @@
             ],
             "name": "IntendedConjugateCurrency",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "754:129:54",
+            "scope": 23182,
+            "src": "762:129:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.SingleFigureTotalOriginFigures",
-            "id": 19491,
+            "id": 23135,
             "members": [
               {
                 "constant": false,
-                "id": 19487,
+                "id": 23131,
                 "name": "single",
                 "nodeType": "VariableDeclaration",
-                "scope": 19491,
-                "src": "937:30:54",
+                "scope": 23135,
+                "src": "945:30:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                  "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Figure"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19486,
+                  "id": 23130,
                   "name": "MonetaryTypesLib.Figure",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19406,
-                  "src": "937:23:54",
+                  "referencedDeclaration": 23050,
+                  "src": "945:23:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                    "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Figure"
                   }
                 },
@@ -244,36 +247,36 @@
               },
               {
                 "constant": false,
-                "id": 19490,
+                "id": 23134,
                 "name": "total",
                 "nodeType": "VariableDeclaration",
-                "scope": 19491,
-                "src": "977:20:54",
+                "scope": 23135,
+                "src": "985:20:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                 },
                 "typeName": {
                   "baseType": {
                     "contractScope": null,
-                    "id": 19488,
+                    "id": 23132,
                     "name": "OriginFigure",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19480,
-                    "src": "977:12:54",
+                    "referencedDeclaration": 23124,
+                    "src": "985:12:54",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_OriginFigure_$19480_storage_ptr",
+                      "typeIdentifier": "t_struct$_OriginFigure_$23124_storage_ptr",
                       "typeString": "struct NahmiiTypesLib.OriginFigure"
                     }
                   },
-                  "id": 19489,
+                  "id": 23133,
                   "length": null,
                   "nodeType": "ArrayTypeName",
-                  "src": "977:14:54",
+                  "src": "985:14:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                   }
                 },
@@ -283,46 +286,46 @@
             ],
             "name": "SingleFigureTotalOriginFigures",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "889:115:54",
+            "scope": 23182,
+            "src": "897:115:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.TotalOriginFigures",
-            "id": 19495,
+            "id": 23139,
             "members": [
               {
                 "constant": false,
-                "id": 19494,
+                "id": 23138,
                 "name": "total",
                 "nodeType": "VariableDeclaration",
-                "scope": 19495,
-                "src": "1046:20:54",
+                "scope": 23139,
+                "src": "1054:20:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                 },
                 "typeName": {
                   "baseType": {
                     "contractScope": null,
-                    "id": 19492,
+                    "id": 23136,
                     "name": "OriginFigure",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19480,
-                    "src": "1046:12:54",
+                    "referencedDeclaration": 23124,
+                    "src": "1054:12:54",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_OriginFigure_$19480_storage_ptr",
+                      "typeIdentifier": "t_struct$_OriginFigure_$23124_storage_ptr",
                       "typeString": "struct NahmiiTypesLib.OriginFigure"
                     }
                   },
-                  "id": 19493,
+                  "id": 23137,
                   "length": null,
                   "nodeType": "ArrayTypeName",
-                  "src": "1046:14:54",
+                  "src": "1054:14:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                   }
                 },
@@ -332,21 +335,21 @@
             ],
             "name": "TotalOriginFigures",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1010:63:54",
+            "scope": 23182,
+            "src": "1018:63:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.CurrentPreviousInt256",
-            "id": 19500,
+            "id": 23144,
             "members": [
               {
                 "constant": false,
-                "id": 19497,
+                "id": 23141,
                 "name": "current",
                 "nodeType": "VariableDeclaration",
-                "scope": 19500,
-                "src": "1118:14:54",
+                "scope": 23144,
+                "src": "1126:14:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -354,10 +357,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19496,
+                  "id": 23140,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1118:6:54",
+                  "src": "1126:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -368,11 +371,11 @@
               },
               {
                 "constant": false,
-                "id": 19499,
+                "id": 23143,
                 "name": "previous",
                 "nodeType": "VariableDeclaration",
-                "scope": 19500,
-                "src": "1142:15:54",
+                "scope": 23144,
+                "src": "1150:15:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -380,10 +383,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19498,
+                  "id": 23142,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1142:6:54",
+                  "src": "1150:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -395,21 +398,21 @@
             ],
             "name": "CurrentPreviousInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1079:85:54",
+            "scope": 23182,
+            "src": "1087:85:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.SingleTotalInt256",
-            "id": 19505,
+            "id": 23149,
             "members": [
               {
                 "constant": false,
-                "id": 19502,
+                "id": 23146,
                 "name": "single",
                 "nodeType": "VariableDeclaration",
-                "scope": 19505,
-                "src": "1205:13:54",
+                "scope": 23149,
+                "src": "1213:13:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -417,10 +420,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19501,
+                  "id": 23145,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1205:6:54",
+                  "src": "1213:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -431,11 +434,11 @@
               },
               {
                 "constant": false,
-                "id": 19504,
+                "id": 23148,
                 "name": "total",
                 "nodeType": "VariableDeclaration",
-                "scope": 19505,
-                "src": "1228:12:54",
+                "scope": 23149,
+                "src": "1236:12:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -443,10 +446,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19503,
+                  "id": 23147,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1228:6:54",
+                  "src": "1236:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -458,36 +461,36 @@
             ],
             "name": "SingleTotalInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1170:77:54",
+            "scope": 23182,
+            "src": "1178:77:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
-            "id": 19510,
+            "id": 23154,
             "members": [
               {
                 "constant": false,
-                "id": 19507,
+                "id": 23151,
                 "name": "intended",
                 "nodeType": "VariableDeclaration",
-                "scope": 19510,
-                "src": "1309:30:54",
+                "scope": 23154,
+                "src": "1317:30:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19506,
+                  "id": 23150,
                   "name": "CurrentPreviousInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19500,
-                  "src": "1309:21:54",
+                  "referencedDeclaration": 23144,
+                  "src": "1317:21:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                   }
                 },
@@ -496,26 +499,26 @@
               },
               {
                 "constant": false,
-                "id": 19509,
+                "id": 23153,
                 "name": "conjugate",
                 "nodeType": "VariableDeclaration",
-                "scope": 19510,
-                "src": "1349:31:54",
+                "scope": 23154,
+                "src": "1357:31:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19508,
+                  "id": 23152,
                   "name": "CurrentPreviousInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19500,
-                  "src": "1349:21:54",
+                  "referencedDeclaration": 23144,
+                  "src": "1357:21:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                   }
                 },
@@ -525,36 +528,36 @@
             ],
             "name": "IntendedConjugateCurrentPreviousInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1253:134:54",
+            "scope": 23182,
+            "src": "1261:134:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.IntendedConjugateSingleTotalInt256",
-            "id": 19515,
+            "id": 23159,
             "members": [
               {
                 "constant": false,
-                "id": 19512,
+                "id": 23156,
                 "name": "intended",
                 "nodeType": "VariableDeclaration",
-                "scope": 19515,
-                "src": "1445:26:54",
+                "scope": 23159,
+                "src": "1453:26:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                  "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19511,
+                  "id": 23155,
                   "name": "SingleTotalInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19505,
-                  "src": "1445:17:54",
+                  "referencedDeclaration": 23149,
+                  "src": "1453:17:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                    "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                   }
                 },
@@ -563,26 +566,26 @@
               },
               {
                 "constant": false,
-                "id": 19514,
+                "id": 23158,
                 "name": "conjugate",
                 "nodeType": "VariableDeclaration",
-                "scope": 19515,
-                "src": "1481:27:54",
+                "scope": 23159,
+                "src": "1489:27:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                  "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19513,
+                  "id": 23157,
                   "name": "SingleTotalInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19505,
-                  "src": "1481:17:54",
+                  "referencedDeclaration": 23149,
+                  "src": "1489:17:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                    "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                   }
                 },
@@ -592,21 +595,21 @@
             ],
             "name": "IntendedConjugateSingleTotalInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1393:122:54",
+            "scope": 23182,
+            "src": "1401:122:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.WalletOperatorHashes",
-            "id": 19520,
+            "id": 23164,
             "members": [
               {
                 "constant": false,
-                "id": 19517,
+                "id": 23161,
                 "name": "wallet",
                 "nodeType": "VariableDeclaration",
-                "scope": 19520,
-                "src": "1559:14:54",
+                "scope": 23164,
+                "src": "1567:14:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -614,10 +617,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19516,
+                  "id": 23160,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1559:7:54",
+                  "src": "1567:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -628,11 +631,11 @@
               },
               {
                 "constant": false,
-                "id": 19519,
+                "id": 23163,
                 "name": "operator",
                 "nodeType": "VariableDeclaration",
-                "scope": 19520,
-                "src": "1583:16:54",
+                "scope": 23164,
+                "src": "1591:16:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -640,10 +643,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19518,
+                  "id": 23162,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1583:7:54",
+                  "src": "1591:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -655,21 +658,21 @@
             ],
             "name": "WalletOperatorHashes",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1521:85:54",
+            "scope": 23182,
+            "src": "1529:85:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.Signature",
-            "id": 19527,
+            "id": 23171,
             "members": [
               {
                 "constant": false,
-                "id": 19522,
+                "id": 23166,
                 "name": "r",
                 "nodeType": "VariableDeclaration",
-                "scope": 19527,
-                "src": "1639:9:54",
+                "scope": 23171,
+                "src": "1647:9:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -677,10 +680,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19521,
+                  "id": 23165,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1639:7:54",
+                  "src": "1647:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -691,11 +694,11 @@
               },
               {
                 "constant": false,
-                "id": 19524,
+                "id": 23168,
                 "name": "s",
                 "nodeType": "VariableDeclaration",
-                "scope": 19527,
-                "src": "1658:9:54",
+                "scope": 23171,
+                "src": "1666:9:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -703,10 +706,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19523,
+                  "id": 23167,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1658:7:54",
+                  "src": "1666:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -717,11 +720,11 @@
               },
               {
                 "constant": false,
-                "id": 19526,
+                "id": 23170,
                 "name": "v",
                 "nodeType": "VariableDeclaration",
-                "scope": 19527,
-                "src": "1677:7:54",
+                "scope": 23171,
+                "src": "1685:7:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -729,10 +732,10 @@
                   "typeString": "uint8"
                 },
                 "typeName": {
-                  "id": 19525,
+                  "id": 23169,
                   "name": "uint8",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1677:5:54",
+                  "src": "1685:5:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint8",
                     "typeString": "uint8"
@@ -744,21 +747,21 @@
             ],
             "name": "Signature",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1612:79:54",
+            "scope": 23182,
+            "src": "1620:79:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.Seal",
-            "id": 19532,
+            "id": 23176,
             "members": [
               {
                 "constant": false,
-                "id": 19529,
+                "id": 23173,
                 "name": "hash",
                 "nodeType": "VariableDeclaration",
-                "scope": 19532,
-                "src": "1719:12:54",
+                "scope": 23176,
+                "src": "1727:12:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -766,10 +769,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19528,
+                  "id": 23172,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1719:7:54",
+                  "src": "1727:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -780,26 +783,26 @@
               },
               {
                 "constant": false,
-                "id": 19531,
+                "id": 23175,
                 "name": "signature",
                 "nodeType": "VariableDeclaration",
-                "scope": 19532,
-                "src": "1741:19:54",
+                "scope": 23176,
+                "src": "1749:19:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Signature_$19527_storage_ptr",
+                  "typeIdentifier": "t_struct$_Signature_$23171_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.Signature"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19530,
+                  "id": 23174,
                   "name": "Signature",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19527,
-                  "src": "1741:9:54",
+                  "referencedDeclaration": 23171,
+                  "src": "1749:9:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Signature_$19527_storage_ptr",
+                    "typeIdentifier": "t_struct$_Signature_$23171_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.Signature"
                   }
                 },
@@ -809,36 +812,36 @@
             ],
             "name": "Seal",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1697:70:54",
+            "scope": 23182,
+            "src": "1705:70:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.WalletOperatorSeal",
-            "id": 19537,
+            "id": 23181,
             "members": [
               {
                 "constant": false,
-                "id": 19534,
+                "id": 23178,
                 "name": "wallet",
                 "nodeType": "VariableDeclaration",
-                "scope": 19537,
-                "src": "1809:11:54",
+                "scope": 23181,
+                "src": "1817:11:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                  "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.Seal"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19533,
+                  "id": 23177,
                   "name": "Seal",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19532,
-                  "src": "1809:4:54",
+                  "referencedDeclaration": 23176,
+                  "src": "1817:4:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                    "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.Seal"
                   }
                 },
@@ -847,26 +850,26 @@
               },
               {
                 "constant": false,
-                "id": 19536,
+                "id": 23180,
                 "name": "operator",
                 "nodeType": "VariableDeclaration",
-                "scope": 19537,
-                "src": "1830:13:54",
+                "scope": 23181,
+                "src": "1838:13:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                  "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.Seal"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19535,
+                  "id": 23179,
                   "name": "Seal",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19532,
-                  "src": "1830:4:54",
+                  "referencedDeclaration": 23176,
+                  "src": "1838:4:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                    "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.Seal"
                   }
                 },
@@ -876,49 +879,52 @@
             ],
             "name": "WalletOperatorSeal",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1773:77:54",
+            "scope": 23182,
+            "src": "1781:77:54",
             "visibility": "public"
           }
         ],
-        "scope": 19539,
-        "src": "296:1556:54"
+        "scope": 23183,
+        "src": "304:1556:54"
       }
     ],
-    "src": "122:1730:54"
+    "src": "122:1738:54"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/NahmiiTypesLib.sol",
     "exportedSymbols": {
       "NahmiiTypesLib": [
-        19538
+        23182
       ]
     },
-    "id": 19539,
+    "id": 23183,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 19470,
+        "id": 23114,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:54"
+        "src": "122:32:54"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "./MonetaryTypesLib.sol",
-        "id": 19472,
+        "id": 23116,
         "nodeType": "ImportDirective",
-        "scope": 19539,
-        "sourceUnit": 19413,
-        "src": "148:56:54",
+        "scope": 23183,
+        "sourceUnit": 23057,
+        "src": "156:56:54",
         "symbolAliases": [
           {
-            "foreign": 19471,
+            "foreign": 23115,
             "local": null
           }
         ],
@@ -930,45 +936,45 @@
         "contractKind": "library",
         "documentation": "@title     NahmiiTypesLib\n@dev       Data types of general nahmii character",
         "fullyImplemented": true,
-        "id": 19538,
+        "id": 23182,
         "linearizedBaseContracts": [
-          19538
+          23182
         ],
         "name": "NahmiiTypesLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "NahmiiTypesLib.ChallengePhase",
-            "id": 19475,
+            "id": 23119,
             "members": [
               {
-                "id": 19473,
+                "id": 23117,
                 "name": "Dispute",
                 "nodeType": "EnumValue",
-                "src": "487:7:54"
+                "src": "495:7:54"
               },
               {
-                "id": 19474,
+                "id": 23118,
                 "name": "Closed",
                 "nodeType": "EnumValue",
-                "src": "496:6:54"
+                "src": "504:6:54"
               }
             ],
             "name": "ChallengePhase",
             "nodeType": "EnumDefinition",
-            "src": "466:37:54"
+            "src": "474:37:54"
           },
           {
             "canonicalName": "NahmiiTypesLib.OriginFigure",
-            "id": 19480,
+            "id": 23124,
             "members": [
               {
                 "constant": false,
-                "id": 19477,
+                "id": 23121,
                 "name": "originId",
                 "nodeType": "VariableDeclaration",
-                "scope": 19480,
-                "src": "685:16:54",
+                "scope": 23124,
+                "src": "693:16:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -976,10 +982,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 19476,
+                  "id": 23120,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "685:7:54",
+                  "src": "693:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -990,26 +996,26 @@
               },
               {
                 "constant": false,
-                "id": 19479,
+                "id": 23123,
                 "name": "figure",
                 "nodeType": "VariableDeclaration",
-                "scope": 19480,
-                "src": "711:30:54",
+                "scope": 23124,
+                "src": "719:30:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                  "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Figure"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19478,
+                  "id": 23122,
                   "name": "MonetaryTypesLib.Figure",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19406,
-                  "src": "711:23:54",
+                  "referencedDeclaration": 23050,
+                  "src": "719:23:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                    "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Figure"
                   }
                 },
@@ -1019,36 +1025,36 @@
             ],
             "name": "OriginFigure",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "655:93:54",
+            "scope": 23182,
+            "src": "663:93:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.IntendedConjugateCurrency",
-            "id": 19485,
+            "id": 23129,
             "members": [
               {
                 "constant": false,
-                "id": 19482,
+                "id": 23126,
                 "name": "intended",
                 "nodeType": "VariableDeclaration",
-                "scope": 19485,
-                "src": "797:34:54",
+                "scope": 23129,
+                "src": "805:34:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19481,
+                  "id": 23125,
                   "name": "MonetaryTypesLib.Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19401,
-                  "src": "797:25:54",
+                  "referencedDeclaration": 23045,
+                  "src": "805:25:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -1057,26 +1063,26 @@
               },
               {
                 "constant": false,
-                "id": 19484,
+                "id": 23128,
                 "name": "conjugate",
                 "nodeType": "VariableDeclaration",
-                "scope": 19485,
-                "src": "841:35:54",
+                "scope": 23129,
+                "src": "849:35:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                  "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Currency"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19483,
+                  "id": 23127,
                   "name": "MonetaryTypesLib.Currency",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19401,
-                  "src": "841:25:54",
+                  "referencedDeclaration": 23045,
+                  "src": "849:25:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                    "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency"
                   }
                 },
@@ -1086,36 +1092,36 @@
             ],
             "name": "IntendedConjugateCurrency",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "754:129:54",
+            "scope": 23182,
+            "src": "762:129:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.SingleFigureTotalOriginFigures",
-            "id": 19491,
+            "id": 23135,
             "members": [
               {
                 "constant": false,
-                "id": 19487,
+                "id": 23131,
                 "name": "single",
                 "nodeType": "VariableDeclaration",
-                "scope": 19491,
-                "src": "937:30:54",
+                "scope": 23135,
+                "src": "945:30:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                  "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                   "typeString": "struct MonetaryTypesLib.Figure"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19486,
+                  "id": 23130,
                   "name": "MonetaryTypesLib.Figure",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19406,
-                  "src": "937:23:54",
+                  "referencedDeclaration": 23050,
+                  "src": "945:23:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Figure_$19406_storage_ptr",
+                    "typeIdentifier": "t_struct$_Figure_$23050_storage_ptr",
                     "typeString": "struct MonetaryTypesLib.Figure"
                   }
                 },
@@ -1124,36 +1130,36 @@
               },
               {
                 "constant": false,
-                "id": 19490,
+                "id": 23134,
                 "name": "total",
                 "nodeType": "VariableDeclaration",
-                "scope": 19491,
-                "src": "977:20:54",
+                "scope": 23135,
+                "src": "985:20:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                 },
                 "typeName": {
                   "baseType": {
                     "contractScope": null,
-                    "id": 19488,
+                    "id": 23132,
                     "name": "OriginFigure",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19480,
-                    "src": "977:12:54",
+                    "referencedDeclaration": 23124,
+                    "src": "985:12:54",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_OriginFigure_$19480_storage_ptr",
+                      "typeIdentifier": "t_struct$_OriginFigure_$23124_storage_ptr",
                       "typeString": "struct NahmiiTypesLib.OriginFigure"
                     }
                   },
-                  "id": 19489,
+                  "id": 23133,
                   "length": null,
                   "nodeType": "ArrayTypeName",
-                  "src": "977:14:54",
+                  "src": "985:14:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                   }
                 },
@@ -1163,46 +1169,46 @@
             ],
             "name": "SingleFigureTotalOriginFigures",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "889:115:54",
+            "scope": 23182,
+            "src": "897:115:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.TotalOriginFigures",
-            "id": 19495,
+            "id": 23139,
             "members": [
               {
                 "constant": false,
-                "id": 19494,
+                "id": 23138,
                 "name": "total",
                 "nodeType": "VariableDeclaration",
-                "scope": 19495,
-                "src": "1046:20:54",
+                "scope": 23139,
+                "src": "1054:20:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                 },
                 "typeName": {
                   "baseType": {
                     "contractScope": null,
-                    "id": 19492,
+                    "id": 23136,
                     "name": "OriginFigure",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 19480,
-                    "src": "1046:12:54",
+                    "referencedDeclaration": 23124,
+                    "src": "1054:12:54",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_OriginFigure_$19480_storage_ptr",
+                      "typeIdentifier": "t_struct$_OriginFigure_$23124_storage_ptr",
                       "typeString": "struct NahmiiTypesLib.OriginFigure"
                     }
                   },
-                  "id": 19493,
+                  "id": 23137,
                   "length": null,
                   "nodeType": "ArrayTypeName",
-                  "src": "1046:14:54",
+                  "src": "1054:14:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$19480_storage_$dyn_storage_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_OriginFigure_$23124_storage_$dyn_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.OriginFigure[]"
                   }
                 },
@@ -1212,21 +1218,21 @@
             ],
             "name": "TotalOriginFigures",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1010:63:54",
+            "scope": 23182,
+            "src": "1018:63:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.CurrentPreviousInt256",
-            "id": 19500,
+            "id": 23144,
             "members": [
               {
                 "constant": false,
-                "id": 19497,
+                "id": 23141,
                 "name": "current",
                 "nodeType": "VariableDeclaration",
-                "scope": 19500,
-                "src": "1118:14:54",
+                "scope": 23144,
+                "src": "1126:14:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1234,10 +1240,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19496,
+                  "id": 23140,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1118:6:54",
+                  "src": "1126:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -1248,11 +1254,11 @@
               },
               {
                 "constant": false,
-                "id": 19499,
+                "id": 23143,
                 "name": "previous",
                 "nodeType": "VariableDeclaration",
-                "scope": 19500,
-                "src": "1142:15:54",
+                "scope": 23144,
+                "src": "1150:15:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1260,10 +1266,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19498,
+                  "id": 23142,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1142:6:54",
+                  "src": "1150:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -1275,21 +1281,21 @@
             ],
             "name": "CurrentPreviousInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1079:85:54",
+            "scope": 23182,
+            "src": "1087:85:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.SingleTotalInt256",
-            "id": 19505,
+            "id": 23149,
             "members": [
               {
                 "constant": false,
-                "id": 19502,
+                "id": 23146,
                 "name": "single",
                 "nodeType": "VariableDeclaration",
-                "scope": 19505,
-                "src": "1205:13:54",
+                "scope": 23149,
+                "src": "1213:13:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1297,10 +1303,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19501,
+                  "id": 23145,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1205:6:54",
+                  "src": "1213:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -1311,11 +1317,11 @@
               },
               {
                 "constant": false,
-                "id": 19504,
+                "id": 23148,
                 "name": "total",
                 "nodeType": "VariableDeclaration",
-                "scope": 19505,
-                "src": "1228:12:54",
+                "scope": 23149,
+                "src": "1236:12:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1323,10 +1329,10 @@
                   "typeString": "int256"
                 },
                 "typeName": {
-                  "id": 19503,
+                  "id": 23147,
                   "name": "int256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1228:6:54",
+                  "src": "1236:6:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_int256",
                     "typeString": "int256"
@@ -1338,36 +1344,36 @@
             ],
             "name": "SingleTotalInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1170:77:54",
+            "scope": 23182,
+            "src": "1178:77:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.IntendedConjugateCurrentPreviousInt256",
-            "id": 19510,
+            "id": 23154,
             "members": [
               {
                 "constant": false,
-                "id": 19507,
+                "id": 23151,
                 "name": "intended",
                 "nodeType": "VariableDeclaration",
-                "scope": 19510,
-                "src": "1309:30:54",
+                "scope": 23154,
+                "src": "1317:30:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19506,
+                  "id": 23150,
                   "name": "CurrentPreviousInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19500,
-                  "src": "1309:21:54",
+                  "referencedDeclaration": 23144,
+                  "src": "1317:21:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                   }
                 },
@@ -1376,26 +1382,26 @@
               },
               {
                 "constant": false,
-                "id": 19509,
+                "id": 23153,
                 "name": "conjugate",
                 "nodeType": "VariableDeclaration",
-                "scope": 19510,
-                "src": "1349:31:54",
+                "scope": 23154,
+                "src": "1357:31:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                  "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19508,
+                  "id": 23152,
                   "name": "CurrentPreviousInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19500,
-                  "src": "1349:21:54",
+                  "referencedDeclaration": 23144,
+                  "src": "1357:21:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$19500_storage_ptr",
+                    "typeIdentifier": "t_struct$_CurrentPreviousInt256_$23144_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.CurrentPreviousInt256"
                   }
                 },
@@ -1405,36 +1411,36 @@
             ],
             "name": "IntendedConjugateCurrentPreviousInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1253:134:54",
+            "scope": 23182,
+            "src": "1261:134:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.IntendedConjugateSingleTotalInt256",
-            "id": 19515,
+            "id": 23159,
             "members": [
               {
                 "constant": false,
-                "id": 19512,
+                "id": 23156,
                 "name": "intended",
                 "nodeType": "VariableDeclaration",
-                "scope": 19515,
-                "src": "1445:26:54",
+                "scope": 23159,
+                "src": "1453:26:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                  "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19511,
+                  "id": 23155,
                   "name": "SingleTotalInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19505,
-                  "src": "1445:17:54",
+                  "referencedDeclaration": 23149,
+                  "src": "1453:17:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                    "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                   }
                 },
@@ -1443,26 +1449,26 @@
               },
               {
                 "constant": false,
-                "id": 19514,
+                "id": 23158,
                 "name": "conjugate",
                 "nodeType": "VariableDeclaration",
-                "scope": 19515,
-                "src": "1481:27:54",
+                "scope": 23159,
+                "src": "1489:27:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                  "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19513,
+                  "id": 23157,
                   "name": "SingleTotalInt256",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19505,
-                  "src": "1481:17:54",
+                  "referencedDeclaration": 23149,
+                  "src": "1489:17:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_SingleTotalInt256_$19505_storage_ptr",
+                    "typeIdentifier": "t_struct$_SingleTotalInt256_$23149_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.SingleTotalInt256"
                   }
                 },
@@ -1472,21 +1478,21 @@
             ],
             "name": "IntendedConjugateSingleTotalInt256",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1393:122:54",
+            "scope": 23182,
+            "src": "1401:122:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.WalletOperatorHashes",
-            "id": 19520,
+            "id": 23164,
             "members": [
               {
                 "constant": false,
-                "id": 19517,
+                "id": 23161,
                 "name": "wallet",
                 "nodeType": "VariableDeclaration",
-                "scope": 19520,
-                "src": "1559:14:54",
+                "scope": 23164,
+                "src": "1567:14:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1494,10 +1500,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19516,
+                  "id": 23160,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1559:7:54",
+                  "src": "1567:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1508,11 +1514,11 @@
               },
               {
                 "constant": false,
-                "id": 19519,
+                "id": 23163,
                 "name": "operator",
                 "nodeType": "VariableDeclaration",
-                "scope": 19520,
-                "src": "1583:16:54",
+                "scope": 23164,
+                "src": "1591:16:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1520,10 +1526,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19518,
+                  "id": 23162,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1583:7:54",
+                  "src": "1591:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1535,21 +1541,21 @@
             ],
             "name": "WalletOperatorHashes",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1521:85:54",
+            "scope": 23182,
+            "src": "1529:85:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.Signature",
-            "id": 19527,
+            "id": 23171,
             "members": [
               {
                 "constant": false,
-                "id": 19522,
+                "id": 23166,
                 "name": "r",
                 "nodeType": "VariableDeclaration",
-                "scope": 19527,
-                "src": "1639:9:54",
+                "scope": 23171,
+                "src": "1647:9:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1557,10 +1563,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19521,
+                  "id": 23165,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1639:7:54",
+                  "src": "1647:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1571,11 +1577,11 @@
               },
               {
                 "constant": false,
-                "id": 19524,
+                "id": 23168,
                 "name": "s",
                 "nodeType": "VariableDeclaration",
-                "scope": 19527,
-                "src": "1658:9:54",
+                "scope": 23171,
+                "src": "1666:9:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1583,10 +1589,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19523,
+                  "id": 23167,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1658:7:54",
+                  "src": "1666:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1597,11 +1603,11 @@
               },
               {
                 "constant": false,
-                "id": 19526,
+                "id": 23170,
                 "name": "v",
                 "nodeType": "VariableDeclaration",
-                "scope": 19527,
-                "src": "1677:7:54",
+                "scope": 23171,
+                "src": "1685:7:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1609,10 +1615,10 @@
                   "typeString": "uint8"
                 },
                 "typeName": {
-                  "id": 19525,
+                  "id": 23169,
                   "name": "uint8",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1677:5:54",
+                  "src": "1685:5:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint8",
                     "typeString": "uint8"
@@ -1624,21 +1630,21 @@
             ],
             "name": "Signature",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1612:79:54",
+            "scope": 23182,
+            "src": "1620:79:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.Seal",
-            "id": 19532,
+            "id": 23176,
             "members": [
               {
                 "constant": false,
-                "id": 19529,
+                "id": 23173,
                 "name": "hash",
                 "nodeType": "VariableDeclaration",
-                "scope": 19532,
-                "src": "1719:12:54",
+                "scope": 23176,
+                "src": "1727:12:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1646,10 +1652,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 19528,
+                  "id": 23172,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1719:7:54",
+                  "src": "1727:7:54",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1660,26 +1666,26 @@
               },
               {
                 "constant": false,
-                "id": 19531,
+                "id": 23175,
                 "name": "signature",
                 "nodeType": "VariableDeclaration",
-                "scope": 19532,
-                "src": "1741:19:54",
+                "scope": 23176,
+                "src": "1749:19:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Signature_$19527_storage_ptr",
+                  "typeIdentifier": "t_struct$_Signature_$23171_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.Signature"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19530,
+                  "id": 23174,
                   "name": "Signature",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19527,
-                  "src": "1741:9:54",
+                  "referencedDeclaration": 23171,
+                  "src": "1749:9:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Signature_$19527_storage_ptr",
+                    "typeIdentifier": "t_struct$_Signature_$23171_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.Signature"
                   }
                 },
@@ -1689,36 +1695,36 @@
             ],
             "name": "Seal",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1697:70:54",
+            "scope": 23182,
+            "src": "1705:70:54",
             "visibility": "public"
           },
           {
             "canonicalName": "NahmiiTypesLib.WalletOperatorSeal",
-            "id": 19537,
+            "id": 23181,
             "members": [
               {
                 "constant": false,
-                "id": 19534,
+                "id": 23178,
                 "name": "wallet",
                 "nodeType": "VariableDeclaration",
-                "scope": 19537,
-                "src": "1809:11:54",
+                "scope": 23181,
+                "src": "1817:11:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                  "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.Seal"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19533,
+                  "id": 23177,
                   "name": "Seal",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19532,
-                  "src": "1809:4:54",
+                  "referencedDeclaration": 23176,
+                  "src": "1817:4:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                    "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.Seal"
                   }
                 },
@@ -1727,26 +1733,26 @@
               },
               {
                 "constant": false,
-                "id": 19536,
+                "id": 23180,
                 "name": "operator",
                 "nodeType": "VariableDeclaration",
-                "scope": 19537,
-                "src": "1830:13:54",
+                "scope": 23181,
+                "src": "1838:13:54",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                  "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                   "typeString": "struct NahmiiTypesLib.Seal"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 19535,
+                  "id": 23179,
                   "name": "Seal",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 19532,
-                  "src": "1830:4:54",
+                  "referencedDeclaration": 23176,
+                  "src": "1838:4:54",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Seal_$19532_storage_ptr",
+                    "typeIdentifier": "t_struct$_Seal_$23176_storage_ptr",
                     "typeString": "struct NahmiiTypesLib.Seal"
                   }
                 },
@@ -1756,29 +1762,29 @@
             ],
             "name": "WalletOperatorSeal",
             "nodeType": "StructDefinition",
-            "scope": 19538,
-            "src": "1773:77:54",
+            "scope": 23182,
+            "src": "1781:77:54",
             "visibility": "public"
           }
         ],
-        "scope": 19539,
-        "src": "296:1556:54"
+        "scope": 23183,
+        "src": "304:1556:54"
       }
     ],
-    "src": "122:1730:54"
+    "src": "122:1738:54"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {
     "3": {
       "events": {},
       "links": {},
-      "address": "0x6310871ae19fd5412a892d7d0c23c13b68d90d53",
-      "transactionHash": "0x60a62f35061ee882c800105e7af8912359dcd64565cc68f1329a2addcf8c6f1a"
+      "address": "0xffdfa37bb4123e3c650ba84f11f180202e670c62",
+      "transactionHash": "0x3dc6d0608b9fcb5e706c1b59144fec7f7d4a7b721df3ba8853e21a846a0d8f7f"
     }
   },
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T08:24:32.073Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-23T00:21:40.866Z"
 }

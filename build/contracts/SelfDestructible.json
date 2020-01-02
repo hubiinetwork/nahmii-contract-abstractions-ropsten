@@ -2,24 +2,11 @@
   "contractName": "SelfDestructible",
   "abi": [
     {
-      "constant": true,
-      "inputs": [],
-      "name": "selfDestructionDisabled",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "anonymous": false,
       "inputs": [
         {
           "indexed": false,
+          "internalType": "address",
           "name": "wallet",
           "type": "address"
         }
@@ -32,6 +19,7 @@
       "inputs": [
         {
           "indexed": false,
+          "internalType": "address",
           "name": "wallet",
           "type": "address"
         }
@@ -42,9 +30,25 @@
     {
       "constant": true,
       "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
       "name": "destructor",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -76,28 +80,31 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\n/**\n * @title SelfDestructible\n * @notice Contract that allows for self-destruction\n */\ncontract SelfDestructible {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    bool public selfDestructionDisabled;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SelfDestructionDisabledEvent(address wallet);\n    event TriggerSelfDestructionEvent(address wallet);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Get the address of the destructor role\n    function destructor()\n    public\n    view\n    returns (address);\n\n    /// @notice Disable self-destruction of this contract\n    /// @dev This operation can not be undone\n    function disableSelfDestruction()\n    public\n    {\n        // Require that sender is the assigned destructor\n        require(destructor() == msg.sender);\n\n        // Disable self-destruction\n        selfDestructionDisabled = true;\n\n        // Emit event\n        emit SelfDestructionDisabledEvent(msg.sender);\n    }\n\n    /// @notice Destroy this contract\n    function triggerSelfDestruction()\n    public\n    {\n        // Require that sender is the assigned destructor\n        require(destructor() == msg.sender);\n\n        // Require that self-destruction has not been disabled\n        require(!selfDestructionDisabled);\n\n        // Emit event\n        emit TriggerSelfDestructionEvent(msg.sender);\n\n        // Self-destruct and reward destructor\n        selfdestruct(msg.sender);\n    }\n}\n",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\n/**\n * @title SelfDestructible\n * @notice Contract that allows for self-destruction\n */\ncontract SelfDestructible {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    bool public selfDestructionDisabled;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SelfDestructionDisabledEvent(address wallet);\n    event TriggerSelfDestructionEvent(address wallet);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Get the address of the destructor role\n    function destructor()\n    public\n    view\n    returns (address);\n\n    /// @notice Disable self-destruction of this contract\n    /// @dev This operation can not be undone\n    function disableSelfDestruction()\n    public\n    {\n        // Require that sender is the assigned destructor\n        require(destructor() == msg.sender);\n\n        // Disable self-destruction\n        selfDestructionDisabled = true;\n\n        // Emit event\n        emit SelfDestructionDisabledEvent(msg.sender);\n    }\n\n    /// @notice Destroy this contract\n    function triggerSelfDestruction()\n    public\n    {\n        // Require that sender is the assigned destructor\n        require(destructor() == msg.sender);\n\n        // Require that self-destruction has not been disabled\n        require(!selfDestructionDisabled);\n\n        // Emit event\n        emit TriggerSelfDestructionEvent(msg.sender);\n\n        // Self-destruct and reward destructor\n        selfdestruct(msg.sender);\n    }\n}\n",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/SelfDestructible.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SelfDestructible.sol",
     "exportedSymbols": {
       "SelfDestructible": [
-        31613
+        37143
       ]
     },
-    "id": 31614,
+    "id": 37144,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 31549,
+        "id": 37079,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:75"
+        "src": "122:32:80"
       },
       {
         "baseContracts": [],
@@ -105,20 +112,20 @@
         "contractKind": "contract",
         "documentation": "@title SelfDestructible\n@notice Contract that allows for self-destruction",
         "fullyImplemented": false,
-        "id": 31613,
+        "id": 37143,
         "linearizedBaseContracts": [
-          31613
+          37143
         ],
         "name": "SelfDestructible",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 31551,
+            "id": 37081,
             "name": "selfDestructionDisabled",
             "nodeType": "VariableDeclaration",
-            "scope": 31613,
-            "src": "413:35:75",
+            "scope": 37143,
+            "src": "421:35:80",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -126,10 +133,10 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 31550,
+              "id": 37080,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
-              "src": "413:4:75",
+              "src": "421:4:80",
               "typeDescriptions": {
                 "typeIdentifier": "t_bool",
                 "typeString": "bool"
@@ -141,21 +148,21 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 31555,
+            "id": 37085,
             "name": "SelfDestructionDisabledEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 31554,
+              "id": 37084,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31553,
+                  "id": 37083,
                   "indexed": false,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31555,
-                  "src": "632:14:75",
+                  "scope": 37085,
+                  "src": "640:14:80",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -163,10 +170,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 31552,
+                    "id": 37082,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "632:7:75",
+                    "src": "640:7:80",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -176,28 +184,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "631:16:75"
+              "src": "639:16:80"
             },
-            "src": "597:51:75"
+            "src": "605:51:80"
           },
           {
             "anonymous": false,
             "documentation": null,
-            "id": 31559,
+            "id": 37089,
             "name": "TriggerSelfDestructionEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 31558,
+              "id": 37088,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31557,
+                  "id": 37087,
                   "indexed": false,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31559,
-                  "src": "687:14:75",
+                  "scope": 37089,
+                  "src": "695:14:80",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -205,10 +213,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 31556,
+                    "id": 37086,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "687:7:75",
+                    "src": "695:7:80",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -218,38 +227,36 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "686:16:75"
+              "src": "694:16:80"
             },
-            "src": "653:50:75"
+            "src": "661:50:80"
           },
           {
             "body": null,
             "documentation": "@notice Get the address of the destructor role",
-            "id": 31564,
+            "id": 37094,
             "implemented": false,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "destructor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 31560,
+              "id": 37090,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "928:2:75"
+              "src": "936:2:80"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 31563,
+              "id": 37093,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31562,
+                  "id": 37092,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31564,
-                  "src": "964:7:75",
+                  "scope": 37094,
+                  "src": "972:7:80",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -257,10 +264,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 31561,
+                    "id": 37091,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "964:7:75",
+                    "src": "972:7:80",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -270,19 +278,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "963:9:75"
+              "src": "971:9:80"
             },
-            "scope": 31613,
-            "src": "909:64:75",
+            "scope": 37143,
+            "src": "917:64:80",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 31584,
+              "id": 37114,
               "nodeType": "Block",
-              "src": "1132:265:75",
+              "src": "1140:265:80",
               "statements": [
                 {
                   "expression": {
@@ -294,7 +302,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 31572,
+                        "id": 37102,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -304,18 +312,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 31568,
+                            "id": 37098,
                             "name": "destructor",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 31564,
-                            "src": "1208:10:75",
+                            "referencedDeclaration": 37094,
+                            "src": "1216:10:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
                               "typeString": "function () view returns (address)"
                             }
                           },
-                          "id": 31569,
+                          "id": 37099,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -323,7 +331,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "1208:12:75",
+                          "src": "1216:12:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -335,18 +343,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 31570,
+                            "id": 37100,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 50294,
-                            "src": "1224:3:75",
+                            "referencedDeclaration": 57369,
+                            "src": "1232:3:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 31571,
+                          "id": 37101,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -354,13 +362,13 @@
                           "memberName": "sender",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": null,
-                          "src": "1224:10:75",
+                          "src": "1232:10:80",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
                           }
                         },
-                        "src": "1208:26:75",
+                        "src": "1216:26:80",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -374,21 +382,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 31567,
+                      "id": 37097,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "1200:7:75",
+                      "referencedDeclaration": 57372,
+                      "src": "1208:7:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 31573,
+                    "id": 37103,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -396,32 +404,32 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1200:35:75",
+                    "src": "1208:35:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31574,
+                  "id": 37104,
                   "nodeType": "ExpressionStatement",
-                  "src": "1200:35:75"
+                  "src": "1208:35:80"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 31577,
+                    "id": 37107,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 31575,
+                      "id": 37105,
                       "name": "selfDestructionDisabled",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31551,
-                      "src": "1282:23:75",
+                      "referencedDeclaration": 37081,
+                      "src": "1290:23:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -432,14 +440,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 31576,
+                      "id": 37106,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "1308:4:75",
+                      "src": "1316:4:80",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -447,15 +455,15 @@
                       },
                       "value": "true"
                     },
-                    "src": "1282:30:75",
+                    "src": "1290:30:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "id": 31578,
+                  "id": 37108,
                   "nodeType": "ExpressionStatement",
-                  "src": "1282:30:75"
+                  "src": "1290:30:80"
                 },
                 {
                   "eventCall": {
@@ -465,18 +473,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 31580,
+                          "id": 37110,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 50294,
-                          "src": "1379:3:75",
+                          "referencedDeclaration": 57369,
+                          "src": "1387:3:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 31581,
+                        "id": 37111,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -484,32 +492,32 @@
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "1379:10:75",
+                        "src": "1387:10:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       ],
-                      "id": 31579,
+                      "id": 37109,
                       "name": "SelfDestructionDisabledEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31555,
-                      "src": "1350:28:75",
+                      "referencedDeclaration": 37085,
+                      "src": "1358:28:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 31582,
+                    "id": 37112,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -517,50 +525,48 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1350:40:75",
+                    "src": "1358:40:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31583,
+                  "id": 37113,
                   "nodeType": "EmitStatement",
-                  "src": "1345:45:75"
+                  "src": "1353:45:80"
                 }
               ]
             },
             "documentation": "@notice Disable self-destruction of this contract\n @dev This operation can not be undone",
-            "id": 31585,
+            "id": 37115,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "disableSelfDestruction",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 31565,
+              "id": 37095,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1114:2:75"
+              "src": "1122:2:80"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 31566,
+              "id": 37096,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1132:0:75"
+              "src": "1140:0:80"
             },
-            "scope": 31613,
-            "src": "1083:314:75",
+            "scope": 37143,
+            "src": "1091:314:80",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 31611,
+              "id": 37141,
               "nodeType": "Block",
-              "src": "1490:376:75",
+              "src": "1498:376:80",
               "statements": [
                 {
                   "expression": {
@@ -572,7 +578,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 31593,
+                        "id": 37123,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -582,18 +588,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 31589,
+                            "id": 37119,
                             "name": "destructor",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 31564,
-                            "src": "1566:10:75",
+                            "referencedDeclaration": 37094,
+                            "src": "1574:10:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
                               "typeString": "function () view returns (address)"
                             }
                           },
-                          "id": 31590,
+                          "id": 37120,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -601,7 +607,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "1566:12:75",
+                          "src": "1574:12:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -613,18 +619,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 31591,
+                            "id": 37121,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 50294,
-                            "src": "1582:3:75",
+                            "referencedDeclaration": 57369,
+                            "src": "1590:3:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 31592,
+                          "id": 37122,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -632,13 +638,13 @@
                           "memberName": "sender",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": null,
-                          "src": "1582:10:75",
+                          "src": "1590:10:80",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
                           }
                         },
-                        "src": "1566:26:75",
+                        "src": "1574:26:80",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -652,21 +658,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 31588,
+                      "id": 37118,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "1558:7:75",
+                      "referencedDeclaration": 57372,
+                      "src": "1566:7:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 31594,
+                    "id": 37124,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -674,15 +680,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1558:35:75",
+                    "src": "1566:35:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31595,
+                  "id": 37125,
                   "nodeType": "ExpressionStatement",
-                  "src": "1558:35:75"
+                  "src": "1566:35:80"
                 },
                 {
                   "expression": {
@@ -690,7 +696,7 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 31598,
+                        "id": 37128,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -698,15 +704,15 @@
                         "nodeType": "UnaryOperation",
                         "operator": "!",
                         "prefix": true,
-                        "src": "1675:24:75",
+                        "src": "1683:24:80",
                         "subExpression": {
                           "argumentTypes": null,
-                          "id": 31597,
+                          "id": 37127,
                           "name": "selfDestructionDisabled",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 31551,
-                          "src": "1676:23:75",
+                          "referencedDeclaration": 37081,
+                          "src": "1684:23:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
                             "typeString": "bool"
@@ -725,21 +731,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 31596,
+                      "id": 37126,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "1667:7:75",
+                      "referencedDeclaration": 57372,
+                      "src": "1675:7:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 31599,
+                    "id": 37129,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -747,15 +753,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1667:33:75",
+                    "src": "1675:33:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31600,
+                  "id": 37130,
                   "nodeType": "ExpressionStatement",
-                  "src": "1667:33:75"
+                  "src": "1675:33:80"
                 },
                 {
                   "eventCall": {
@@ -765,18 +771,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 31602,
+                          "id": 37132,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 50294,
-                          "src": "1766:3:75",
+                          "referencedDeclaration": 57369,
+                          "src": "1774:3:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 31603,
+                        "id": 37133,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -784,32 +790,32 @@
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "1766:10:75",
+                        "src": "1774:10:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       ],
-                      "id": 31601,
+                      "id": 37131,
                       "name": "TriggerSelfDestructionEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31559,
-                      "src": "1738:27:75",
+                      "referencedDeclaration": 37089,
+                      "src": "1746:27:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 31604,
+                    "id": 37134,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -817,15 +823,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1738:39:75",
+                    "src": "1746:39:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31605,
+                  "id": 37135,
                   "nodeType": "EmitStatement",
-                  "src": "1733:44:75"
+                  "src": "1741:44:80"
                 },
                 {
                   "expression": {
@@ -835,18 +841,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 31607,
+                          "id": 37137,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 50294,
-                          "src": "1848:3:75",
+                          "referencedDeclaration": 57369,
+                          "src": "1856:3:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 31608,
+                        "id": 37138,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -854,32 +860,32 @@
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "1848:10:75",
+                        "src": "1856:10:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       ],
-                      "id": 31606,
+                      "id": 37136,
                       "name": "selfdestruct",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 50302,
-                      "src": "1835:12:75",
+                      "referencedDeclaration": 57377,
+                      "src": "1843:12:80",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
-                        "typeString": "function (address)"
+                        "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_payable_$returns$__$",
+                        "typeString": "function (address payable)"
                       }
                     },
-                    "id": 31609,
+                    "id": 37139,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -887,72 +893,73 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1835:24:75",
+                    "src": "1843:24:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31610,
+                  "id": 37140,
                   "nodeType": "ExpressionStatement",
-                  "src": "1835:24:75"
+                  "src": "1843:24:80"
                 }
               ]
             },
             "documentation": "@notice Destroy this contract",
-            "id": 31612,
+            "id": 37142,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "triggerSelfDestruction",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 31586,
+              "id": 37116,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1472:2:75"
+              "src": "1480:2:80"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 31587,
+              "id": 37117,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1490:0:75"
+              "src": "1498:0:80"
             },
-            "scope": 31613,
-            "src": "1441:425:75",
+            "scope": 37143,
+            "src": "1449:425:80",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 31614,
-        "src": "236:1632:75"
+        "scope": 37144,
+        "src": "244:1632:80"
       }
     ],
-    "src": "122:1747:75"
+    "src": "122:1755:80"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/SelfDestructible.sol",
     "exportedSymbols": {
       "SelfDestructible": [
-        31613
+        37143
       ]
     },
-    "id": 31614,
+    "id": 37144,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 31549,
+        "id": 37079,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:75"
+        "src": "122:32:80"
       },
       {
         "baseContracts": [],
@@ -960,20 +967,20 @@
         "contractKind": "contract",
         "documentation": "@title SelfDestructible\n@notice Contract that allows for self-destruction",
         "fullyImplemented": false,
-        "id": 31613,
+        "id": 37143,
         "linearizedBaseContracts": [
-          31613
+          37143
         ],
         "name": "SelfDestructible",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 31551,
+            "id": 37081,
             "name": "selfDestructionDisabled",
             "nodeType": "VariableDeclaration",
-            "scope": 31613,
-            "src": "413:35:75",
+            "scope": 37143,
+            "src": "421:35:80",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -981,10 +988,10 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 31550,
+              "id": 37080,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
-              "src": "413:4:75",
+              "src": "421:4:80",
               "typeDescriptions": {
                 "typeIdentifier": "t_bool",
                 "typeString": "bool"
@@ -996,21 +1003,21 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 31555,
+            "id": 37085,
             "name": "SelfDestructionDisabledEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 31554,
+              "id": 37084,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31553,
+                  "id": 37083,
                   "indexed": false,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31555,
-                  "src": "632:14:75",
+                  "scope": 37085,
+                  "src": "640:14:80",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1018,10 +1025,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 31552,
+                    "id": 37082,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "632:7:75",
+                    "src": "640:7:80",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1031,28 +1039,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "631:16:75"
+              "src": "639:16:80"
             },
-            "src": "597:51:75"
+            "src": "605:51:80"
           },
           {
             "anonymous": false,
             "documentation": null,
-            "id": 31559,
+            "id": 37089,
             "name": "TriggerSelfDestructionEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 31558,
+              "id": 37088,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31557,
+                  "id": 37087,
                   "indexed": false,
                   "name": "wallet",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31559,
-                  "src": "687:14:75",
+                  "scope": 37089,
+                  "src": "695:14:80",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1060,10 +1068,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 31556,
+                    "id": 37086,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "687:7:75",
+                    "src": "695:7:80",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1073,38 +1082,36 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "686:16:75"
+              "src": "694:16:80"
             },
-            "src": "653:50:75"
+            "src": "661:50:80"
           },
           {
             "body": null,
             "documentation": "@notice Get the address of the destructor role",
-            "id": 31564,
+            "id": 37094,
             "implemented": false,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "destructor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 31560,
+              "id": 37090,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "928:2:75"
+              "src": "936:2:80"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 31563,
+              "id": 37093,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 31562,
+                  "id": 37092,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 31564,
-                  "src": "964:7:75",
+                  "scope": 37094,
+                  "src": "972:7:80",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1112,10 +1119,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 31561,
+                    "id": 37091,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "964:7:75",
+                    "src": "972:7:80",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1125,19 +1133,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "963:9:75"
+              "src": "971:9:80"
             },
-            "scope": 31613,
-            "src": "909:64:75",
+            "scope": 37143,
+            "src": "917:64:80",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 31584,
+              "id": 37114,
               "nodeType": "Block",
-              "src": "1132:265:75",
+              "src": "1140:265:80",
               "statements": [
                 {
                   "expression": {
@@ -1149,7 +1157,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 31572,
+                        "id": 37102,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1159,18 +1167,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 31568,
+                            "id": 37098,
                             "name": "destructor",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 31564,
-                            "src": "1208:10:75",
+                            "referencedDeclaration": 37094,
+                            "src": "1216:10:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
                               "typeString": "function () view returns (address)"
                             }
                           },
-                          "id": 31569,
+                          "id": 37099,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1178,7 +1186,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "1208:12:75",
+                          "src": "1216:12:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -1190,18 +1198,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 31570,
+                            "id": 37100,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 50294,
-                            "src": "1224:3:75",
+                            "referencedDeclaration": 57369,
+                            "src": "1232:3:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 31571,
+                          "id": 37101,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1209,13 +1217,13 @@
                           "memberName": "sender",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": null,
-                          "src": "1224:10:75",
+                          "src": "1232:10:80",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
                           }
                         },
-                        "src": "1208:26:75",
+                        "src": "1216:26:80",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -1229,21 +1237,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 31567,
+                      "id": 37097,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "1200:7:75",
+                      "referencedDeclaration": 57372,
+                      "src": "1208:7:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 31573,
+                    "id": 37103,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1251,32 +1259,32 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1200:35:75",
+                    "src": "1208:35:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31574,
+                  "id": 37104,
                   "nodeType": "ExpressionStatement",
-                  "src": "1200:35:75"
+                  "src": "1208:35:80"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 31577,
+                    "id": 37107,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 31575,
+                      "id": 37105,
                       "name": "selfDestructionDisabled",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31551,
-                      "src": "1282:23:75",
+                      "referencedDeclaration": 37081,
+                      "src": "1290:23:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
@@ -1287,14 +1295,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 31576,
+                      "id": 37106,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "bool",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "1308:4:75",
+                      "src": "1316:4:80",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -1302,15 +1310,15 @@
                       },
                       "value": "true"
                     },
-                    "src": "1282:30:75",
+                    "src": "1290:30:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "id": 31578,
+                  "id": 37108,
                   "nodeType": "ExpressionStatement",
-                  "src": "1282:30:75"
+                  "src": "1290:30:80"
                 },
                 {
                   "eventCall": {
@@ -1320,18 +1328,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 31580,
+                          "id": 37110,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 50294,
-                          "src": "1379:3:75",
+                          "referencedDeclaration": 57369,
+                          "src": "1387:3:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 31581,
+                        "id": 37111,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1339,32 +1347,32 @@
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "1379:10:75",
+                        "src": "1387:10:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       ],
-                      "id": 31579,
+                      "id": 37109,
                       "name": "SelfDestructionDisabledEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31555,
-                      "src": "1350:28:75",
+                      "referencedDeclaration": 37085,
+                      "src": "1358:28:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 31582,
+                    "id": 37112,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1372,50 +1380,48 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1350:40:75",
+                    "src": "1358:40:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31583,
+                  "id": 37113,
                   "nodeType": "EmitStatement",
-                  "src": "1345:45:75"
+                  "src": "1353:45:80"
                 }
               ]
             },
             "documentation": "@notice Disable self-destruction of this contract\n @dev This operation can not be undone",
-            "id": 31585,
+            "id": 37115,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "disableSelfDestruction",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 31565,
+              "id": 37095,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1114:2:75"
+              "src": "1122:2:80"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 31566,
+              "id": 37096,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1132:0:75"
+              "src": "1140:0:80"
             },
-            "scope": 31613,
-            "src": "1083:314:75",
+            "scope": 37143,
+            "src": "1091:314:80",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 31611,
+              "id": 37141,
               "nodeType": "Block",
-              "src": "1490:376:75",
+              "src": "1498:376:80",
               "statements": [
                 {
                   "expression": {
@@ -1427,7 +1433,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 31593,
+                        "id": 37123,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1437,18 +1443,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 31589,
+                            "id": 37119,
                             "name": "destructor",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 31564,
-                            "src": "1566:10:75",
+                            "referencedDeclaration": 37094,
+                            "src": "1574:10:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
                               "typeString": "function () view returns (address)"
                             }
                           },
-                          "id": 31590,
+                          "id": 37120,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1456,7 +1462,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "1566:12:75",
+                          "src": "1574:12:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -1468,18 +1474,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 31591,
+                            "id": 37121,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 50294,
-                            "src": "1582:3:75",
+                            "referencedDeclaration": 57369,
+                            "src": "1590:3:80",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 31592,
+                          "id": 37122,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1487,13 +1493,13 @@
                           "memberName": "sender",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": null,
-                          "src": "1582:10:75",
+                          "src": "1590:10:80",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
                           }
                         },
-                        "src": "1566:26:75",
+                        "src": "1574:26:80",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -1507,21 +1513,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 31588,
+                      "id": 37118,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "1558:7:75",
+                      "referencedDeclaration": 57372,
+                      "src": "1566:7:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 31594,
+                    "id": 37124,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1529,15 +1535,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1558:35:75",
+                    "src": "1566:35:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31595,
+                  "id": 37125,
                   "nodeType": "ExpressionStatement",
-                  "src": "1558:35:75"
+                  "src": "1566:35:80"
                 },
                 {
                   "expression": {
@@ -1545,7 +1551,7 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 31598,
+                        "id": 37128,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1553,15 +1559,15 @@
                         "nodeType": "UnaryOperation",
                         "operator": "!",
                         "prefix": true,
-                        "src": "1675:24:75",
+                        "src": "1683:24:80",
                         "subExpression": {
                           "argumentTypes": null,
-                          "id": 31597,
+                          "id": 37127,
                           "name": "selfDestructionDisabled",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 31551,
-                          "src": "1676:23:75",
+                          "referencedDeclaration": 37081,
+                          "src": "1684:23:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
                             "typeString": "bool"
@@ -1580,21 +1586,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 31596,
+                      "id": 37126,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "1667:7:75",
+                      "referencedDeclaration": 57372,
+                      "src": "1675:7:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 31599,
+                    "id": 37129,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1602,15 +1608,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1667:33:75",
+                    "src": "1675:33:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31600,
+                  "id": 37130,
                   "nodeType": "ExpressionStatement",
-                  "src": "1667:33:75"
+                  "src": "1675:33:80"
                 },
                 {
                   "eventCall": {
@@ -1620,18 +1626,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 31602,
+                          "id": 37132,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 50294,
-                          "src": "1766:3:75",
+                          "referencedDeclaration": 57369,
+                          "src": "1774:3:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 31603,
+                        "id": 37133,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1639,32 +1645,32 @@
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "1766:10:75",
+                        "src": "1774:10:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       ],
-                      "id": 31601,
+                      "id": 37131,
                       "name": "TriggerSelfDestructionEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 31559,
-                      "src": "1738:27:75",
+                      "referencedDeclaration": 37089,
+                      "src": "1746:27:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 31604,
+                    "id": 37134,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1672,15 +1678,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1738:39:75",
+                    "src": "1746:39:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31605,
+                  "id": 37135,
                   "nodeType": "EmitStatement",
-                  "src": "1733:44:75"
+                  "src": "1741:44:80"
                 },
                 {
                   "expression": {
@@ -1690,18 +1696,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 31607,
+                          "id": 37137,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 50294,
-                          "src": "1848:3:75",
+                          "referencedDeclaration": 57369,
+                          "src": "1856:3:80",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 31608,
+                        "id": 37138,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1709,32 +1715,32 @@
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": null,
-                        "src": "1848:10:75",
+                        "src": "1856:10:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
+                          "typeIdentifier": "t_address_payable",
+                          "typeString": "address payable"
                         }
                       ],
-                      "id": 31606,
+                      "id": 37136,
                       "name": "selfdestruct",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 50302,
-                      "src": "1835:12:75",
+                      "referencedDeclaration": 57377,
+                      "src": "1843:12:80",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
-                        "typeString": "function (address)"
+                        "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_payable_$returns$__$",
+                        "typeString": "function (address payable)"
                       }
                     },
-                    "id": 31609,
+                    "id": 37139,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1742,57 +1748,55 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1835:24:75",
+                    "src": "1843:24:80",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 31610,
+                  "id": 37140,
                   "nodeType": "ExpressionStatement",
-                  "src": "1835:24:75"
+                  "src": "1843:24:80"
                 }
               ]
             },
             "documentation": "@notice Destroy this contract",
-            "id": 31612,
+            "id": 37142,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "triggerSelfDestruction",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 31586,
+              "id": 37116,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1472:2:75"
+              "src": "1480:2:80"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 31587,
+              "id": 37117,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1490:0:75"
+              "src": "1498:0:80"
             },
-            "scope": 31613,
-            "src": "1441:425:75",
+            "scope": 37143,
+            "src": "1449:425:80",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 31614,
-        "src": "236:1632:75"
+        "scope": 37144,
+        "src": "244:1632:80"
       }
     ],
-    "src": "122:1747:75"
+    "src": "122:1755:80"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T06:20:37.039Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.485Z"
 }

@@ -2,22 +2,97 @@
   "contractName": "TransferControllerManageable",
   "abi": [
     {
-      "constant": false,
-      "inputs": [],
-      "name": "triggerSelfDestruction",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "contract TransferControllerManager",
+          "name": "oldTransferControllerManager",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "contract TransferControllerManager",
+          "name": "newTransferControllerManager",
+          "type": "address"
+        }
+      ],
+      "name": "SetTransferControllerManagerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
     },
     {
       "constant": true,
       "inputs": [],
-      "name": "selfDestructionDisabled",
+      "name": "deployer",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
-          "type": "bool"
+          "type": "address"
         }
       ],
       "payable": false,
@@ -30,20 +105,7 @@
       "name": "destructor",
       "outputs": [
         {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "operator",
-      "outputs": [
-        {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -62,9 +124,40 @@
       "type": "function"
     },
     {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "newDeployer",
           "type": "address"
         }
@@ -76,23 +169,10 @@
       "type": "function"
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "transferControllerManager",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "newOperator",
           "type": "address"
         }
@@ -106,9 +186,10 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "deployer",
+      "name": "transferControllerManager",
       "outputs": [
         {
+          "internalType": "contract TransferControllerManager",
           "name": "",
           "type": "address"
         }
@@ -118,84 +199,19 @@
       "type": "function"
     },
     {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "oldTransferControllerManager",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "newTransferControllerManager",
-          "type": "address"
-        }
-      ],
-      "name": "SetTransferControllerManagerEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "oldDeployer",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "newDeployer",
-          "type": "address"
-        }
-      ],
-      "name": "SetDeployerEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "oldOperator",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "newOperator",
-          "type": "address"
-        }
-      ],
-      "name": "SetOperatorEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "wallet",
-          "type": "address"
-        }
-      ],
-      "name": "SelfDestructionDisabledEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "wallet",
-          "type": "address"
-        }
-      ],
-      "name": "TriggerSelfDestructionEvent",
-      "type": "event"
+      "constant": false,
+      "inputs": [],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "constant": false,
       "inputs": [
         {
+          "internalType": "contract TransferControllerManager",
           "name": "newTransferControllerManager",
           "type": "address"
         }
@@ -211,40 +227,43 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {TransferControllerManager} from \"./TransferControllerManager.sol\";\nimport {TransferController} from \"./TransferController.sol\";\n\n/**\n * @title TransferControllerManageable\n * @notice An ownable with a transfer controller manager\n */\ncontract TransferControllerManageable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    TransferControllerManager public transferControllerManager;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetTransferControllerManagerEvent(TransferControllerManager oldTransferControllerManager,\n        TransferControllerManager newTransferControllerManager);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the currency manager contract\n    /// @param newTransferControllerManager The (address of) TransferControllerManager contract instance\n    function setTransferControllerManager(TransferControllerManager newTransferControllerManager)\n    public\n    onlyDeployer\n    notNullAddress(newTransferControllerManager)\n    notSameAddresses(newTransferControllerManager, transferControllerManager)\n    {\n        //set new currency manager\n        TransferControllerManager oldTransferControllerManager = transferControllerManager;\n        transferControllerManager = newTransferControllerManager;\n\n        // Emit event\n        emit SetTransferControllerManagerEvent(oldTransferControllerManager, newTransferControllerManager);\n    }\n\n    /// @notice Get the transfer controller of the given currency contract address and standard\n    function transferController(address currencyCt, string standard)\n    internal\n    view\n    returns (TransferController)\n    {\n        return transferControllerManager.transferController(currencyCt, standard);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier transferControllerManagerInitialized() {\n        require(transferControllerManager != address(0));\n        _;\n    }\n}\n",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\nimport {Ownable} from \"./Ownable.sol\";\nimport {TransferControllerManager} from \"./TransferControllerManager.sol\";\nimport {TransferController} from \"./TransferController.sol\";\n\n/**\n * @title TransferControllerManageable\n * @notice An ownable with a transfer controller manager\n */\ncontract TransferControllerManageable is Ownable {\n    //\n    // Variables\n    // -----------------------------------------------------------------------------------------------------------------\n    TransferControllerManager public transferControllerManager;\n\n    //\n    // Events\n    // -----------------------------------------------------------------------------------------------------------------\n    event SetTransferControllerManagerEvent(TransferControllerManager oldTransferControllerManager,\n        TransferControllerManager newTransferControllerManager);\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    /// @notice Set the currency manager contract\n    /// @param newTransferControllerManager The (address of) TransferControllerManager contract instance\n    function setTransferControllerManager(TransferControllerManager newTransferControllerManager)\n    public\n    onlyDeployer\n    notNullAddress(address(newTransferControllerManager))\n    notSameAddresses(address(newTransferControllerManager), address(transferControllerManager))\n    {\n        //set new currency manager\n        TransferControllerManager oldTransferControllerManager = transferControllerManager;\n        transferControllerManager = newTransferControllerManager;\n\n        // Emit event\n        emit SetTransferControllerManagerEvent(oldTransferControllerManager, newTransferControllerManager);\n    }\n\n    /// @notice Get the transfer controller of the given currency contract address and standard\n    function transferController(address currencyCt, string memory standard)\n    internal\n    view\n    returns (TransferController)\n    {\n        return transferControllerManager.transferController(currencyCt, standard);\n    }\n\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier transferControllerManagerInitialized() {\n        require(address(transferControllerManager) != address(0), \"Transfer controller manager not initialized [TransferControllerManageable.sol:63]\");\n        _;\n    }\n}",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/TransferControllerManageable.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransferControllerManageable.sol",
     "exportedSymbols": {
       "TransferControllerManageable": [
-        35340
+        41181
       ]
     },
-    "id": 35341,
+    "id": 41182,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 35267,
+        "id": 41099,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:88"
+        "src": "122:32:93"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
         "file": "./Ownable.sol",
-        "id": 35269,
+        "id": 41101,
         "nodeType": "ImportDirective",
-        "scope": 35341,
-        "sourceUnit": 25427,
-        "src": "148:38:88",
+        "scope": 41182,
+        "sourceUnit": 30686,
+        "src": "156:38:93",
         "symbolAliases": [
           {
-            "foreign": 35268,
+            "foreign": 41100,
             "local": null
           }
         ],
@@ -253,14 +272,14 @@
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransferControllerManager.sol",
         "file": "./TransferControllerManager.sol",
-        "id": 35271,
+        "id": 41103,
         "nodeType": "ImportDirective",
-        "scope": 35341,
-        "sourceUnit": 35774,
-        "src": "187:74:88",
+        "scope": 41182,
+        "sourceUnit": 41618,
+        "src": "195:74:93",
         "symbolAliases": [
           {
-            "foreign": 35270,
+            "foreign": 41102,
             "local": null
           }
         ],
@@ -269,14 +288,14 @@
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransferController.sol",
         "file": "./TransferController.sol",
-        "id": 35273,
+        "id": 41105,
         "nodeType": "ImportDirective",
-        "scope": 35341,
-        "sourceUnit": 35266,
-        "src": "262:60:88",
+        "scope": 41182,
+        "sourceUnit": 41098,
+        "src": "270:60:93",
         "symbolAliases": [
           {
-            "foreign": 35272,
+            "foreign": 41104,
             "local": null
           }
         ],
@@ -288,61 +307,61 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 35274,
+              "id": 41106,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 25426,
-              "src": "469:7:88",
+              "referencedDeclaration": 30685,
+              "src": "477:7:93",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeIdentifier": "t_contract$_Ownable_$30685",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 35275,
+            "id": 41107,
             "nodeType": "InheritanceSpecifier",
-            "src": "469:7:88"
+            "src": "477:7:93"
           }
         ],
         "contractDependencies": [
-          19393,
-          25426,
-          31613
+          23037,
+          30685,
+          37143
         ],
         "contractKind": "contract",
         "documentation": "@title TransferControllerManageable\n@notice An ownable with a transfer controller manager",
         "fullyImplemented": false,
-        "id": 35340,
+        "id": 41181,
         "linearizedBaseContracts": [
-          35340,
-          25426,
-          31613,
-          19393
+          41181,
+          30685,
+          37143,
+          23037
         ],
         "name": "TransferControllerManageable",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 35277,
+            "id": 41109,
             "name": "transferControllerManager",
             "nodeType": "VariableDeclaration",
-            "scope": 35340,
-            "src": "628:58:88",
+            "scope": 41181,
+            "src": "636:58:93",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+              "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
               "typeString": "contract TransferControllerManager"
             },
             "typeName": {
               "contractScope": null,
-              "id": 35276,
+              "id": 41108,
               "name": "TransferControllerManager",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 35773,
-              "src": "628:25:88",
+              "referencedDeclaration": 41617,
+              "src": "636:25:93",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                 "typeString": "contract TransferControllerManager"
               }
             },
@@ -352,36 +371,36 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 35283,
+            "id": 41115,
             "name": "SetTransferControllerManagerEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 35282,
+              "id": 41114,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35279,
+                  "id": 41111,
                   "indexed": false,
                   "name": "oldTransferControllerManager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35283,
-                  "src": "875:54:88",
+                  "scope": 41115,
+                  "src": "883:54:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                    "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                     "typeString": "contract TransferControllerManager"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35278,
+                    "id": 41110,
                     "name": "TransferControllerManager",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35773,
-                    "src": "875:25:88",
+                    "referencedDeclaration": 41617,
+                    "src": "883:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
@@ -390,27 +409,27 @@
                 },
                 {
                   "constant": false,
-                  "id": 35281,
+                  "id": 41113,
                   "indexed": false,
                   "name": "newTransferControllerManager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35283,
-                  "src": "939:54:88",
+                  "scope": 41115,
+                  "src": "947:54:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                    "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                     "typeString": "contract TransferControllerManager"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35280,
+                    "id": 41112,
                     "name": "TransferControllerManager",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35773,
-                    "src": "939:25:88",
+                    "referencedDeclaration": 41617,
+                    "src": "947:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
@@ -418,43 +437,43 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "874:120:88"
+              "src": "882:120:93"
             },
-            "src": "835:160:88"
+            "src": "843:160:93"
           },
           {
             "body": {
-              "id": 35310,
+              "id": 41148,
               "nodeType": "Block",
-              "src": "1554:331:88",
+              "src": "1589:331:93",
               "statements": [
                 {
                   "assignments": [
-                    35298
+                    41136
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 35298,
+                      "id": 41136,
                       "name": "oldTransferControllerManager",
                       "nodeType": "VariableDeclaration",
-                      "scope": 35311,
-                      "src": "1599:54:88",
+                      "scope": 41148,
+                      "src": "1634:54:93",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                        "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                         "typeString": "contract TransferControllerManager"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 35297,
+                        "id": 41135,
                         "name": "TransferControllerManager",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 35773,
-                        "src": "1599:25:88",
+                        "referencedDeclaration": 41617,
+                        "src": "1634:25:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       },
@@ -462,41 +481,41 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 35300,
+                  "id": 41138,
                   "initialValue": {
                     "argumentTypes": null,
-                    "id": 35299,
+                    "id": 41137,
                     "name": "transferControllerManager",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 35277,
-                    "src": "1656:25:88",
+                    "referencedDeclaration": 41109,
+                    "src": "1691:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1599:82:88"
+                  "src": "1634:82:93"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 35303,
+                    "id": 41141,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 35301,
+                      "id": 41139,
                       "name": "transferControllerManager",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 35277,
-                      "src": "1691:25:88",
+                      "referencedDeclaration": 41109,
+                      "src": "1726:25:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                        "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                         "typeString": "contract TransferControllerManager"
                       }
                     },
@@ -504,26 +523,26 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 35302,
+                      "id": 41140,
                       "name": "newTransferControllerManager",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 35285,
-                      "src": "1719:28:88",
+                      "referencedDeclaration": 41117,
+                      "src": "1754:28:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                        "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                         "typeString": "contract TransferControllerManager"
                       }
                     },
-                    "src": "1691:56:88",
+                    "src": "1726:56:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
-                  "id": 35304,
+                  "id": 41142,
                   "nodeType": "ExpressionStatement",
-                  "src": "1691:56:88"
+                  "src": "1726:56:93"
                 },
                 {
                   "eventCall": {
@@ -531,27 +550,27 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 35306,
+                        "id": 41144,
                         "name": "oldTransferControllerManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35298,
-                        "src": "1819:28:88",
+                        "referencedDeclaration": 41136,
+                        "src": "1854:28:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 35307,
+                        "id": 41145,
                         "name": "newTransferControllerManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35285,
-                        "src": "1849:28:88",
+                        "referencedDeclaration": 41117,
+                        "src": "1884:28:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       }
@@ -559,26 +578,26 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         },
                         {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       ],
-                      "id": 35305,
+                      "id": 41143,
                       "name": "SetTransferControllerManagerEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 35283,
-                      "src": "1785:33:88",
+                      "referencedDeclaration": 41115,
+                      "src": "1820:33:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TransferControllerManager_$35773_$_t_contract$_TransferControllerManager_$35773_$returns$__$",
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TransferControllerManager_$41617_$_t_contract$_TransferControllerManager_$41617_$returns$__$",
                         "typeString": "function (contract TransferControllerManager,contract TransferControllerManager)"
                       }
                     },
-                    "id": 35308,
+                    "id": 41146,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -586,151 +605,264 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1785:93:88",
+                    "src": "1820:93:93",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 35309,
+                  "id": 41147,
                   "nodeType": "EmitStatement",
-                  "src": "1780:98:88"
+                  "src": "1815:98:93"
                 }
               ]
             },
             "documentation": "@notice Set the currency manager contract\n @param newTransferControllerManager The (address of) TransferControllerManager contract instance",
-            "id": 35311,
+            "id": 41149,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 35288,
+                "id": 41120,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 35287,
+                  "id": 41119,
                   "name": "onlyDeployer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 25377,
-                  "src": "1410:12:88",
+                  "referencedDeclaration": 30636,
+                  "src": "1418:12:93",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1410:12:88"
+                "src": "1418:12:93"
               },
               {
                 "arguments": [
                   {
                     "argumentTypes": null,
-                    "id": 35290,
-                    "name": "newTransferControllerManager",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 35285,
-                    "src": "1442:28:88",
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 41123,
+                        "name": "newTransferControllerManager",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41117,
+                        "src": "1458:28:93",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      ],
+                      "id": 41122,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1450:7:93",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 41124,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1450:37:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                      "typeString": "contract TransferControllerManager"
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
                     }
                   }
                 ],
-                "id": 35291,
+                "id": 41125,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 35289,
+                  "id": 41121,
                   "name": "notNullAddress",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 19344,
-                  "src": "1427:14:88",
+                  "referencedDeclaration": 22988,
+                  "src": "1435:14:93",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_address_$",
                     "typeString": "modifier (address)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1427:44:88"
+                "src": "1435:53:93"
               },
               {
                 "arguments": [
                   {
                     "argumentTypes": null,
-                    "id": 35293,
-                    "name": "newTransferControllerManager",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 35285,
-                    "src": "1493:28:88",
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 41128,
+                        "name": "newTransferControllerManager",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41117,
+                        "src": "1518:28:93",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      ],
+                      "id": 41127,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1510:7:93",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 41129,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1510:37:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                      "typeString": "contract TransferControllerManager"
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
                     }
                   },
                   {
                     "argumentTypes": null,
-                    "id": 35294,
-                    "name": "transferControllerManager",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 35277,
-                    "src": "1523:25:88",
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 41131,
+                        "name": "transferControllerManager",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41109,
+                        "src": "1557:25:93",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      ],
+                      "id": 41130,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1549:7:93",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 41132,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1549:34:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                      "typeString": "contract TransferControllerManager"
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
                     }
                   }
                 ],
-                "id": 35295,
+                "id": 41133,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 35292,
+                  "id": 41126,
                   "name": "notSameAddresses",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 19392,
-                  "src": "1476:16:88",
+                  "referencedDeclaration": 23036,
+                  "src": "1493:16:93",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
                     "typeString": "modifier (address,address)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1476:73:88"
+                "src": "1493:91:93"
               }
             ],
             "name": "setTransferControllerManager",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 35286,
+              "id": 41118,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35285,
+                  "id": 41117,
                   "name": "newTransferControllerManager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35311,
-                  "src": "1339:54:88",
+                  "scope": 41149,
+                  "src": "1347:54:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                    "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                     "typeString": "contract TransferControllerManager"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35284,
+                    "id": 41116,
                     "name": "TransferControllerManager",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35773,
-                    "src": "1339:25:88",
+                    "referencedDeclaration": 41617,
+                    "src": "1347:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
@@ -738,26 +870,25 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1338:56:88"
+              "src": "1346:56:93"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 35296,
+              "id": 41134,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1554:0:88"
+              "src": "1589:0:93"
             },
-            "scope": 35340,
-            "src": "1301:584:88",
+            "scope": 41181,
+            "src": "1309:611:93",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 35326,
+              "id": 41164,
               "nodeType": "Block",
-              "src": "2111:90:88",
+              "src": "2153:90:93",
               "statements": [
                 {
                   "expression": {
@@ -765,12 +896,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 35322,
+                        "id": 41160,
                         "name": "currencyCt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35313,
-                        "src": "2173:10:88",
+                        "referencedDeclaration": 41151,
+                        "src": "2215:10:93",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -778,12 +909,12 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 35323,
+                        "id": 41161,
                         "name": "standard",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35315,
-                        "src": "2185:8:88",
+                        "referencedDeclaration": 41153,
+                        "src": "2227:8:93",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
                           "typeString": "string memory"
@@ -803,32 +934,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 35320,
+                        "id": 41158,
                         "name": "transferControllerManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35277,
-                        "src": "2128:25:88",
+                        "referencedDeclaration": 41109,
+                        "src": "2170:25:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       },
-                      "id": 35321,
+                      "id": 41159,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "transferController",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 35772,
-                      "src": "2128:44:88",
+                      "referencedDeclaration": 41616,
+                      "src": "2170:44:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_external_view$_t_address_$_t_string_memory_ptr_$returns$_t_contract$_TransferController_$35265_$",
+                        "typeIdentifier": "t_function_external_view$_t_address_$_t_string_memory_ptr_$returns$_t_contract$_TransferController_$41097_$",
                         "typeString": "function (address,string memory) view external returns (contract TransferController)"
                       }
                     },
-                    "id": 35324,
+                    "id": 41162,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -836,38 +967,37 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "2128:66:88",
+                    "src": "2170:66:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferController_$35265",
+                      "typeIdentifier": "t_contract$_TransferController_$41097",
                       "typeString": "contract TransferController"
                     }
                   },
-                  "functionReturnParameters": 35319,
-                  "id": 35325,
+                  "functionReturnParameters": 41157,
+                  "id": 41163,
                   "nodeType": "Return",
-                  "src": "2121:73:88"
+                  "src": "2163:73:93"
                 }
               ]
             },
             "documentation": "@notice Get the transfer controller of the given currency contract address and standard",
-            "id": 35327,
+            "id": 41165,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "transferController",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 35316,
+              "id": 41154,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35313,
+                  "id": 41151,
                   "name": "currencyCt",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35327,
-                  "src": "2015:18:88",
+                  "scope": 41165,
+                  "src": "2050:18:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -875,10 +1005,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 35312,
+                    "id": 41150,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2015:7:88",
+                    "src": "2050:7:93",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -889,22 +1020,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 35315,
+                  "id": 41153,
                   "name": "standard",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35327,
-                  "src": "2035:15:88",
+                  "scope": 41165,
+                  "src": "2070:22:93",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 35314,
+                    "id": 41152,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2035:6:88",
+                    "src": "2070:6:93",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -914,35 +1045,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2014:37:88"
+              "src": "2049:44:93"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 35319,
+              "id": 41157,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35318,
+                  "id": 41156,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35327,
-                  "src": "2087:18:88",
+                  "scope": 41165,
+                  "src": "2129:18:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferController_$35265",
+                    "typeIdentifier": "t_contract$_TransferController_$41097",
                     "typeString": "contract TransferController"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35317,
+                    "id": 41155,
                     "name": "TransferController",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35265,
-                    "src": "2087:18:88",
+                    "referencedDeclaration": 41097,
+                    "src": "2129:18:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferController_$35265",
+                      "typeIdentifier": "t_contract$_TransferController_$41097",
                       "typeString": "contract TransferController"
                     }
                   },
@@ -950,19 +1080,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2086:20:88"
+              "src": "2128:20:93"
             },
-            "scope": 35340,
-            "src": "1987:214:88",
+            "scope": 41181,
+            "src": "2022:221:93",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 35338,
+              "id": 41179,
               "nodeType": "Block",
-              "src": "2400:76:88",
+              "src": "2442:170:93",
               "statements": [
                 {
                   "expression": {
@@ -974,22 +1104,60 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 35334,
+                        "id": 41174,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 35330,
-                          "name": "transferControllerManager",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 35277,
-                          "src": "2418:25:88",
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 41169,
+                              "name": "transferControllerManager",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 41109,
+                              "src": "2468:25:93",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                                "typeString": "contract TransferControllerManager"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                                "typeString": "contract TransferControllerManager"
+                              }
+                            ],
+                            "id": 41168,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2460:7:93",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 41170,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2460:34:93",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                            "typeString": "contract TransferControllerManager"
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
                           }
                         },
                         "nodeType": "BinaryOperation",
@@ -1000,14 +1168,14 @@
                             {
                               "argumentTypes": null,
                               "hexValue": "30",
-                              "id": 35332,
+                              "id": 41172,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "kind": "number",
                               "lValueRequested": false,
                               "nodeType": "Literal",
-                              "src": "2455:1:88",
+                              "src": "2506:1:93",
                               "subdenomination": null,
                               "typeDescriptions": {
                                 "typeIdentifier": "t_rational_0_by_1",
@@ -1023,20 +1191,20 @@
                                 "typeString": "int_const 0"
                               }
                             ],
-                            "id": 35331,
+                            "id": 41171,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "lValueRequested": false,
                             "nodeType": "ElementaryTypeNameExpression",
-                            "src": "2447:7:88",
+                            "src": "2498:7:93",
                             "typeDescriptions": {
                               "typeIdentifier": "t_type$_t_address_$",
                               "typeString": "type(address)"
                             },
                             "typeName": "address"
                           },
-                          "id": 35333,
+                          "id": 41173,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -1044,17 +1212,35 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "2447:10:88",
+                          "src": "2498:10:93",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
                           }
                         },
-                        "src": "2418:39:88",
+                        "src": "2460:48:93",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "5472616e7366657220636f6e74726f6c6c6572206d616e61676572206e6f7420696e697469616c697a6564205b5472616e73666572436f6e74726f6c6c65724d616e61676561626c652e736f6c3a36335d",
+                        "id": 41175,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2510:83:93",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_9578c75ff2e17287db62e02d5ebbe4da395c95c514e5020ad679ab32328c93f9",
+                          "typeString": "literal_string \"Transfer controller manager not initialized [TransferControllerManageable.sol:63]\""
+                        },
+                        "value": "Transfer controller manager not initialized [TransferControllerManageable.sol:63]"
                       }
                     ],
                     "expression": {
@@ -1062,23 +1248,27 @@
                         {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_9578c75ff2e17287db62e02d5ebbe4da395c95c514e5020ad679ab32328c93f9",
+                          "typeString": "literal_string \"Transfer controller manager not initialized [TransferControllerManageable.sol:63]\""
                         }
                       ],
-                      "id": 35329,
+                      "id": 41167,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "2410:7:88",
+                      "referencedDeclaration": 57373,
+                      "src": "2452:7:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
-                        "typeString": "function (bool) pure"
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 35335,
+                    "id": 41176,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1086,75 +1276,78 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "2410:48:88",
+                    "src": "2452:142:93",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 35336,
+                  "id": 41177,
                   "nodeType": "ExpressionStatement",
-                  "src": "2410:48:88"
+                  "src": "2452:142:93"
                 },
                 {
-                  "id": 35337,
+                  "id": 41178,
                   "nodeType": "PlaceholderStatement",
-                  "src": "2468:1:88"
+                  "src": "2604:1:93"
                 }
               ]
             },
             "documentation": null,
-            "id": 35339,
+            "id": 41180,
             "name": "transferControllerManagerInitialized",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 35328,
+              "id": 41166,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2397:2:88"
+              "src": "2439:2:93"
             },
-            "src": "2352:124:88",
+            "src": "2394:218:93",
             "visibility": "internal"
           }
         ],
-        "scope": 35341,
-        "src": "428:2050:88"
+        "scope": 41182,
+        "src": "436:2178:93"
       }
     ],
-    "src": "122:2357:88"
+    "src": "122:2492:93"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransferControllerManageable.sol",
     "exportedSymbols": {
       "TransferControllerManageable": [
-        35340
+        41181
       ]
     },
-    "id": 35341,
+    "id": 41182,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 35267,
+        "id": 41099,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:88"
+        "src": "122:32:93"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Ownable.sol",
         "file": "./Ownable.sol",
-        "id": 35269,
+        "id": 41101,
         "nodeType": "ImportDirective",
-        "scope": 35341,
-        "sourceUnit": 25427,
-        "src": "148:38:88",
+        "scope": 41182,
+        "sourceUnit": 30686,
+        "src": "156:38:93",
         "symbolAliases": [
           {
-            "foreign": 35268,
+            "foreign": 41100,
             "local": null
           }
         ],
@@ -1163,14 +1356,14 @@
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransferControllerManager.sol",
         "file": "./TransferControllerManager.sol",
-        "id": 35271,
+        "id": 41103,
         "nodeType": "ImportDirective",
-        "scope": 35341,
-        "sourceUnit": 35774,
-        "src": "187:74:88",
+        "scope": 41182,
+        "sourceUnit": 41618,
+        "src": "195:74:93",
         "symbolAliases": [
           {
-            "foreign": 35270,
+            "foreign": 41102,
             "local": null
           }
         ],
@@ -1179,14 +1372,14 @@
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/TransferController.sol",
         "file": "./TransferController.sol",
-        "id": 35273,
+        "id": 41105,
         "nodeType": "ImportDirective",
-        "scope": 35341,
-        "sourceUnit": 35266,
-        "src": "262:60:88",
+        "scope": 41182,
+        "sourceUnit": 41098,
+        "src": "270:60:93",
         "symbolAliases": [
           {
-            "foreign": 35272,
+            "foreign": 41104,
             "local": null
           }
         ],
@@ -1198,61 +1391,61 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 35274,
+              "id": 41106,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 25426,
-              "src": "469:7:88",
+              "referencedDeclaration": 30685,
+              "src": "477:7:93",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$25426",
+                "typeIdentifier": "t_contract$_Ownable_$30685",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 35275,
+            "id": 41107,
             "nodeType": "InheritanceSpecifier",
-            "src": "469:7:88"
+            "src": "477:7:93"
           }
         ],
         "contractDependencies": [
-          19393,
-          25426,
-          31613
+          23037,
+          30685,
+          37143
         ],
         "contractKind": "contract",
         "documentation": "@title TransferControllerManageable\n@notice An ownable with a transfer controller manager",
         "fullyImplemented": false,
-        "id": 35340,
+        "id": 41181,
         "linearizedBaseContracts": [
-          35340,
-          25426,
-          31613,
-          19393
+          41181,
+          30685,
+          37143,
+          23037
         ],
         "name": "TransferControllerManageable",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 35277,
+            "id": 41109,
             "name": "transferControllerManager",
             "nodeType": "VariableDeclaration",
-            "scope": 35340,
-            "src": "628:58:88",
+            "scope": 41181,
+            "src": "636:58:93",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+              "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
               "typeString": "contract TransferControllerManager"
             },
             "typeName": {
               "contractScope": null,
-              "id": 35276,
+              "id": 41108,
               "name": "TransferControllerManager",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 35773,
-              "src": "628:25:88",
+              "referencedDeclaration": 41617,
+              "src": "636:25:93",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                 "typeString": "contract TransferControllerManager"
               }
             },
@@ -1262,36 +1455,36 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 35283,
+            "id": 41115,
             "name": "SetTransferControllerManagerEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 35282,
+              "id": 41114,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35279,
+                  "id": 41111,
                   "indexed": false,
                   "name": "oldTransferControllerManager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35283,
-                  "src": "875:54:88",
+                  "scope": 41115,
+                  "src": "883:54:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                    "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                     "typeString": "contract TransferControllerManager"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35278,
+                    "id": 41110,
                     "name": "TransferControllerManager",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35773,
-                    "src": "875:25:88",
+                    "referencedDeclaration": 41617,
+                    "src": "883:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
@@ -1300,27 +1493,27 @@
                 },
                 {
                   "constant": false,
-                  "id": 35281,
+                  "id": 41113,
                   "indexed": false,
                   "name": "newTransferControllerManager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35283,
-                  "src": "939:54:88",
+                  "scope": 41115,
+                  "src": "947:54:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                    "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                     "typeString": "contract TransferControllerManager"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35280,
+                    "id": 41112,
                     "name": "TransferControllerManager",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35773,
-                    "src": "939:25:88",
+                    "referencedDeclaration": 41617,
+                    "src": "947:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
@@ -1328,43 +1521,43 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "874:120:88"
+              "src": "882:120:93"
             },
-            "src": "835:160:88"
+            "src": "843:160:93"
           },
           {
             "body": {
-              "id": 35310,
+              "id": 41148,
               "nodeType": "Block",
-              "src": "1554:331:88",
+              "src": "1589:331:93",
               "statements": [
                 {
                   "assignments": [
-                    35298
+                    41136
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 35298,
+                      "id": 41136,
                       "name": "oldTransferControllerManager",
                       "nodeType": "VariableDeclaration",
-                      "scope": 35311,
-                      "src": "1599:54:88",
+                      "scope": 41148,
+                      "src": "1634:54:93",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                        "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                         "typeString": "contract TransferControllerManager"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 35297,
+                        "id": 41135,
                         "name": "TransferControllerManager",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 35773,
-                        "src": "1599:25:88",
+                        "referencedDeclaration": 41617,
+                        "src": "1634:25:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       },
@@ -1372,41 +1565,41 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 35300,
+                  "id": 41138,
                   "initialValue": {
                     "argumentTypes": null,
-                    "id": 35299,
+                    "id": 41137,
                     "name": "transferControllerManager",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 35277,
-                    "src": "1656:25:88",
+                    "referencedDeclaration": 41109,
+                    "src": "1691:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1599:82:88"
+                  "src": "1634:82:93"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 35303,
+                    "id": 41141,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 35301,
+                      "id": 41139,
                       "name": "transferControllerManager",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 35277,
-                      "src": "1691:25:88",
+                      "referencedDeclaration": 41109,
+                      "src": "1726:25:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                        "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                         "typeString": "contract TransferControllerManager"
                       }
                     },
@@ -1414,26 +1607,26 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 35302,
+                      "id": 41140,
                       "name": "newTransferControllerManager",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 35285,
-                      "src": "1719:28:88",
+                      "referencedDeclaration": 41117,
+                      "src": "1754:28:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                        "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                         "typeString": "contract TransferControllerManager"
                       }
                     },
-                    "src": "1691:56:88",
+                    "src": "1726:56:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
-                  "id": 35304,
+                  "id": 41142,
                   "nodeType": "ExpressionStatement",
-                  "src": "1691:56:88"
+                  "src": "1726:56:93"
                 },
                 {
                   "eventCall": {
@@ -1441,27 +1634,27 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 35306,
+                        "id": 41144,
                         "name": "oldTransferControllerManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35298,
-                        "src": "1819:28:88",
+                        "referencedDeclaration": 41136,
+                        "src": "1854:28:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 35307,
+                        "id": 41145,
                         "name": "newTransferControllerManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35285,
-                        "src": "1849:28:88",
+                        "referencedDeclaration": 41117,
+                        "src": "1884:28:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       }
@@ -1469,26 +1662,26 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         },
                         {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       ],
-                      "id": 35305,
+                      "id": 41143,
                       "name": "SetTransferControllerManagerEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 35283,
-                      "src": "1785:33:88",
+                      "referencedDeclaration": 41115,
+                      "src": "1820:33:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TransferControllerManager_$35773_$_t_contract$_TransferControllerManager_$35773_$returns$__$",
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_TransferControllerManager_$41617_$_t_contract$_TransferControllerManager_$41617_$returns$__$",
                         "typeString": "function (contract TransferControllerManager,contract TransferControllerManager)"
                       }
                     },
-                    "id": 35308,
+                    "id": 41146,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1496,151 +1689,264 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1785:93:88",
+                    "src": "1820:93:93",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 35309,
+                  "id": 41147,
                   "nodeType": "EmitStatement",
-                  "src": "1780:98:88"
+                  "src": "1815:98:93"
                 }
               ]
             },
             "documentation": "@notice Set the currency manager contract\n @param newTransferControllerManager The (address of) TransferControllerManager contract instance",
-            "id": 35311,
+            "id": 41149,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [
               {
                 "arguments": null,
-                "id": 35288,
+                "id": 41120,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 35287,
+                  "id": 41119,
                   "name": "onlyDeployer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 25377,
-                  "src": "1410:12:88",
+                  "referencedDeclaration": 30636,
+                  "src": "1418:12:93",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
                     "typeString": "modifier ()"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1410:12:88"
+                "src": "1418:12:93"
               },
               {
                 "arguments": [
                   {
                     "argumentTypes": null,
-                    "id": 35290,
-                    "name": "newTransferControllerManager",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 35285,
-                    "src": "1442:28:88",
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 41123,
+                        "name": "newTransferControllerManager",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41117,
+                        "src": "1458:28:93",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      ],
+                      "id": 41122,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1450:7:93",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 41124,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1450:37:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                      "typeString": "contract TransferControllerManager"
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
                     }
                   }
                 ],
-                "id": 35291,
+                "id": 41125,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 35289,
+                  "id": 41121,
                   "name": "notNullAddress",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 19344,
-                  "src": "1427:14:88",
+                  "referencedDeclaration": 22988,
+                  "src": "1435:14:93",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_address_$",
                     "typeString": "modifier (address)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1427:44:88"
+                "src": "1435:53:93"
               },
               {
                 "arguments": [
                   {
                     "argumentTypes": null,
-                    "id": 35293,
-                    "name": "newTransferControllerManager",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 35285,
-                    "src": "1493:28:88",
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 41128,
+                        "name": "newTransferControllerManager",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41117,
+                        "src": "1518:28:93",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      ],
+                      "id": 41127,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1510:7:93",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 41129,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1510:37:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                      "typeString": "contract TransferControllerManager"
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
                     }
                   },
                   {
                     "argumentTypes": null,
-                    "id": 35294,
-                    "name": "transferControllerManager",
-                    "nodeType": "Identifier",
-                    "overloadedDeclarations": [],
-                    "referencedDeclaration": 35277,
-                    "src": "1523:25:88",
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 41131,
+                        "name": "transferControllerManager",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 41109,
+                        "src": "1557:25:93",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                          "typeString": "contract TransferControllerManager"
+                        }
+                      ],
+                      "id": 41130,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1549:7:93",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_address_$",
+                        "typeString": "type(address)"
+                      },
+                      "typeName": "address"
+                    },
+                    "id": 41132,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1549:34:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                      "typeString": "contract TransferControllerManager"
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
                     }
                   }
                 ],
-                "id": 35295,
+                "id": 41133,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 35292,
+                  "id": 41126,
                   "name": "notSameAddresses",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 19392,
-                  "src": "1476:16:88",
+                  "referencedDeclaration": 23036,
+                  "src": "1493:16:93",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_address_$_t_address_$",
                     "typeString": "modifier (address,address)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1476:73:88"
+                "src": "1493:91:93"
               }
             ],
             "name": "setTransferControllerManager",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 35286,
+              "id": 41118,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35285,
+                  "id": 41117,
                   "name": "newTransferControllerManager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35311,
-                  "src": "1339:54:88",
+                  "scope": 41149,
+                  "src": "1347:54:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                    "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                     "typeString": "contract TransferControllerManager"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35284,
+                    "id": 41116,
                     "name": "TransferControllerManager",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35773,
-                    "src": "1339:25:88",
+                    "referencedDeclaration": 41617,
+                    "src": "1347:25:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                      "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                       "typeString": "contract TransferControllerManager"
                     }
                   },
@@ -1648,26 +1954,25 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1338:56:88"
+              "src": "1346:56:93"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 35296,
+              "id": 41134,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1554:0:88"
+              "src": "1589:0:93"
             },
-            "scope": 35340,
-            "src": "1301:584:88",
+            "scope": 41181,
+            "src": "1309:611:93",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 35326,
+              "id": 41164,
               "nodeType": "Block",
-              "src": "2111:90:88",
+              "src": "2153:90:93",
               "statements": [
                 {
                   "expression": {
@@ -1675,12 +1980,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 35322,
+                        "id": 41160,
                         "name": "currencyCt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35313,
-                        "src": "2173:10:88",
+                        "referencedDeclaration": 41151,
+                        "src": "2215:10:93",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1688,12 +1993,12 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 35323,
+                        "id": 41161,
                         "name": "standard",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35315,
-                        "src": "2185:8:88",
+                        "referencedDeclaration": 41153,
+                        "src": "2227:8:93",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
                           "typeString": "string memory"
@@ -1713,32 +2018,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 35320,
+                        "id": 41158,
                         "name": "transferControllerManager",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 35277,
-                        "src": "2128:25:88",
+                        "referencedDeclaration": 41109,
+                        "src": "2170:25:93",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
+                          "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
                           "typeString": "contract TransferControllerManager"
                         }
                       },
-                      "id": 35321,
+                      "id": 41159,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "transferController",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 35772,
-                      "src": "2128:44:88",
+                      "referencedDeclaration": 41616,
+                      "src": "2170:44:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_external_view$_t_address_$_t_string_memory_ptr_$returns$_t_contract$_TransferController_$35265_$",
+                        "typeIdentifier": "t_function_external_view$_t_address_$_t_string_memory_ptr_$returns$_t_contract$_TransferController_$41097_$",
                         "typeString": "function (address,string memory) view external returns (contract TransferController)"
                       }
                     },
-                    "id": 35324,
+                    "id": 41162,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1746,38 +2051,37 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "2128:66:88",
+                    "src": "2170:66:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferController_$35265",
+                      "typeIdentifier": "t_contract$_TransferController_$41097",
                       "typeString": "contract TransferController"
                     }
                   },
-                  "functionReturnParameters": 35319,
-                  "id": 35325,
+                  "functionReturnParameters": 41157,
+                  "id": 41163,
                   "nodeType": "Return",
-                  "src": "2121:73:88"
+                  "src": "2163:73:93"
                 }
               ]
             },
             "documentation": "@notice Get the transfer controller of the given currency contract address and standard",
-            "id": 35327,
+            "id": 41165,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": true,
+            "kind": "function",
             "modifiers": [],
             "name": "transferController",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 35316,
+              "id": 41154,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35313,
+                  "id": 41151,
                   "name": "currencyCt",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35327,
-                  "src": "2015:18:88",
+                  "scope": 41165,
+                  "src": "2050:18:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1785,10 +2089,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 35312,
+                    "id": 41150,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2015:7:88",
+                    "src": "2050:7:93",
+                    "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1799,22 +2104,22 @@
                 },
                 {
                   "constant": false,
-                  "id": 35315,
+                  "id": 41153,
                   "name": "standard",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35327,
-                  "src": "2035:15:88",
+                  "scope": 41165,
+                  "src": "2070:22:93",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_memory_ptr",
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 35314,
+                    "id": 41152,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2035:6:88",
+                    "src": "2070:6:93",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -1824,35 +2129,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2014:37:88"
+              "src": "2049:44:93"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 35319,
+              "id": 41157,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 35318,
+                  "id": 41156,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 35327,
-                  "src": "2087:18:88",
+                  "scope": 41165,
+                  "src": "2129:18:93",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_TransferController_$35265",
+                    "typeIdentifier": "t_contract$_TransferController_$41097",
                     "typeString": "contract TransferController"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 35317,
+                    "id": 41155,
                     "name": "TransferController",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 35265,
-                    "src": "2087:18:88",
+                    "referencedDeclaration": 41097,
+                    "src": "2129:18:93",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_TransferController_$35265",
+                      "typeIdentifier": "t_contract$_TransferController_$41097",
                       "typeString": "contract TransferController"
                     }
                   },
@@ -1860,19 +2164,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2086:20:88"
+              "src": "2128:20:93"
             },
-            "scope": 35340,
-            "src": "1987:214:88",
+            "scope": 41181,
+            "src": "2022:221:93",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 35338,
+              "id": 41179,
               "nodeType": "Block",
-              "src": "2400:76:88",
+              "src": "2442:170:93",
               "statements": [
                 {
                   "expression": {
@@ -1884,22 +2188,60 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 35334,
+                        "id": 41174,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 35330,
-                          "name": "transferControllerManager",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 35277,
-                          "src": "2418:25:88",
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 41169,
+                              "name": "transferControllerManager",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 41109,
+                              "src": "2468:25:93",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                                "typeString": "contract TransferControllerManager"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_contract$_TransferControllerManager_$41617",
+                                "typeString": "contract TransferControllerManager"
+                              }
+                            ],
+                            "id": 41168,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2460:7:93",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 41170,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2460:34:93",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_contract$_TransferControllerManager_$35773",
-                            "typeString": "contract TransferControllerManager"
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
                           }
                         },
                         "nodeType": "BinaryOperation",
@@ -1910,14 +2252,14 @@
                             {
                               "argumentTypes": null,
                               "hexValue": "30",
-                              "id": 35332,
+                              "id": 41172,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "kind": "number",
                               "lValueRequested": false,
                               "nodeType": "Literal",
-                              "src": "2455:1:88",
+                              "src": "2506:1:93",
                               "subdenomination": null,
                               "typeDescriptions": {
                                 "typeIdentifier": "t_rational_0_by_1",
@@ -1933,20 +2275,20 @@
                                 "typeString": "int_const 0"
                               }
                             ],
-                            "id": 35331,
+                            "id": 41171,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "lValueRequested": false,
                             "nodeType": "ElementaryTypeNameExpression",
-                            "src": "2447:7:88",
+                            "src": "2498:7:93",
                             "typeDescriptions": {
                               "typeIdentifier": "t_type$_t_address_$",
                               "typeString": "type(address)"
                             },
                             "typeName": "address"
                           },
-                          "id": 35333,
+                          "id": 41173,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -1954,17 +2296,35 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "2447:10:88",
+                          "src": "2498:10:93",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_address",
-                            "typeString": "address"
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
                           }
                         },
-                        "src": "2418:39:88",
+                        "src": "2460:48:93",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "5472616e7366657220636f6e74726f6c6c6572206d616e61676572206e6f7420696e697469616c697a6564205b5472616e73666572436f6e74726f6c6c65724d616e61676561626c652e736f6c3a36335d",
+                        "id": 41175,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2510:83:93",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_9578c75ff2e17287db62e02d5ebbe4da395c95c514e5020ad679ab32328c93f9",
+                          "typeString": "literal_string \"Transfer controller manager not initialized [TransferControllerManageable.sol:63]\""
+                        },
+                        "value": "Transfer controller manager not initialized [TransferControllerManageable.sol:63]"
                       }
                     ],
                     "expression": {
@@ -1972,23 +2332,27 @@
                         {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_9578c75ff2e17287db62e02d5ebbe4da395c95c514e5020ad679ab32328c93f9",
+                          "typeString": "literal_string \"Transfer controller manager not initialized [TransferControllerManageable.sol:63]\""
                         }
                       ],
-                      "id": 35329,
+                      "id": 41167,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "2410:7:88",
+                      "referencedDeclaration": 57373,
+                      "src": "2452:7:93",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
-                        "typeString": "function (bool) pure"
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 35335,
+                    "id": 41176,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1996,48 +2360,48 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "2410:48:88",
+                    "src": "2452:142:93",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 35336,
+                  "id": 41177,
                   "nodeType": "ExpressionStatement",
-                  "src": "2410:48:88"
+                  "src": "2452:142:93"
                 },
                 {
-                  "id": 35337,
+                  "id": 41178,
                   "nodeType": "PlaceholderStatement",
-                  "src": "2468:1:88"
+                  "src": "2604:1:93"
                 }
               ]
             },
             "documentation": null,
-            "id": 35339,
+            "id": 41180,
             "name": "transferControllerManagerInitialized",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 35328,
+              "id": 41166,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2397:2:88"
+              "src": "2439:2:93"
             },
-            "src": "2352:124:88",
+            "src": "2394:218:93",
             "visibility": "internal"
           }
         ],
-        "scope": 35341,
-        "src": "428:2050:88"
+        "scope": 41182,
+        "src": "436:2178:93"
       }
     ],
-    "src": "122:2357:88"
+    "src": "122:2492:93"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T06:20:37.066Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.513Z"
 }

@@ -1,13 +1,10 @@
-# NAHMII CONTRACT ABSTRACTIONS FOR ROPSTEN
+# NAHMII CONTRACT ABSTRACTIONS
 
-## About this package
+## About the contract abstractions
 
 This package hosts contract abstractions generated from the deployment of 
 [nahmii contracts](https://github.com/hubiinetwork/nahmii-contracts.git) to 
-the Ropsten testnet.
-
-This particular version of the package contains abstractions from 
-**[nahmii-contracts v1.0.0-ropsten.10](https://github.com/hubiinetwork/nahmii-contracts/tree/v1.0-ropsten.10)**.  
+the Ropsten Ethereum testnet.
 
 ## About nahmii
 
@@ -22,8 +19,9 @@ See www.hubii.com for more information.
 ## Prerequisites
 
 * To use this software you need a modern version of **NodeJS and NPM**.
-  We recommend having the current LTS version (v10.x) installed, or
+  We recommend having the current LTS version (v8.x) installed, or
   later, and updating NPM to the latest available version.
+* You will also need an **API key** for access to _hubii_'s APIs.
 
 ## Installation
 

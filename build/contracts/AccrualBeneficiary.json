@@ -2,29 +2,61 @@
   "contractName": "AccrualBeneficiary",
   "abi": [
     {
+      "anonymous": false,
+      "inputs": [],
+      "name": "CloseAccrualPeriodEvent",
+      "type": "event"
+    },
+    {
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "wallet",
           "type": "address"
         },
         {
+          "internalType": "string",
+          "name": "balanceType",
+          "type": "string"
+        }
+      ],
+      "name": "receiveEthersTo",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "wallet",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
           "name": "balanceType",
           "type": "string"
         },
         {
+          "internalType": "int256",
           "name": "amount",
           "type": "int256"
         },
         {
+          "internalType": "address",
           "name": "currencyCt",
           "type": "address"
         },
         {
+          "internalType": "uint256",
           "name": "currencyId",
           "type": "uint256"
         },
         {
+          "internalType": "string",
           "name": "standard",
           "type": "string"
         }
@@ -39,40 +71,19 @@
       "constant": false,
       "inputs": [
         {
-          "name": "wallet",
-          "type": "address"
-        },
-        {
-          "name": "balanceType",
-          "type": "string"
-        }
-      ],
-      "name": "receiveEthersTo",
-      "outputs": [],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "anonymous": false,
-      "inputs": [],
-      "name": "CloseAccrualPeriodEvent",
-      "type": "event"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
           "components": [
             {
+              "internalType": "address",
               "name": "ct",
               "type": "address"
             },
             {
+              "internalType": "uint256",
               "name": "id",
               "type": "uint256"
             }
           ],
+          "internalType": "struct MonetaryTypesLib.Currency[]",
           "name": "",
           "type": "tuple[]"
         }
@@ -88,49 +99,52 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\npragma experimental ABIEncoderV2;\n\nimport {Beneficiary} from \"./Beneficiary.sol\";\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\n\n/**\n * @title AccrualBeneficiary\n * @notice A beneficiary of accruals\n */\ncontract AccrualBeneficiary is Beneficiary {\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    event CloseAccrualPeriodEvent();\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    function closeAccrualPeriod(MonetaryTypesLib.Currency[])\n    public\n    {\n        emit CloseAccrualPeriodEvent();\n    }\n}\n",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\npragma experimental ABIEncoderV2;\n\nimport {Beneficiary} from \"./Beneficiary.sol\";\nimport {MonetaryTypesLib} from \"./MonetaryTypesLib.sol\";\n\n/**\n * @title AccrualBeneficiary\n * @notice A beneficiary of accruals\n */\ncontract AccrualBeneficiary is Beneficiary {\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    event CloseAccrualPeriodEvent();\n\n    //\n    // Functions\n    // -----------------------------------------------------------------------------------------------------------------\n    function closeAccrualPeriod(MonetaryTypesLib.Currency[] memory)\n    public\n    {\n        emit CloseAccrualPeriodEvent();\n    }\n}\n",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/AccrualBeneficiary.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/AccrualBeneficiary.sol",
     "exportedSymbols": {
       "AccrualBeneficiary": [
-        185
+        211
       ]
     },
-    "id": 186,
+    "id": 212,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 165,
+        "id": 191,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:1"
+        "src": "122:32:1"
       },
       {
-        "id": 166,
+        "id": 192,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:1"
+        "src": "155:33:1"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Beneficiary.sol",
         "file": "./Beneficiary.sol",
-        "id": 168,
+        "id": 194,
         "nodeType": "ImportDirective",
-        "scope": 186,
-        "sourceUnit": 2159,
-        "src": "182:46:1",
+        "scope": 212,
+        "sourceUnit": 2225,
+        "src": "190:46:1",
         "symbolAliases": [
           {
-            "foreign": 167,
+            "foreign": 193,
             "local": null
           }
         ],
@@ -139,14 +153,14 @@
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "./MonetaryTypesLib.sol",
-        "id": 170,
+        "id": 196,
         "nodeType": "ImportDirective",
-        "scope": 186,
-        "sourceUnit": 19413,
-        "src": "229:56:1",
+        "scope": 212,
+        "sourceUnit": 23057,
+        "src": "237:56:1",
         "symbolAliases": [
           {
-            "foreign": 169,
+            "foreign": 195,
             "local": null
           }
         ],
@@ -158,31 +172,31 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 171,
+              "id": 197,
               "name": "Beneficiary",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 2158,
-              "src": "392:11:1",
+              "referencedDeclaration": 2224,
+              "src": "400:11:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Beneficiary_$2158",
+                "typeIdentifier": "t_contract$_Beneficiary_$2224",
                 "typeString": "contract Beneficiary"
               }
             },
-            "id": 172,
+            "id": 198,
             "nodeType": "InheritanceSpecifier",
-            "src": "392:11:1"
+            "src": "400:11:1"
           }
         ],
         "contractDependencies": [
-          2158
+          2224
         ],
         "contractKind": "contract",
         "documentation": "@title AccrualBeneficiary\n@notice A beneficiary of accruals",
         "fullyImplemented": false,
-        "id": 185,
+        "id": 211,
         "linearizedBaseContracts": [
-          185,
-          2158
+          211,
+          2224
         ],
         "name": "AccrualBeneficiary",
         "nodeType": "ContractDefinition",
@@ -190,22 +204,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 174,
+            "id": 200,
             "name": "CloseAccrualPeriodEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 173,
+              "id": 199,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "584:2:1"
+              "src": "592:2:1"
             },
-            "src": "555:32:1"
+            "src": "563:32:1"
           },
           {
             "body": {
-              "id": 183,
+              "id": 209,
               "nodeType": "Block",
-              "src": "810:47:1",
+              "src": "825:47:1",
               "statements": [
                 {
                   "eventCall": {
@@ -213,18 +227,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 180,
+                      "id": 206,
                       "name": "CloseAccrualPeriodEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 174,
-                      "src": "825:23:1",
+                      "referencedDeclaration": 200,
+                      "src": "840:23:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 181,
+                    "id": 207,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -232,62 +246,61 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "825:25:1",
+                    "src": "840:25:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 182,
+                  "id": 208,
                   "nodeType": "EmitStatement",
-                  "src": "820:30:1"
+                  "src": "835:30:1"
                 }
               ]
             },
             "documentation": null,
-            "id": 184,
+            "id": 210,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "closeAccrualPeriod",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 178,
+              "id": 204,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 177,
+                  "id": 203,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 184,
-                  "src": "766:27:1",
+                  "scope": 210,
+                  "src": "774:34:1",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Currency_$19401_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Currency_$23045_memory_$dyn_memory_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 175,
+                      "id": 201,
                       "name": "MonetaryTypesLib.Currency",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 19401,
-                      "src": "766:25:1",
+                      "referencedDeclaration": 23045,
+                      "src": "774:25:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                        "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                         "typeString": "struct MonetaryTypesLib.Currency"
                       }
                     },
-                    "id": 176,
+                    "id": 202,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "766:27:1",
+                    "src": "774:27:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Currency_$19401_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Currency_$23045_storage_$dyn_storage_ptr",
                       "typeString": "struct MonetaryTypesLib.Currency[]"
                     }
                   },
@@ -295,69 +308,71 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "765:29:1"
+              "src": "773:36:1"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 179,
+              "id": 205,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "810:0:1"
+              "src": "825:0:1"
             },
-            "scope": 185,
-            "src": "738:119:1",
+            "scope": 211,
+            "src": "746:126:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 186,
-        "src": "361:498:1"
+        "scope": 212,
+        "src": "369:505:1"
       }
     ],
-    "src": "122:738:1"
+    "src": "122:753:1"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/AccrualBeneficiary.sol",
     "exportedSymbols": {
       "AccrualBeneficiary": [
-        185
+        211
       ]
     },
-    "id": 186,
+    "id": 212,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 165,
+        "id": 191,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:1"
+        "src": "122:32:1"
       },
       {
-        "id": 166,
+        "id": 192,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "147:33:1"
+        "src": "155:33:1"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Beneficiary.sol",
         "file": "./Beneficiary.sol",
-        "id": 168,
+        "id": 194,
         "nodeType": "ImportDirective",
-        "scope": 186,
-        "sourceUnit": 2159,
-        "src": "182:46:1",
+        "scope": 212,
+        "sourceUnit": 2225,
+        "src": "190:46:1",
         "symbolAliases": [
           {
-            "foreign": 167,
+            "foreign": 193,
             "local": null
           }
         ],
@@ -366,14 +381,14 @@
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/MonetaryTypesLib.sol",
         "file": "./MonetaryTypesLib.sol",
-        "id": 170,
+        "id": 196,
         "nodeType": "ImportDirective",
-        "scope": 186,
-        "sourceUnit": 19413,
-        "src": "229:56:1",
+        "scope": 212,
+        "sourceUnit": 23057,
+        "src": "237:56:1",
         "symbolAliases": [
           {
-            "foreign": 169,
+            "foreign": 195,
             "local": null
           }
         ],
@@ -385,31 +400,31 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 171,
+              "id": 197,
               "name": "Beneficiary",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 2158,
-              "src": "392:11:1",
+              "referencedDeclaration": 2224,
+              "src": "400:11:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Beneficiary_$2158",
+                "typeIdentifier": "t_contract$_Beneficiary_$2224",
                 "typeString": "contract Beneficiary"
               }
             },
-            "id": 172,
+            "id": 198,
             "nodeType": "InheritanceSpecifier",
-            "src": "392:11:1"
+            "src": "400:11:1"
           }
         ],
         "contractDependencies": [
-          2158
+          2224
         ],
         "contractKind": "contract",
         "documentation": "@title AccrualBeneficiary\n@notice A beneficiary of accruals",
         "fullyImplemented": false,
-        "id": 185,
+        "id": 211,
         "linearizedBaseContracts": [
-          185,
-          2158
+          211,
+          2224
         ],
         "name": "AccrualBeneficiary",
         "nodeType": "ContractDefinition",
@@ -417,22 +432,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 174,
+            "id": 200,
             "name": "CloseAccrualPeriodEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 173,
+              "id": 199,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "584:2:1"
+              "src": "592:2:1"
             },
-            "src": "555:32:1"
+            "src": "563:32:1"
           },
           {
             "body": {
-              "id": 183,
+              "id": 209,
               "nodeType": "Block",
-              "src": "810:47:1",
+              "src": "825:47:1",
               "statements": [
                 {
                   "eventCall": {
@@ -440,18 +455,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 180,
+                      "id": 206,
                       "name": "CloseAccrualPeriodEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 174,
-                      "src": "825:23:1",
+                      "referencedDeclaration": 200,
+                      "src": "840:23:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 181,
+                    "id": 207,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -459,62 +474,61 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "825:25:1",
+                    "src": "840:25:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 182,
+                  "id": 208,
                   "nodeType": "EmitStatement",
-                  "src": "820:30:1"
+                  "src": "835:30:1"
                 }
               ]
             },
             "documentation": null,
-            "id": 184,
+            "id": 210,
             "implemented": true,
-            "isConstructor": false,
-            "isDeclaredConst": false,
+            "kind": "function",
             "modifiers": [],
             "name": "closeAccrualPeriod",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 178,
+              "id": 204,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 177,
+                  "id": 203,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 184,
-                  "src": "766:27:1",
+                  "scope": 210,
+                  "src": "774:34:1",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Currency_$19401_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Currency_$23045_memory_$dyn_memory_ptr",
                     "typeString": "struct MonetaryTypesLib.Currency[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 175,
+                      "id": 201,
                       "name": "MonetaryTypesLib.Currency",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 19401,
-                      "src": "766:25:1",
+                      "referencedDeclaration": 23045,
+                      "src": "774:25:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Currency_$19401_storage_ptr",
+                        "typeIdentifier": "t_struct$_Currency_$23045_storage_ptr",
                         "typeString": "struct MonetaryTypesLib.Currency"
                       }
                     },
-                    "id": 176,
+                    "id": 202,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "766:27:1",
+                    "src": "774:27:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Currency_$19401_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Currency_$23045_storage_$dyn_storage_ptr",
                       "typeString": "struct MonetaryTypesLib.Currency[]"
                     }
                   },
@@ -522,33 +536,32 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "765:29:1"
+              "src": "773:36:1"
             },
-            "payable": false,
             "returnParameters": {
-              "id": 179,
+              "id": 205,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "810:0:1"
+              "src": "825:0:1"
             },
-            "scope": 185,
-            "src": "738:119:1",
+            "scope": 211,
+            "src": "746:126:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 186,
-        "src": "361:498:1"
+        "scope": 212,
+        "src": "369:505:1"
       }
     ],
-    "src": "122:738:1"
+    "src": "122:753:1"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T06:20:36.852Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.265Z"
 }

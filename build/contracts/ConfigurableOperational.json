@@ -2,22 +2,112 @@
   "contractName": "ConfigurableOperational",
   "abi": [
     {
-      "constant": false,
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructionDisabledEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "contract Configuration",
+          "name": "oldConfiguration",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "contract Configuration",
+          "name": "newConfiguration",
+          "type": "address"
+        }
+      ],
+      "name": "SetConfigurationEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldDeployer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newDeployer",
+          "type": "address"
+        }
+      ],
+      "name": "SetDeployerEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "oldOperator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newOperator",
+          "type": "address"
+        }
+      ],
+      "name": "SetOperatorEvent",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "wallet",
+          "type": "address"
+        }
+      ],
+      "name": "TriggerSelfDestructionEvent",
+      "type": "event"
+    },
+    {
+      "constant": true,
       "inputs": [],
-      "name": "triggerSelfDestruction",
-      "outputs": [],
+      "name": "configuration",
+      "outputs": [
+        {
+          "internalType": "contract Configuration",
+          "name": "",
+          "type": "address"
+        }
+      ],
       "payable": false,
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "constant": true,
       "inputs": [],
-      "name": "selfDestructionDisabled",
+      "name": "deployer",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
-          "type": "bool"
+          "type": "address"
         }
       ],
       "payable": false,
@@ -30,48 +120,7 @@
       "name": "destructor",
       "outputs": [
         {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "operator",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "newConfiguration",
-          "type": "address"
-        }
-      ],
-      "name": "setConfiguration",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "configuration",
-      "outputs": [
-        {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -90,9 +139,55 @@
       "type": "function"
     },
     {
+      "constant": true,
+      "inputs": [],
+      "name": "operator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "selfDestructionDisabled",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "constant": false,
       "inputs": [
         {
+          "internalType": "contract Configuration",
+          "name": "newConfiguration",
+          "type": "address"
+        }
+      ],
+      "name": "setConfiguration",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "newDeployer",
           "type": "address"
         }
@@ -107,6 +202,7 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "newOperator",
           "type": "address"
         }
@@ -118,133 +214,56 @@
       "type": "function"
     },
     {
-      "constant": true,
+      "constant": false,
       "inputs": [],
-      "name": "deployer",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "name": "triggerSelfDestruction",
+      "outputs": [],
       "payable": false,
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "oldConfiguration",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "newConfiguration",
-          "type": "address"
-        }
-      ],
-      "name": "SetConfigurationEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "oldDeployer",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "newDeployer",
-          "type": "address"
-        }
-      ],
-      "name": "SetDeployerEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "oldOperator",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "newOperator",
-          "type": "address"
-        }
-      ],
-      "name": "SetOperatorEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "wallet",
-          "type": "address"
-        }
-      ],
-      "name": "SelfDestructionDisabledEvent",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "name": "wallet",
-          "type": "address"
-        }
-      ],
-      "name": "TriggerSelfDestructionEvent",
-      "type": "event"
     }
   ],
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity ^0.4.25;\n\nimport {Configurable} from \"./Configurable.sol\";\n\n/**\n * @title ConfigurableOperational\n * @notice A configurable with modifiers for operational mode state validation\n */\ncontract ConfigurableOperational is Configurable {\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier onlyOperationalModeNormal() {\n        require(configuration.isOperationalModeNormal());\n        _;\n    }\n}\n",
+  "source": "/*\n * Hubii Nahmii\n *\n * Compliant with the Hubii Nahmii specification v0.12.\n *\n * Copyright (C) 2017-2018 Hubii AS\n */\n\npragma solidity >=0.4.25 <0.6.0;\n\nimport {Configurable} from \"./Configurable.sol\";\n\n/**\n * @title ConfigurableOperational\n * @notice A configurable with modifiers for operational mode state validation\n */\ncontract ConfigurableOperational is Configurable {\n    //\n    // Modifiers\n    // -----------------------------------------------------------------------------------------------------------------\n    modifier onlyOperationalModeNormal() {\n        require(configuration.isOperationalModeNormal(), \"Operational mode is not normal [ConfigurableOperational.sol:22]\");\n        _;\n    }\n}",
   "sourcePath": "/opt/buildagent/work/855e104608380c36/contracts/ConfigurableOperational.sol",
   "ast": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ConfigurableOperational.sol",
     "exportedSymbols": {
       "ConfigurableOperational": [
-        5805
+        5968
       ]
     },
-    "id": 5806,
+    "id": 5969,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5790,
+        "id": 5952,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:20"
+        "src": "122:32:20"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configurable.sol",
         "file": "./Configurable.sol",
-        "id": 5792,
+        "id": 5954,
         "nodeType": "ImportDirective",
-        "scope": 5806,
-        "sourceUnit": 5789,
-        "src": "148:48:20",
+        "scope": 5969,
+        "sourceUnit": 5951,
+        "src": "156:48:20",
         "symbolAliases": [
           {
-            "foreign": 5791,
+            "foreign": 5953,
             "local": null
           }
         ],
@@ -256,46 +275,46 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 5793,
+              "id": 5955,
               "name": "Configurable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5788,
-              "src": "355:12:20",
+              "referencedDeclaration": 5950,
+              "src": "363:12:20",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Configurable_$5788",
+                "typeIdentifier": "t_contract$_Configurable_$5950",
                 "typeString": "contract Configurable"
               }
             },
-            "id": 5794,
+            "id": 5956,
             "nodeType": "InheritanceSpecifier",
-            "src": "355:12:20"
+            "src": "363:12:20"
           }
         ],
         "contractDependencies": [
-          5788,
-          19393,
-          25426,
-          31613
+          5950,
+          23037,
+          30685,
+          37143
         ],
         "contractKind": "contract",
         "documentation": "@title ConfigurableOperational\n@notice A configurable with modifiers for operational mode state validation",
         "fullyImplemented": false,
-        "id": 5805,
+        "id": 5968,
         "linearizedBaseContracts": [
-          5805,
-          5788,
-          25426,
-          31613,
-          19393
+          5968,
+          5950,
+          30685,
+          37143,
+          23037
         ],
         "name": "ConfigurableOperational",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 5803,
+              "id": 5966,
               "nodeType": "Block",
-              "src": "556:76:20",
+              "src": "564:143:20",
               "statements": [
                 {
                   "expression": {
@@ -308,32 +327,32 @@
                           "argumentTypes": [],
                           "expression": {
                             "argumentTypes": null,
-                            "id": 5797,
+                            "id": 5959,
                             "name": "configuration",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 5741,
-                            "src": "574:13:20",
+                            "referencedDeclaration": 5894,
+                            "src": "582:13:20",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_Configuration_$7172",
+                              "typeIdentifier": "t_contract$_Configuration_$7342",
                               "typeString": "contract Configuration"
                             }
                           },
-                          "id": 5798,
+                          "id": 5960,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "isOperationalModeNormal",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 6113,
-                          "src": "574:37:20",
+                          "referencedDeclaration": 6276,
+                          "src": "582:37:20",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$__$returns$_t_bool_$",
                             "typeString": "function () view external returns (bool)"
                           }
                         },
-                        "id": 5799,
+                        "id": 5961,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -341,11 +360,29 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "574:39:20",
+                        "src": "582:39:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "4f7065726174696f6e616c206d6f6465206973206e6f74206e6f726d616c205b436f6e666967757261626c654f7065726174696f6e616c2e736f6c3a32325d",
+                        "id": 5962,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "623:65:20",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_005ca73fec988adb4bc43abcba5ccf9d30b6c47a2ca7119622146ba2601b0a52",
+                          "typeString": "literal_string \"Operational mode is not normal [ConfigurableOperational.sol:22]\""
+                        },
+                        "value": "Operational mode is not normal [ConfigurableOperational.sol:22]"
                       }
                     ],
                     "expression": {
@@ -353,23 +390,27 @@
                         {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_005ca73fec988adb4bc43abcba5ccf9d30b6c47a2ca7119622146ba2601b0a52",
+                          "typeString": "literal_string \"Operational mode is not normal [ConfigurableOperational.sol:22]\""
                         }
                       ],
-                      "id": 5796,
+                      "id": 5958,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "566:7:20",
+                      "referencedDeclaration": 57373,
+                      "src": "574:7:20",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
-                        "typeString": "function (bool) pure"
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 5800,
+                    "id": 5963,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -377,75 +418,78 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "566:48:20",
+                    "src": "574:115:20",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5801,
+                  "id": 5964,
                   "nodeType": "ExpressionStatement",
-                  "src": "566:48:20"
+                  "src": "574:115:20"
                 },
                 {
-                  "id": 5802,
+                  "id": 5965,
                   "nodeType": "PlaceholderStatement",
-                  "src": "624:1:20"
+                  "src": "699:1:20"
                 }
               ]
             },
             "documentation": null,
-            "id": 5804,
+            "id": 5967,
             "name": "onlyOperationalModeNormal",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 5795,
+              "id": 5957,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "553:2:20"
+              "src": "561:2:20"
             },
-            "src": "519:113:20",
+            "src": "527:180:20",
             "visibility": "internal"
           }
         ],
-        "scope": 5806,
-        "src": "319:315:20"
+        "scope": 5969,
+        "src": "327:382:20"
       }
     ],
-    "src": "122:513:20"
+    "src": "122:587:20"
   },
   "legacyAST": {
     "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/ConfigurableOperational.sol",
     "exportedSymbols": {
       "ConfigurableOperational": [
-        5805
+        5968
       ]
     },
-    "id": 5806,
+    "id": 5969,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5790,
+        "id": 5952,
         "literals": [
           "solidity",
-          "^",
+          ">=",
           "0.4",
-          ".25"
+          ".25",
+          "<",
+          "0.6",
+          ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "122:24:20"
+        "src": "122:32:20"
       },
       {
         "absolutePath": "/opt/buildagent/work/855e104608380c36/contracts/Configurable.sol",
         "file": "./Configurable.sol",
-        "id": 5792,
+        "id": 5954,
         "nodeType": "ImportDirective",
-        "scope": 5806,
-        "sourceUnit": 5789,
-        "src": "148:48:20",
+        "scope": 5969,
+        "sourceUnit": 5951,
+        "src": "156:48:20",
         "symbolAliases": [
           {
-            "foreign": 5791,
+            "foreign": 5953,
             "local": null
           }
         ],
@@ -457,46 +501,46 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 5793,
+              "id": 5955,
               "name": "Configurable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5788,
-              "src": "355:12:20",
+              "referencedDeclaration": 5950,
+              "src": "363:12:20",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Configurable_$5788",
+                "typeIdentifier": "t_contract$_Configurable_$5950",
                 "typeString": "contract Configurable"
               }
             },
-            "id": 5794,
+            "id": 5956,
             "nodeType": "InheritanceSpecifier",
-            "src": "355:12:20"
+            "src": "363:12:20"
           }
         ],
         "contractDependencies": [
-          5788,
-          19393,
-          25426,
-          31613
+          5950,
+          23037,
+          30685,
+          37143
         ],
         "contractKind": "contract",
         "documentation": "@title ConfigurableOperational\n@notice A configurable with modifiers for operational mode state validation",
         "fullyImplemented": false,
-        "id": 5805,
+        "id": 5968,
         "linearizedBaseContracts": [
-          5805,
-          5788,
-          25426,
-          31613,
-          19393
+          5968,
+          5950,
+          30685,
+          37143,
+          23037
         ],
         "name": "ConfigurableOperational",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 5803,
+              "id": 5966,
               "nodeType": "Block",
-              "src": "556:76:20",
+              "src": "564:143:20",
               "statements": [
                 {
                   "expression": {
@@ -509,32 +553,32 @@
                           "argumentTypes": [],
                           "expression": {
                             "argumentTypes": null,
-                            "id": 5797,
+                            "id": 5959,
                             "name": "configuration",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 5741,
-                            "src": "574:13:20",
+                            "referencedDeclaration": 5894,
+                            "src": "582:13:20",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_Configuration_$7172",
+                              "typeIdentifier": "t_contract$_Configuration_$7342",
                               "typeString": "contract Configuration"
                             }
                           },
-                          "id": 5798,
+                          "id": 5960,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "isOperationalModeNormal",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 6113,
-                          "src": "574:37:20",
+                          "referencedDeclaration": 6276,
+                          "src": "582:37:20",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$__$returns$_t_bool_$",
                             "typeString": "function () view external returns (bool)"
                           }
                         },
-                        "id": 5799,
+                        "id": 5961,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -542,11 +586,29 @@
                         "lValueRequested": false,
                         "names": [],
                         "nodeType": "FunctionCall",
-                        "src": "574:39:20",
+                        "src": "582:39:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "4f7065726174696f6e616c206d6f6465206973206e6f74206e6f726d616c205b436f6e666967757261626c654f7065726174696f6e616c2e736f6c3a32325d",
+                        "id": 5962,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "623:65:20",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_005ca73fec988adb4bc43abcba5ccf9d30b6c47a2ca7119622146ba2601b0a52",
+                          "typeString": "literal_string \"Operational mode is not normal [ConfigurableOperational.sol:22]\""
+                        },
+                        "value": "Operational mode is not normal [ConfigurableOperational.sol:22]"
                       }
                     ],
                     "expression": {
@@ -554,23 +616,27 @@
                         {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_005ca73fec988adb4bc43abcba5ccf9d30b6c47a2ca7119622146ba2601b0a52",
+                          "typeString": "literal_string \"Operational mode is not normal [ConfigurableOperational.sol:22]\""
                         }
                       ],
-                      "id": 5796,
+                      "id": 5958,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        50297,
-                        50298
+                        57372,
+                        57373
                       ],
-                      "referencedDeclaration": 50297,
-                      "src": "566:7:20",
+                      "referencedDeclaration": 57373,
+                      "src": "574:7:20",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
-                        "typeString": "function (bool) pure"
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 5800,
+                    "id": 5963,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -578,48 +644,48 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "566:48:20",
+                    "src": "574:115:20",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5801,
+                  "id": 5964,
                   "nodeType": "ExpressionStatement",
-                  "src": "566:48:20"
+                  "src": "574:115:20"
                 },
                 {
-                  "id": 5802,
+                  "id": 5965,
                   "nodeType": "PlaceholderStatement",
-                  "src": "624:1:20"
+                  "src": "699:1:20"
                 }
               ]
             },
             "documentation": null,
-            "id": 5804,
+            "id": 5967,
             "name": "onlyOperationalModeNormal",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 5795,
+              "id": 5957,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "553:2:20"
+              "src": "561:2:20"
             },
-            "src": "519:113:20",
+            "src": "527:180:20",
             "visibility": "internal"
           }
         ],
-        "scope": 5806,
-        "src": "319:315:20"
+        "scope": 5969,
+        "src": "327:382:20"
       }
     ],
-    "src": "122:513:20"
+    "src": "122:587:20"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-04-02T06:20:36.879Z"
+  "schemaVersion": "2.0.3",
+  "updatedAt": "2019-10-22T21:00:29.299Z"
 }
